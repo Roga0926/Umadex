@@ -2,7 +2,7 @@
 
 Los caballos reales detrás de cada personaje de **Umamusume: Pretty Derby**: historial de carreras, pedigrí de tres generaciones, carreras de grupo ganadas y ganancias, además de las carreras G1 del año con su récord y sus ganadores históricos.
 
-**Ver el sitio:** https://roga0926.github.io/Umadex/
+**Ver el sitio:** https://umadexfan.com
 
 ## Contenido
 
