@@ -594,7 +594,7 @@ function fillGrid() {
       ${sk ? '<div class="side">' : ''}<div class="tote"><b>${g1(p)}</b><small>G1</small></div>${sk ? sk + '</div>' : ''}
       <div class="jp">${esc(p.nombre_japones || '')}${p.caballo_real && p.caballo_real !== p.personaje ? ` · ${esc(p.caballo_real)}` : ''}</div>
       <div class="meta">
-        <span>Nac. <span class="num">${esc(p.anio_nacimiento || '—')}</span></span>
+        <span class="num">${esc(p.anio_nacimiento || '—')}</span>
         <span><span class="num">${fmtN(r.victorias)}</span> ${r.victorias === 1 ? 'victoria' : 'victorias'} / <span class="num">${fmtN(r.carreras)}</span> ${r.carreras === 1 ? 'carrera' : 'carreras'}</span>
         <span class="gg"><span>${gradeChip('G2')} ${rg.G2?.ganadas || 0}</span><span>${gradeChip('G3')} ${rg.G3?.ganadas || 0}</span></span>
         ${p.categoria === 'agregado' ? '<span class="tag add">Agregado</span>' : p.categoria !== 'oficial' ? `<span class="tag">${esc(p.categoria)}</span>` : ''}
