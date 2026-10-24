@@ -584,7 +584,7 @@ function viewList() {
         <option value="victorias">Más victorias</option><option value="anio">Año de nacimiento</option>
       </select></div>
   </div>
-  ${(og => og && silk(og) ? `<p class="silk-note">${silk(og)}<span>Este ícono indica los colores del uniforme que vestía el jinete en la vida real. Por ejemplo, el de ${esc(og.personaje)}.</span></p>` : '')(all().find(x => String(x.id) === '94'))}
+  ${(og => og && silk(og) ? `<p class="silk-note">${silk(og)}<span>Este ícono indica los colores del uniforme que vestía el jinete en la vida real. Este, por ejemplo, es el de ${esc(og.personaje)}.</span></p>` : '')(all().find(x => String(x.id) === '94'))}
   <div class="count" id="count"></div>
   <div class="grid" id="grid"></div>`;
   const q = app.querySelector('#q'), cat = app.querySelector('#cat'), sort = app.querySelector('#sort');
