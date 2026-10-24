@@ -259,6 +259,30 @@ tr.win td{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .dot-inline.potras{background:var(--gold)}.dot-inline.potros{background:var(--orange)}
 #rf-wrap{scroll-margin-top:5rem}
 .tabs{display:flex;gap:0;flex-wrap:wrap;border-bottom:2px solid var(--ink)}
+/* quiz */
+.qz-start{background:var(--turf);color:var(--turf-ink);border-color:var(--turf);font-size:1.05rem;padding:.6rem 1.4rem;margin:.25rem 0 1rem}
+.qz-bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;margin:.4rem 0 .9rem;max-width:40rem}
+.qz-bar i{display:block;height:100%;background:var(--turf)}
+.qz-q{font-size:clamp(1.35rem,4.5vw,2rem);line-height:1.2;max-width:44rem}
+.qz-opts{display:grid;gap:.6rem;max-width:40rem}
+.qz-opts button{justify-content:flex-start;text-align:left;padding:.8rem 1rem;font-size:1rem;font-weight:600;min-height:3rem}
+.qz-opts button:not(:disabled):hover{border-color:var(--turf)}
+.qz-opts button.ok{background:var(--g3);border-color:var(--g3);color:#fff;opacity:1}
+.qz-opts button.mal{background:var(--g2);border-color:var(--g2);color:#fff;opacity:1}
+.qz-opts button.off{opacity:.55}
+.qz-foto{width:7rem;height:7rem;object-fit:cover;border-radius:var(--r);border:1px solid var(--line);background:var(--sunk);display:block;margin:.2rem 0 .8rem}
+.qz-mini{width:2.2rem;height:2.2rem;border-radius:5px;object-fit:cover;vertical-align:middle;margin-right:.45rem;border:1px solid var(--line)}
+.qz-sedas{grid-template-columns:repeat(3,minmax(0,6.5rem));gap:.8rem}
+.qz-sedas button{justify-content:center;padding:.7rem;min-height:0}
+.qz-sedas .silk{width:100%;height:auto;aspect-ratio:1/1}
+.qz-rev li b .silk,.qz-rev small .silk{display:inline-block;vertical-align:middle;width:2rem;height:2rem}
+.qz-msg{min-height:1.5rem;font-weight:600;margin:.8rem 0 .4rem}
+.qz-rev ol{margin:0;padding-left:1.4rem;display:grid;gap:.7rem}
+.qz-rev li{display:grid;gap:.15rem}
+.qz-rev li b{color:var(--g3)}
+.qz-rev li.mal b::after{content:" ✗";color:var(--g2)}
+.qz-rev li.ok b::after{content:" ✓"}
+.qz-rev small{color:var(--muted)}
 /* ganancias */
 .earn{overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.4rem;position:relative}
 .ebars{display:flex;align-items:flex-end;gap:2px;height:22rem;min-width:max-content;padding-top:1.4rem}
@@ -338,6 +362,7 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
       <a href="#g1" data-nav="g1">G1 del año</a>
       <a href="#hazanas" data-nav="hazanas">Hazañas</a>
       <a href="#ganancias" data-nav="ganancias">Ganancias</a>
+      <a href="#quiz" data-nav="quiz">Quiz</a>
       <a href="#agregar" data-nav="agregar">Agregar personaje</a>
     </nav>
   </div>
@@ -514,6 +539,7 @@ function route() {
   if (h === 'agregar' || h.startsWith('editar-')) sec = 'agregar';
   if (h.startsWith('hazanas')) sec = 'hazanas';
   if (h.startsWith('ganancias')) sec = 'ganancias';
+  if (h === 'quiz') sec = 'quiz';
   document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === sec) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   const nav = document.querySelector('.nav'), cur = nav?.querySelector('[aria-current]');
   if (cur && nav.scrollWidth > nav.clientWidth) { const r = cur.getBoundingClientRect(), n = nav.getBoundingClientRect(); nav.scrollLeft += r.left - n.left - (n.width - r.width) / 2; }
@@ -528,6 +554,7 @@ function route() {
   if (h === 'agregar') return viewForm(null);
   if (h.startsWith('hazanas')) return viewFeats(h.slice(8));
   if (h === 'ganancias') return viewEarn();
+  if (h === 'quiz') return viewQuiz();
   if (h.startsWith('editar-')) return viewForm(h.slice(7));
   if (h.startsWith('ajustar-')) return viewForm(null, h.slice(8));
   return viewList();
@@ -964,7 +991,7 @@ function rebuildRaces() {
   if (!POR[SEASON]) POR[SEASON] = Object.fromEntries(Object.keys(BASE_POR[Object.keys(BASE_POR).pop()]).map(k => [k, null]));
   YEARS = Object.keys(POR).sort();
 }
-function rebuild() { roster = BASE.map(applyP); rebuildRaces(); }
+function rebuild() { roster = BASE.map(applyP); rebuildRaces(); quizBank = null; }
 function g1Head(mode) {
   return `<section class="intro">
     <span class="label">Temporada ${SEASON} · ${RACES.length} carreras G1</span>
@@ -1256,6 +1283,222 @@ function viewEarn() {
   box.addEventListener('scroll', hide, { passive: true });
   box.addEventListener('focusin', e => { const el = e.target.closest('.ecol'); if (el) { const r = el.getBoundingClientRect(); show(el, r.left + r.width / 2, r.top + r.height / 2); } });
   box.addEventListener('focusout', hide);
+}
+
+/* ---------- vista: quiz ---------- */
+// El banco de preguntas se arma con los mismos datos que muestra el sitio (G1 por año, fichas y pedigrí),
+// así cada respuesta coincide con lo que se ve en las fichas. Cada partida toma 15 al azar.
+const QUIZ_N = 15;
+// Carreras JRA usadas en "¿Quién ganó…?": año desde el que existe con ese nombre/formato y grupo de edad
+// (f3/c3 = potras/potros de 3 años, f2/c2 = de 2 años, fo = yeguas adultas, o = abierta)
+const QUIZ_RACES = {
+  february_stakes: { desde: 1984 }, takamatsunomiya_kinen: { desde: 1996 }, osaka_hai: {},
+  oka_sho: { g: 'f3' }, satsuki_sho: { g: 'c3' }, tenno_sho_primavera: {}, nhk_mile_cup: { desde: 1996, g: 'c3' },
+  victoria_mile: { desde: 2006, g: 'fo' }, yushun_himba: { g: 'f3' }, tokyo_yushun: { g: 'c3' }, yasuda_kinen: {},
+  takarazuka_kinen: {}, sprinters_stakes: { desde: 1990 }, shuka_sho: { desde: 1996, g: 'f3' }, kikuka_sho: { g: 'c3' },
+  tenno_sho_otono: {}, qe2_cup: { g: y => y <= 1995 ? 'f3' : 'fo' }, mile_championship: { desde: 1984 },
+  japan_cup: { desde: 1981 }, champions_cup: { desde: 2014 }, hanshin_jf: { desde: 1991, g: 'f2' },
+  asahi_hai_fs: { desde: 1991, g: 'c2' }, hopeful_stakes: { desde: 2017, g: 'c2' }, arima_kinen: {},
+};
+const qShuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const qTitle = s => String(s).toLowerCase().replace(/(^|[\s.\-'(])([a-zà-ÿ])/g, (m, a, b) => a + b.toUpperCase());
+const qRaceName = id => carreraEs(String(D.nombres[id] || id).replace(/\s*\((?:Japanese|Japan) [^)]*\)/, ''));
+// Tres valores consecutivos que contienen la respuesta, en una posición al azar (así la correcta no siempre es la del medio)
+const qNear = (n, min = 0) => { const s = Math.max(min, n - Math.floor(Math.random() * 3)); return [s, s + 1, s + 2].map(String); };
+
+function buildQuiz() {
+  const pjs = all(), byId = Object.fromEntries(pjs.map(p => [String(p.id), p]));
+  const pjName = p => p.caballo_real && norm(p.caballo_real) !== norm(p.personaje) ? `${p.personaje} (${p.caballo_real})` : p.personaje;
+  const byHorse = Object.fromEntries(pjs.filter(p => p.caballo_real).map(p => [norm(p.caballo_real), p]));
+  // Ganadores: W[carrera][año] = { name, key, pj }
+  const W = {};
+  for (const r of D.g1.carreras) {
+    if (r.pais !== 'JPN' || !r.ganadores_por_anio) continue;
+    W[r.id] = {};
+    for (const w of r.ganadores_por_anio) {
+      if (!w.ganador || /&|dead heat/i.test(w.ganador)) continue; // empates: se omiten
+      const pj = (w.personaje_ids || []).map(i => byId[String(i)]).find(Boolean) || byHorse[norm(w.ganador)];
+      W[r.id][w.anio] = { name: pj ? pjName(pj) : qTitle(w.ganador), key: norm(pj?.caballo_real || w.ganador), pj };
+    }
+  }
+  const grpOf = (id, y) => { const g = QUIZ_RACES[id]?.g; return (typeof g === 'function' ? g(y) : g) || 'o'; };
+  const winnersIn = (y, grps) => Object.keys(QUIZ_RACES).filter(id => y >= (QUIZ_RACES[id].desde || 1980) && grps.includes(grpOf(id, y))).map(id => W[id]?.[y]).filter(Boolean);
+  const born = (from, to, sexo) => pjs.filter(p => p.anio_nacimiento >= from && p.anio_nacimiento <= to && (!sexo || p.sexo === sexo))
+    .map(p => ({ name: pjName(p), key: norm(p.caballo_real || p.personaje), pj: p }));
+  // Caballos de la misma generación que el ganador de una carrera de ese grupo y año
+  const generacion = (g, y) => ({
+    f3: () => [...born(y - 3, y - 3, 'hembra'), ...winnersIn(y, ['f3']), ...winnersIn(y - 1, ['f2'])],
+    c3: () => [...born(y - 3, y - 3), ...winnersIn(y, ['c3']), ...winnersIn(y - 1, ['c2'])],
+    f2: () => [...born(y - 2, y - 2, 'hembra'), ...winnersIn(y, ['f2']), ...winnersIn(y + 1, ['f3'])],
+    c2: () => [...born(y - 2, y - 2), ...winnersIn(y, ['c2']), ...winnersIn(y + 1, ['c3'])],
+    fo: () => [...born(y - 6, y - 3, 'hembra'), ...winnersIn(y, ['fo', 'f3']), ...winnersIn(y - 1, ['fo'])],
+    o: () => [...born(y - 6, y - 3), ...winnersIn(y, ['o']), ...winnersIn(y - 1, ['o'])],
+  })[g]();
+  // Dos distractores: si la respuesta es un personaje, se prefieren otros personajes; si no, otros ganadores de la época
+  const distract = (ans, pool, evitar = []) => {
+    const no = new Set([ans.key, ...evitar]), seen = new Set(), out = [];
+    const cands = qShuffle(pool).sort((a, b) => (!!b.pj === !!ans.pj) - (!!a.pj === !!ans.pj));
+    for (const c of cands) { if (no.has(c.key) || seen.has(c.key)) continue; seen.add(c.key); out.push(c.name); if (out.length === 2) break; }
+    return out.length === 2 ? out : null;
+  };
+  // Si la generación exacta no da dos opciones, se amplía a los personajes de los años vecinos
+  const distractGen = (ans, g, y, evitar) => distract(ans, generacion(g, y), evitar)
+    || distract(ans, [...generacion(g, y), ...born(y - (/2/.test(g) ? 3 : 5), y - (/2/.test(g) ? 1 : 2), /^f/.test(g) ? 'hembra' : '')], evitar);
+  const Q = [];
+  const add = (tipo, pregunta, correcta, otras) => { if (otras && otras.length === 2 && !otras.includes(correcta)) Q.push({ tipo, pregunta, correcta, opciones: [correcta, ...otras] }); };
+
+  // 1. ¿Quién ganó la carrera X en el año Y? (todas las de personajes; del resto, una muestra para no saturar el banco)
+  const ganadas = [];
+  for (const [id, cfg] of Object.entries(QUIZ_RACES)) for (const [y, w] of Object.entries(W[id] || {})) {
+    if (+y < (cfg.desde || 1980)) continue;
+    ganadas.push({ id, y: +y, w });
+  }
+  const conPj = ganadas.filter(x => x.w.pj), sinPj = qShuffle(ganadas.filter(x => !x.w.pj)).slice(0, Math.max(0, 420 - conPj.length));
+  for (const { id, y, w } of [...conPj, ...sinPj])
+    add('ganador', `¿Quién ganó la ${qRaceName(id)} del año ${y}?`, w.name, distractGen(w, grpOf(id, y), y));
+
+  // 2. ¿Quién es el personaje basado en estos padres?
+  for (const p of pjs) {
+    const pa = p.pedigri?.padre, ma = p.pedigri?.madre;
+    if (!pa || !ma || !p.anio_nacimiento) continue;
+    const pool = pjs.filter(x => x !== p && x.anio_nacimiento && !(norm(x.pedigri?.padre) === norm(pa) && norm(x.pedigri?.madre) === norm(ma)))
+      .sort((a, b) => Math.abs(a.anio_nacimiento - p.anio_nacimiento) - Math.abs(b.anio_nacimiento - p.anio_nacimiento) || Math.random() - .5)
+      .slice(0, 6);
+    add('padres', `¿Quién es el personaje basado en estos padres? Padre: ${pa} · Madre: ${ma}`, p.personaje, qShuffle(pool).slice(0, 2).map(x => x.personaje));
+  }
+
+  // 3 y 7. Casi triple corona / casi triple tiara
+  const legs = y => ({ corona: ['satsuki_sho', 'tokyo_yushun', 'kikuka_sho'], tiara: ['oka_sho', 'yushun_himba', y <= 1995 ? 'qe2_cup' : 'shuka_sho'] });
+  const triples = [];
+  for (let y = 1980; y <= 2026; y++) for (const [tipo, ids] of Object.entries(legs(y))) {
+    const ws = ids.map(id => W[id]?.[y]);
+    if (ws.some(w => !w)) continue;
+    const cuenta = {};
+    ws.forEach(w => { cuenta[w.key] = (cuenta[w.key] || 0) + 1; });
+    const g = tipo === 'corona' ? 'c3' : 'f3';
+    for (const [key, n] of Object.entries(cuenta)) {
+      const h = ws.find(w => w.key === key);
+      if (n === 3) triples.push({ tipo, y, h, g });
+      if (n !== 2) continue;
+      const i = ws.findIndex(w => w.key !== key), falta = ws[i];
+      add(tipo === 'corona' ? 'casi-corona' : 'casi-tiara',
+        `${h.name} casi conseguía ganar la triple ${tipo} pero le faltó la ${qRaceName(ids[i])} para lograrlo. ¿Quién ganó esa carrera en ${y}?`,
+        falta.name, distractGen(falta, g, y, [key]));
+    }
+  }
+  // 8. ¿Quién ganó la triple corona (o la triple tiara) en el año Y?
+  for (const { tipo, y, h, g } of triples)
+    add('triple', `¿Quién ganó la triple ${tipo} en el año ${y}?`, h.name, distractGen(h, g, y) || distract(h, [...generacion(g, y), ...triples.filter(t => t.tipo === tipo && t.y !== y).map(t => t.h)]));
+
+  // 4 y 5. ¿Cuántas G1s / G2s tiene el personaje?
+  for (const p of pjs) for (const gr of ['G1', 'G2']) {
+    const n = p.resumen_grados?.[gr]?.ganadas;
+    if (n == null) continue;
+    const ops = qNear(n);
+    add(gr.toLowerCase(), `¿Cuántas ${gr} ganó ${p.personaje}?`, String(n), ops.filter(o => o !== String(n)));
+  }
+
+  // 6. ¿En qué año ganó el personaje la carrera X? (solo carreras que ganó una vez)
+  for (const p of pjs) {
+    const ls = (p.g1_ganadas || []).map(s => String(s).match(/^(.*\S)\s*\((\d{4})\)$/)).filter(Boolean);
+    const veces = {};
+    ls.forEach(m => { veces[m[1]] = (veces[m[1]] || 0) + 1; });
+    for (const m of ls) {
+      if (veces[m[1]] > 1) continue;
+      const y = +m[2], ops = qNear(y, 1900);
+      add('anio', `¿En qué año ganó ${p.personaje} la ${carreraEs(m[1].replace(/\s*\((?:Japanese|Japan) [^)]*\)/, ''))}?`, String(y), ops.filter(o => o !== String(y)));
+    }
+  }
+
+  // 9. ¿El personaje ganó el doble Tenno Sho (primavera y otoño del mismo año)?
+  const tenno = {};
+  for (const id of ['tenno_sho_primavera', 'tenno_sho_otono']) for (const [y, w] of Object.entries(W[id] || {}))
+    if (w.pj) (tenno[w.pj.id] ||= { p: w.pj, s: {} }).s[y] = (tenno[w.pj.id].s[y] || 0) + 1;
+  for (const { p, s } of Object.values(tenno)) {
+    const doble = Object.values(s).some(n => n === 2);
+    Q.push({ tipo: 'tenno', pregunta: `¿${p.personaje} ganó el doble Tenno Sho (primavera y otoño del mismo año)?`, correcta: doble ? 'Sí' : 'No', opciones: ['Sí', 'No'], fijo: true });
+  }
+  // 10. [Foto] ¿De qué color era el uniforme del jinete? Opciones = íconos de sedas (ids de personaje)
+  const firma = p => silk(p).replace(/sk[\w-]+/g, '');
+  const conSeda = pjs.filter(p => silk(p));
+  for (const p of conSeda) {
+    const f = firma(p), vistas = new Set([f]), otras = [];
+    for (const x of qShuffle(conSeda)) { const fx = firma(x); if (vistas.has(fx)) continue; vistas.add(fx); otras.push(String(x.id)); if (otras.length === 2) break; }
+    if (otras.length === 2) Q.push({ tipo: 'seda', pregunta: `¿De qué color era el uniforme del jinete de ${p.personaje}?`, correcta: String(p.id), opciones: [String(p.id), ...otras], foto: p.id });
+  }
+  // 11. [Foto] ¿Quién es este personaje? Distractores: personajes de la misma generación y sexo
+  for (const p of pjs) {
+    const pool = pjs.filter(x => x !== p && x.sexo === p.sexo && x.anio_nacimiento)
+      .sort((a, b) => Math.abs(a.anio_nacimiento - p.anio_nacimiento) - Math.abs(b.anio_nacimiento - p.anio_nacimiento) || Math.random() - .5)
+      .slice(0, 6);
+    const otras = qShuffle(pool).slice(0, 2).map(x => x.personaje);
+    if (otras.length === 2) Q.push({ tipo: 'quien', pregunta: '¿Quién es este personaje?', correcta: p.personaje, opciones: [p.personaje, ...otras], foto: p.id });
+  }
+  return Q;
+}
+// En las preguntas de sedas la opción es el id del personaje y se muestra su ícono
+const qPj = id => all().find(p => String(p.id) === String(id));
+const qOpt = (q, o, size = 'lg') => q.tipo === 'seda' ? (qPj(o) ? silk(qPj(o), size) : '') : esc(o);
+
+// Peso de cada tipo al armar una partida, para que no salgan 15 preguntas del mismo estilo
+const QUIZ_PESOS = { seda: 2, quien: 1, ganador: 4, padres: 1, g1: 2, g2: 1, anio: 2, 'casi-corona': 1, 'casi-tiara': 1, triple: .5, tenno: 1 };
+var quizBank = null, quizRun = null; // var: rebuild() la reinicia cuando cambian los datos
+function newRun() {
+  const porTipo = {};
+  quizBank.filter(q => q.tipo !== 'quien' || (qPj(q.foto) && imgUrl(qPj(q.foto)))).forEach(q => (porTipo[q.tipo] ||= []).push(q));
+  Object.keys(porTipo).forEach(t => { porTipo[t] = qShuffle(porTipo[t]); });
+  const preguntas = [];
+  while (preguntas.length < Math.min(QUIZ_N, quizBank.length)) {
+    const tipos = Object.keys(porTipo).filter(t => porTipo[t].length);
+    let r = Math.random() * tipos.reduce((s, t) => s + (QUIZ_PESOS[t] || 1), 0), t = tipos[0];
+    for (const x of tipos) { r -= QUIZ_PESOS[x] || 1; if (r <= 0) { t = x; break; } }
+    const q = porTipo[t].pop();
+    preguntas.push({ ...q, opciones: q.fijo ? q.opciones : qShuffle(q.opciones) });
+  }
+  return { preguntas, i: 0, aciertos: 0, elegida: null, respuestas: [] };
+}
+function viewQuiz() {
+  if (!quizBank) quizBank = buildQuiz();
+  const r = quizRun;
+  if (!r) {
+    app.innerHTML = `
+    <section class="intro">
+      <h1>Quiz</h1>
+      <p>${QUIZ_N} preguntas al azar sobre los caballos reales de cada Umamusume: ganadores de G1, padres, victorias y más. Cada partida es distinta.</p></section>
+    <button type="button" class="qz-start" id="qz-go">Empezar</button>`;
+    document.getElementById('qz-go').onclick = () => { quizRun = newRun(); viewQuiz(); };
+    return;
+  }
+  if (r.i >= r.preguntas.length) {
+    const n = r.preguntas.length, pct = r.aciertos / n;
+    app.innerHTML = `
+    <section class="intro"><span class="label">Resultado</span>
+      <h1>${r.aciertos} de ${n}</h1>
+      <p>${pct === 1 ? '¡Perfecto! Te sabes la historia de memoria.' : pct >= .7 ? '¡Muy bien! Conoces a fondo a los caballos reales.' : pct >= .4 ? 'Nada mal. Revisa las fichas y vuelve a intentarlo.' : 'Hay mucho por descubrir en las fichas. ¡Inténtalo otra vez!'}</p></section>
+    <button type="button" class="qz-start" id="qz-go">Jugar otra vez</button>
+    <section class="panel qz-rev"><h2>Tus respuestas</h2><ol>${r.preguntas.map((q, i) => `<li class="${r.respuestas[i] === q.correcta ? 'ok' : 'mal'}"><span>${q.tipo === 'quien' && imgUrl(qPj(q.foto) || {}) ? `<img class="qz-mini" src="${esc(imgUrl(qPj(q.foto)))}" alt="" data-n="${esc(q.correcta)}">` : ''}${esc(q.pregunta)}</span>
+      <b>${qOpt(q, q.correcta, '')}</b>${r.respuestas[i] !== q.correcta ? `<small>Tu respuesta: ${qOpt(q, r.respuestas[i], '')}</small>` : ''}</li>`).join('')}</ol></section>`;
+    document.getElementById('qz-go').onclick = () => { quizRun = newRun(); viewQuiz(); window.scrollTo(0, 0); };
+    return;
+  }
+  const q = r.preguntas[r.i], done = r.elegida !== null;
+  app.innerHTML = `
+  <section class="intro qz-head"><span class="label">Pregunta ${r.i + 1} de ${r.preguntas.length} · ${r.aciertos} ${r.aciertos === 1 ? 'acierto' : 'aciertos'}</span>
+    <div class="qz-bar" aria-hidden="true"><i style="width:${100 * r.i / r.preguntas.length}%"></i></div>
+    ${q.foto && qPj(q.foto) && imgUrl(qPj(q.foto)) ? `<img class="qz-foto" src="${esc(imgUrl(qPj(q.foto)))}" alt="${esc(qPj(q.foto).personaje)}" data-n="${esc(qPj(q.foto).personaje)}">` : ''}
+    <h1 class="qz-q">${esc(q.pregunta)}</h1></section>
+  <div class="qz-opts${q.tipo === 'seda' ? ' qz-sedas' : ''}" role="group" aria-label="Opciones">${q.opciones.map((o, k) => `<button type="button" data-k="${k}" class="${done ? (o === q.correcta ? 'ok' : o === r.elegida ? 'mal' : 'off') : ''}" ${done ? 'disabled' : ''} aria-label="Opción ${k + 1}">${qOpt(q, o)}</button>`).join('')}</div>
+  <p class="qz-msg" role="status">${done ? (r.elegida === q.correcta ? '¡Correcto!' : q.tipo === 'seda' ? 'Incorrecto. La respuesta correcta está marcada en verde.' : `Incorrecto. La respuesta es <b>${esc(q.correcta)}</b>.`) : ''}</p>
+  ${done ? `<button type="button" class="qz-start" id="qz-next">${r.i + 1 < r.preguntas.length ? 'Siguiente' : 'Ver resultado'}</button>` : ''}
+  <p class="note"><a href="#" id="qz-quit">Salir del quiz</a></p>`;
+  app.querySelectorAll('.qz-opts button').forEach(b => b.onclick = () => {
+    r.elegida = q.opciones[+b.dataset.k]; r.respuestas[r.i] = r.elegida;
+    if (r.elegida === q.correcta) r.aciertos++;
+    viewQuiz(); document.getElementById('qz-next')?.focus();
+  });
+  const next = document.getElementById('qz-next');
+  if (next) next.onclick = () => { r.i++; r.elegida = null; viewQuiz(); window.scrollTo(0, 0); };
+  document.getElementById('qz-quit').onclick = e => { e.preventDefault(); quizRun = null; viewQuiz(); };
 }
 
 /* ---------- colores del jinete (seda) ---------- */
