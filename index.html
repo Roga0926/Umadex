@@ -92,6 +92,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 /* Lista de personajes */
 .count{font-size:.9rem;color:var(--muted)}
+.silk-note{display:flex;align-items:center;gap:.75rem;margin:0 0 .75rem;font-size:.9rem;color:var(--muted);max-width:44rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr));gap:.75rem}
 .card{display:grid;grid-template-columns:1fr auto;gap:.15rem .75rem;padding:.8rem .9rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;align-items:start;transition:border-color .15s}
 .card:hover{border-color:var(--turf)}
@@ -540,8 +541,7 @@ function viewList() {
   app.innerHTML = `
   <section class="intro">
     <span class="label">Roster · ${BASE.length} personajes${extras.length ? ` + ${extras.length} agregados` : ''}</span>
-    <h1>Los caballos reales detrás de cada Umamusume</h1>
-    <p>Récord de carreras, carreras de grupo y pedigrí de tres generaciones del caballo que inspiró a cada personaje. Toca una ficha para ver el detalle.</p>
+    <h1>Datos de carrera de cada Umamusume</h1>
   </section>
   <div class="controls">
     <div class="field grow"><label for="q">Buscar</label><input id="q" type="search" placeholder="Nombre, nombre japonés, padre…" value="${esc(listState.q)}"></div>
@@ -557,6 +557,7 @@ function viewList() {
         <option value="victorias">Más victorias</option><option value="anio">Año de nacimiento</option>
       </select></div>
   </div>
+  ${(og => og && silk(og) ? `<p class="silk-note">${silk(og)}<span>Este ícono indica los colores del uniforme que vestía el jinete en la vida real. Por ejemplo, el de ${esc(og.personaje)}.</span></p>` : '')(all().find(x => String(x.id) === '94'))}
   <div class="count" id="count"></div>
   <div class="grid" id="grid"></div>`;
   const q = app.querySelector('#q'), cat = app.querySelector('#cat'), sort = app.querySelector('#sort');
@@ -693,7 +694,7 @@ function viewFicha(id) {
     <span class="label">${p.categoria === 'agregado' ? (EDIT ? 'Agregado por ti' : 'Personaje agregado') : p.categoria === 'oficial' ? 'Personaje oficial' : esc(p.categoria)}</span>
     <div class="hname"><h1>${esc(p.personaje)}</h1>${silk(p, 'lg')}</div>
     ${p.nombre_japones ? `<div class="jp">${esc(p.nombre_japones)}</div>` : ''}
-    <div class="facts">${facts.map(([k, v]) => `<div><span class="label">${k}</span><span>${esc(v)}</span></div>`).join('')}</div>
+    <div class="facts">${facts.map(([k, v]) => `<div><span class="label">${k}</span><span>${esc(String(v).charAt(0).toUpperCase() + String(v).slice(1))}</span></div>`).join('')}</div>
     ${p.caballo_real ? `<a class="nk" href="${esc(nkUrl(p))}" target="_blank" rel="noopener"><svg viewBox="0 0 48 48" width="22" height="22" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="7" fill="none" stroke="currentColor" stroke-width="3"/></svg>Foto real del caballo <small>${p.netkeiba ? 'netkeiba ↗' : 'buscar en netkeiba ↗'}</small></a>` : ''}
     ${p.nota ? `<p class="note">${esc(p.nota)}</p>` : ''}
     ${!EDIT ? '' : p.categoria === 'agregado' ? `<div class="controls"><a class="btn" href="#editar-${esc(p.docId)}">Editar</a><button class="danger" id="del">Borrar</button><span class="status" id="delmsg"></span></div>`
