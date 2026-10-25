@@ -4,6 +4,8 @@ Los caballos reales detrás de cada personaje de **Umamusume: Pretty Derby**: hi
 
 **Ver el sitio:** https://umadexfan.com
 
+Disponible en español e inglés (botón **ES / EN** en el encabezado). *Also available in English: https://umadexfan.com/?lang=en*
+
 ## Contenido
 
 - **Personajes**: ficha de cada caballo real con su récord, carreras de grupo, pedigrí e historial completo.
