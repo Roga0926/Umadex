@@ -1427,7 +1427,7 @@ function buildQuiz() {
   }
   const conPj = ganadas.filter(x => x.w.pj), sinPj = qShuffle(ganadas.filter(x => !x.w.pj)).slice(0, Math.max(0, 420 - conPj.length));
   for (const { id, y, w } of [...conPj, ...sinPj])
-    add('ganador', T(`¿Quién ganó la ${qRaceName(id)} del año ${y}?`, `Who won the ${qRaceName(id)} in ${y}?`), w.name, distractGen(w, grpOf(id, y), y));
+    add('ganador', () => T(`¿Quién ganó la ${qRaceName(id)} del año ${y}?`, `Who won the ${qRaceName(id)} in ${y}?`), w.name, distractGen(w, grpOf(id, y), y));
 
   // 2. ¿Quién es el personaje basado en estos padres?
   for (const p of pjs) {
@@ -1436,7 +1436,7 @@ function buildQuiz() {
     const pool = pjs.filter(x => x !== p && x.anio_nacimiento && !(norm(x.pedigri?.padre) === norm(pa) && norm(x.pedigri?.madre) === norm(ma)))
       .sort((a, b) => Math.abs(a.anio_nacimiento - p.anio_nacimiento) - Math.abs(b.anio_nacimiento - p.anio_nacimiento) || Math.random() - .5)
       .slice(0, 6);
-    add('padres', T(`¿Quién es el personaje basado en estos padres? Padre: ${pa} · Madre: ${ma}`, `Which character is based on the horse with these parents? Sire: ${pa} · Dam: ${ma}`), p.personaje, qShuffle(pool).slice(0, 2).map(x => x.personaje));
+    add('padres', () => T(`¿Quién es el personaje basado en estos padres? Padre: ${pa} · Madre: ${ma}`, `Which character is based on the horse with these parents? Sire: ${pa} · Dam: ${ma}`), p.personaje, qShuffle(pool).slice(0, 2).map(x => x.personaje));
   }
 
   // 3 y 7. Casi triple corona / casi triple tiara
@@ -1454,21 +1454,21 @@ function buildQuiz() {
       if (n !== 2) continue;
       const i = ws.findIndex(w => w.key !== key), falta = ws[i];
       add(tipo === 'corona' ? 'casi-corona' : 'casi-tiara',
-        T(`${h.name} estuvo a punto de ganar la Triple ${tipo === 'corona' ? 'Corona' : 'Tiara'}, pero le faltó la ${qRaceName(ids[i])}. ¿Quién ganó esa carrera en ${y}?`,
+        () => T(`${h.name} estuvo a punto de ganar la Triple ${tipo === 'corona' ? 'Corona' : 'Tiara'}, pero le faltó la ${qRaceName(ids[i])}. ¿Quién ganó esa carrera en ${y}?`,
           `${h.name} came close to the Triple ${tipo === 'corona' ? 'Crown' : 'Tiara'} but missed out on the ${qRaceName(ids[i])}. Who won that race in ${y}?`),
         falta.name, distractGen(falta, g, y, [key]));
     }
   }
   // 8. ¿Quién ganó la triple corona (o la triple tiara) en el año Y?
   for (const { tipo, y, h, g } of triples)
-    add('triple', T(`¿Quién ganó la Triple ${tipo === 'corona' ? 'Corona' : 'Tiara'} en el año ${y}?`, `Who won the Triple ${tipo === 'corona' ? 'Crown' : 'Tiara'} in ${y}?`), h.name, distractGen(h, g, y) || distract(h, [...generacion(g, y), ...triples.filter(t => t.tipo === tipo && t.y !== y).map(t => t.h)]));
+    add('triple', () => T(`¿Quién ganó la Triple ${tipo === 'corona' ? 'Corona' : 'Tiara'} en el año ${y}?`, `Who won the Triple ${tipo === 'corona' ? 'Crown' : 'Tiara'} in ${y}?`), h.name, distractGen(h, g, y) || distract(h, [...generacion(g, y), ...triples.filter(t => t.tipo === tipo && t.y !== y).map(t => t.h)]));
 
   // 4 y 5. ¿Cuántas G1s / G2s tiene el personaje?
   for (const p of pjs) for (const gr of ['G1', 'G2']) {
     const n = p.resumen_grados?.[gr]?.ganadas;
     if (n == null) continue;
     const ops = qNear(n);
-    add(gr.toLowerCase(), T(`¿Cuántas ${gr} ganó ${p.personaje}?`, `How many ${gr} races did ${p.personaje} win?`), String(n), ops.filter(o => o !== String(n)));
+    add(gr.toLowerCase(), () => T(`¿Cuántas ${gr} ganó ${p.personaje}?`, `How many ${gr} races did ${p.personaje} win?`), String(n), ops.filter(o => o !== String(n)));
   }
 
   // 6. ¿En qué año ganó el personaje la carrera X? (solo carreras que ganó una vez)
@@ -1479,7 +1479,7 @@ function buildQuiz() {
     for (const m of ls) {
       if (veces[m[1]] > 1) continue;
       const y = +m[2], ops = qNear(y, 1900);
-      add('anio', T(`¿En qué año ganó ${p.personaje} la ${carreraTx(m[1].replace(/\s*\((?:Japanese|Japan) [^)]*\)/, ''))}?`, `In what year did ${p.personaje} win the ${carreraTx(m[1].replace(/\s*\((?:Japanese|Japan) [^)]*\)/, ''))}?`), String(y), ops.filter(o => o !== String(y)));
+      add('anio', () => T(`¿En qué año ganó ${p.personaje} la ${carreraTx(m[1].replace(/\s*\((?:Japanese|Japan) [^)]*\)/, ''))}?`, `In what year did ${p.personaje} win the ${carreraTx(m[1].replace(/\s*\((?:Japanese|Japan) [^)]*\)/, ''))}?`), String(y), ops.filter(o => o !== String(y)));
     }
   }
 
@@ -1489,7 +1489,7 @@ function buildQuiz() {
     if (w.pj) (tenno[w.pj.id] ||= { p: w.pj, s: {} }).s[y] = (tenno[w.pj.id].s[y] || 0) + 1;
   for (const { p, s } of Object.values(tenno)) {
     const doble = Object.values(s).some(n => n === 2);
-    Q.push({ tipo: 'tenno', pregunta: T(`¿${p.personaje} ganó el doble Tenno Sho (primavera y otoño del mismo año)?`, `Did ${p.personaje} win both Tenno Sho races (Spring and Autumn) in the same year?`), correcta: doble ? T('Sí', 'Yes') : 'No', opciones: [T('Sí', 'Yes'), 'No'], fijo: true });
+    Q.push({ tipo: 'tenno', pregunta: () => T(`¿${p.personaje} ganó el doble Tenno Sho (primavera y otoño del mismo año)?`, `Did ${p.personaje} win both Tenno Sho races (Spring and Autumn) in the same year?`), correcta: doble ? 'si' : 'no', opciones: ['si', 'no'], fijo: true });
   }
   // 10. [Foto] ¿De qué color era el uniforme del jinete? Opciones = íconos de sedas (ids de personaje)
   // se compara solo el dibujo (sin título ni ids) para no ofrecer dos íconos que se vean iguales
@@ -1498,7 +1498,7 @@ function buildQuiz() {
   for (const p of conSeda) {
     const f = firma(p), vistas = new Set([f]), otras = [];
     for (const x of qShuffle(conSeda)) { const fx = firma(x); if (vistas.has(fx)) continue; vistas.add(fx); otras.push(String(x.id)); if (otras.length === 2) break; }
-    if (otras.length === 2) Q.push({ tipo: 'seda', pregunta: T(`¿De qué color era el uniforme del jinete de ${p.personaje}?`, `Which silks did ${p.personaje}’s jockey wear?`), correcta: String(p.id), opciones: [String(p.id), ...otras], foto: p.id });
+    if (otras.length === 2) Q.push({ tipo: 'seda', pregunta: () => T(`¿De qué color era el uniforme del jinete de ${p.personaje}?`, `Which silks did ${p.personaje}’s jockey wear?`), correcta: String(p.id), opciones: [String(p.id), ...otras], foto: p.id });
   }
   // 11. [Foto] ¿Quién es este personaje? Distractores: personajes de la misma generación y sexo
   for (const p of pjs) {
@@ -1506,13 +1506,15 @@ function buildQuiz() {
       .sort((a, b) => Math.abs(a.anio_nacimiento - p.anio_nacimiento) - Math.abs(b.anio_nacimiento - p.anio_nacimiento) || Math.random() - .5)
       .slice(0, 6);
     const otras = qShuffle(pool).slice(0, 2).map(x => x.personaje);
-    if (otras.length === 2) Q.push({ tipo: 'quien', pregunta: T('¿Quién es este personaje?', 'Who is this character?'), correcta: p.personaje, opciones: [p.personaje, ...otras], foto: p.id });
+    if (otras.length === 2) Q.push({ tipo: 'quien', pregunta: () => T('¿Quién es este personaje?', 'Who is this character?'), correcta: p.personaje, opciones: [p.personaje, ...otras], foto: p.id });
   }
   return Q;
 }
 // En las preguntas de sedas la opción es el id del personaje y se muestra su ícono
 const qPj = id => all().find(p => String(p.id) === String(id));
-const qOpt = (q, o, size = 'lg') => q.tipo === 'seda' ? (qPj(o) ? silk(qPj(o), size) : '') : esc(o);
+const qOpt = (q, o, size = 'lg') => q.tipo === 'seda' ? (qPj(o) ? silk(qPj(o), size) : '') : q.tipo === 'tenno' ? (o === 'si' ? T('Sí', 'Yes') : 'No') : esc(o);
+// El texto de cada pregunta se escribe al mostrarla, en el idioma activo: así se puede cambiar de idioma a mitad de una partida
+const qText = q => typeof q.pregunta === 'function' ? q.pregunta() : String(q.pregunta || '');
 
 // Peso de cada tipo al armar una partida, para que no salgan 15 preguntas del mismo estilo
 const QUIZ_PESOS = { seda: 2, quien: 1, ganador: 4, padres: 1, g1: 2, g2: 1, anio: 2, 'casi-corona': 1, 'casi-tiara': 1, triple: .5, tenno: 1 };
@@ -1550,7 +1552,7 @@ function viewQuiz() {
       <h1>${r.aciertos} ${T('de', 'of')} ${n}</h1>
       <p>${pct === 1 ? T('¡Perfecto! Te sabes la historia de memoria.', 'Perfect! You know the history by heart.') : pct >= .7 ? T('¡Muy bien! Conoces a fondo a los caballos reales.', 'Great job! You really know the real horses.') : pct >= .4 ? T('Nada mal. Revisa las fichas y vuelve a intentarlo.', 'Not bad. Check the profiles and try again.') : T('Hay mucho por descubrir en las fichas. ¡Inténtalo otra vez!', 'There’s a lot to discover in the profiles. Try again!')}</p></section>
     <button type="button" class="qz-start" id="qz-go">${T('Jugar otra vez', 'Play again')}</button>
-    <section class="panel qz-rev"><h2>${T('Tus respuestas', 'Your answers')}</h2><ol>${r.preguntas.map((q, i) => `<li class="${r.respuestas[i] === q.correcta ? 'ok' : 'mal'}"><span>${q.tipo === 'quien' && imgUrl(qPj(q.foto) || {}) ? `<img class="qz-mini" src="${esc(imgUrl(qPj(q.foto)))}" alt="" data-n="${esc(q.correcta)}">` : ''}${esc(q.pregunta)}</span>
+    <section class="panel qz-rev"><h2>${T('Tus respuestas', 'Your answers')}</h2><ol>${r.preguntas.map((q, i) => `<li class="${r.respuestas[i] === q.correcta ? 'ok' : 'mal'}"><span>${q.tipo === 'quien' && imgUrl(qPj(q.foto) || {}) ? `<img class="qz-mini" src="${esc(imgUrl(qPj(q.foto)))}" alt="" data-n="${esc(q.correcta)}">` : ''}${esc(qText(q))}</span>
       <b>${qOpt(q, q.correcta, '')}</b>${r.respuestas[i] !== q.correcta ? `<small>${T('Tu respuesta', 'Your answer')}: ${qOpt(q, r.respuestas[i], '')}</small>` : ''}</li>`).join('')}</ol></section>`;
     document.getElementById('qz-go').onclick = () => { quizRun = newRun(); viewQuiz(); window.scrollTo(0, 0); };
     return;
@@ -1560,9 +1562,9 @@ function viewQuiz() {
   <section class="intro qz-head"><span class="label">${T('Pregunta', 'Question')} ${r.i + 1} ${T('de', 'of')} ${r.preguntas.length} · ${r.aciertos} ${r.aciertos === 1 ? T('acierto', 'correct') : T('aciertos', 'correct')}</span>
     <div class="qz-bar" aria-hidden="true"><i style="width:${100 * r.i / r.preguntas.length}%"></i></div>
     ${q.foto && qPj(q.foto) && imgUrl(qPj(q.foto)) ? `<img class="qz-foto" src="${esc(imgUrl(qPj(q.foto)))}" alt="${esc(qPj(q.foto).personaje)}" data-n="${esc(qPj(q.foto).personaje)}">` : ''}
-    <h1 class="qz-q">${esc(q.pregunta)}</h1></section>
+    <h1 class="qz-q">${esc(qText(q))}</h1></section>
   <div class="qz-opts${q.tipo === 'seda' ? ' qz-sedas' : ''}" role="group" aria-label="${T('Opciones', 'Options')}">${q.opciones.map((o, k) => `<button type="button" data-k="${k}" class="${done ? (o === q.correcta ? 'ok' : o === r.elegida ? 'mal' : 'off') : ''}" ${done ? 'disabled' : ''} aria-label="${T('Opción', 'Option')} ${k + 1}">${qOpt(q, o)}</button>`).join('')}</div>
-  <p class="qz-msg" role="status">${done ? (r.elegida === q.correcta ? T('¡Correcto!', 'Correct!') : q.tipo === 'seda' ? T('Incorrecto. La respuesta correcta está marcada en verde.', 'Wrong. The correct answer is marked in green.') : T(`Incorrecto. La respuesta es <b>${esc(q.correcta)}</b>.`, `Wrong. The answer is <b>${esc(q.correcta)}</b>.`)) : ''}</p>
+  <p class="qz-msg" role="status">${done ? (r.elegida === q.correcta ? T('¡Correcto!', 'Correct!') : q.tipo === 'seda' ? T('Incorrecto. La respuesta correcta está marcada en verde.', 'Wrong. The correct answer is marked in green.') : T(`Incorrecto. La respuesta es <b>${qOpt(q, q.correcta)}</b>.`, `Wrong. The answer is <b>${qOpt(q, q.correcta)}</b>.`)) : ''}</p>
   ${done ? `<button type="button" class="qz-start" id="qz-next">${r.i + 1 < r.preguntas.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See results')}</button>` : ''}
   <p class="note"><a href="#" id="qz-quit">${T('Salir del quiz', 'Quit quiz')}</a></p>`;
   app.querySelectorAll('.qz-opts button').forEach(b => b.onclick = () => {
@@ -2301,7 +2303,7 @@ document.querySelectorAll('.langsw [data-lang]').forEach(b => b.addEventListener
   LANG = b.dataset.lang;
   try { localStorage.setItem('umadex-lang', LANG); } catch {}
   try { const u = new URL(location.href); if (u.searchParams.has('lang')) { u.searchParams.set('lang', LANG); history.replaceState(null, '', u); } } catch {}
-  quizBank = null; quizRun = null; // las preguntas se arman en el idioma activo
+  // el quiz en curso no se reinicia: cada pregunta se escribe en el idioma activo al mostrarla
   applyChrome(); route();
 }));
 applyChrome();
