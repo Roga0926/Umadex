@@ -1306,6 +1306,11 @@ function viewYear(y) {
 // Resultados completos (todos los participantes y su orden de llegada) de las G1 que corrieron los personajes
 const PART = D.participantes || {}, PJC = D.pjCarrera || {}, G1C = D.g1Carrera || {};
 const fieldLink = (key, html) => key && PART[key] ? `<a class="flink" href="#carrera-${key}" title="${T('Ver participantes', 'See the field')}">${html}</a>` : html;
+const PAISES = { JPN: ['Japón', 'Japan'], UAE: ['Emiratos Árabes Unidos', 'United Arab Emirates'], FR: ['Francia', 'France'], FRA: ['Francia', 'France'],
+  HK: ['Hong Kong', 'Hong Kong'], HKG: ['Hong Kong', 'Hong Kong'], GB: ['Reino Unido', 'United Kingdom'], UK: ['Reino Unido', 'United Kingdom'],
+  USA: ['Estados Unidos', 'United States'], SAU: ['Arabia Saudí', 'Saudi Arabia'], KSA: ['Arabia Saudí', 'Saudi Arabia'], AUS: ['Australia', 'Australia'],
+  IRE: ['Irlanda', 'Ireland'], GER: ['Alemania', 'Germany'], ITY: ['Italia', 'Italy'], ITA: ['Italia', 'Italy'], CAN: ['Canadá', 'Canada'], SIN: ['Singapur', 'Singapore'], NZ: ['Nueva Zelanda', 'New Zealand'] };
+const paisTx = c => PAISES[c] ? T(...PAISES[c]) : String(c || '');
 function posTx(x) {
   const s = String(x), m = s.match(/^(\d+)\(DQ\)$/);
   if (/^\d+$/.test(s)) return `<span class="pos ${s === '1' ? 'p1' : ''}">${ordTx(s)}</span>`;
@@ -1322,7 +1327,7 @@ function viewField(key) {
   app.innerHTML = `
   <a class="back" href="#g1" data-back>← ${T('Volver', 'Back')}</a>
   <section class="hero">
-    <span class="label">G1 · ${esc(enW(r.p === 'JPN' ? 'Japón' : r.p || ''))}</span>
+    <span class="label">G1 · ${esc(paisTx(r.p))}</span>
     <h1>${esc(enW(carreraTx(r.c)))}</h1>
     <div class="facts">
       <div><span class="label">${T('Fecha', 'Date')}</span><span>${esc(fecha)}</span></div>
