@@ -238,7 +238,7 @@ tr.win td{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .yc.pj{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,var(--surface))}
 .fieldwrap{width:100%;max-width:46rem}
 .nr{display:grid;gap:.15rem}
-.nr-in{display:flex;align-items:stretch;gap:.4rem}
+.nr-in{display:flex;align-items:stretch;gap:.4rem;overflow:hidden}
 .nr-card{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.05rem 1rem;align-items:center;padding:.45rem .9rem;border-radius:var(--r);background:var(--turf);color:var(--turf-ink);text-decoration:none;border:2px solid var(--turf)}
 .nr-card .label{color:inherit;opacity:.85;font-size:.64rem}
 .nr-card>.label,.nr-name,.nr-meta{grid-column:1}
@@ -1425,11 +1425,27 @@ function nrSlide(list) {
     </${tag}>${arr(1)}</div>
     ${many ? `<div class="nr-dots"><button type="button" class="nr-sm" data-nr-step="-1" aria-label="${T('Carrera anterior', 'Previous race')}">‹</button>${list.map((y, i) => `<button type="button" data-nr-go="${i}" aria-label="${esc(enW(carreraTx(y.nombre)))}"${i === nrIdx ? ' aria-current="true"' : ''}></button>`).join('')}<button type="button" class="nr-sm" data-nr-step="1" aria-label="${T('Carrera siguiente', 'Next race')}">›</button></div>` : ''}`;
 }
+// Cambio de carrera con deslizamiento: la tarjeta sale hacia un lado y la nueva entra por el otro
+let nrBusy = false;
 function nrMove(step, to) {
   const box = app.querySelector('[data-nr]'), list = nextRaces();
-  if (!box || !list.length) return;
+  if (!box || !list.length || nrBusy) return;
+  const prev = nrIdx;
   nrIdx = to != null ? to : (nrIdx + step + list.length) % list.length;
-  box.innerHTML = nrSlide(list);
+  if (nrIdx === prev) return;
+  const dir = step || (nrIdx > prev ? 1 : -1);
+  const focus = document.activeElement?.closest('[data-nr]') ? (document.activeElement.dataset.nrStep ? `[data-nr-step="${document.activeElement.dataset.nrStep}"]${document.activeElement.classList.contains('nr-sm') ? '.nr-sm' : '.nr-arr'}` : `[data-nr-go="${nrIdx}"]`) : null;
+  const swap = () => { box.innerHTML = nrSlide(list); if (focus) box.querySelector(focus)?.focus(); return box.querySelector('.nr-card'); };
+  const old = box.querySelector('.nr-card');
+  if (!old?.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) { swap(); return; }
+  nrBusy = true;
+  const out = old.animate([{ transform: 'none', opacity: 1 }, { transform: `translateX(${-dir * 40}px)`, opacity: 0 }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
+  out.onfinish = () => {
+    const card = swap();
+    const inn = card.animate([{ transform: `translateX(${dir * 40}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, easing: 'cubic-bezier(.2,.7,.3,1)' });
+    inn.onfinish = inn.oncancel = () => { nrBusy = false; };
+  };
+  out.oncancel = () => { swap(); nrBusy = false; };
 }
 app.addEventListener('click', e => {
   const b = e.target.closest('[data-nr-step],[data-nr-go]');
