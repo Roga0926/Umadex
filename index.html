@@ -237,28 +237,31 @@ tr.win td{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .yc.none .w{color:var(--muted);font-weight:500}
 .yc.pj{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,var(--surface))}
 .fieldwrap{width:100%;max-width:46rem}
-.nr{display:grid;gap:.35rem}
-.nr-in{display:flex;align-items:stretch;gap:.5rem}
-.nr-card{flex:1;min-width:0;display:grid;gap:.2rem;padding:.9rem 1.1rem;border-radius:var(--r);background:var(--turf);color:var(--turf-ink);text-decoration:none;border:2px solid var(--turf)}
-.nr-card .label{color:inherit;opacity:.85}
-.nr-name{font-family:var(--font-display);font-size:clamp(1.6rem,4.5vw,2.3rem);line-height:1.05}
-.nr-meta{font-size:.9rem;opacity:.92}
+.nr{display:grid;gap:.15rem}
+.nr-in{display:flex;align-items:stretch;gap:.4rem}
+.nr-card{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.05rem 1rem;align-items:center;padding:.45rem .9rem;border-radius:var(--r);background:var(--turf);color:var(--turf-ink);text-decoration:none;border:2px solid var(--turf)}
+.nr-card .label{color:inherit;opacity:.85;font-size:.64rem}
+.nr-card>.label,.nr-name,.nr-meta{grid-column:1}
+.nr-name{font-family:var(--font-display);font-size:clamp(1.15rem,3vw,1.45rem);line-height:1.1}
+.nr-meta{font-size:.8rem;opacity:.92}
 .nr-meta [class^="surf-"]{color:inherit}
-.nr-foot{display:flex;flex-wrap:wrap;gap:.35rem .8rem;align-items:center;font-size:.88rem;margin-top:.3rem}
+.nr-foot{grid-column:2;grid-row:1/4;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.3rem .7rem;align-items:center;font-size:.8rem}
 .nr-wait{opacity:.85;font-style:italic}
-.nr-cta{margin-left:auto;font-weight:700;background:var(--turf-ink);color:var(--turf);border-radius:999px;padding:.2rem .85rem}
+.nr-cta{font-weight:700;background:var(--turf-ink);color:var(--turf);border-radius:999px;padding:.15rem .75rem}
 a.nr-card:hover{border-color:var(--gold)}
 a.nr-card:hover .nr-cta{background:var(--gold);color:#14211a}
-.nr-pj{display:inline-flex;gap:.35rem;align-items:center;background:var(--gold);color:#14211a;border-radius:999px;padding:.1rem .65rem .1rem .15rem;font-weight:700}
+.nr-pj{display:inline-flex;gap:.3rem;align-items:center;background:var(--gold);color:#14211a;border-radius:999px;padding:.05rem .6rem .05rem .1rem;font-weight:700}
 .nr-pj:not(:has(img)){padding-left:.65rem}
-.nr-pj img{width:1.6rem;height:1.6rem;border-radius:50%;object-fit:cover}
-.nr-arr{flex:none;width:2.6rem;padding:0;justify-content:center;font-size:1.8rem;line-height:1;color:var(--turf)}
+.nr-pj img{width:1.3rem;height:1.3rem;border-radius:50%;object-fit:cover}
+.nr-arr{flex:none;width:2rem;padding:0;justify-content:center;font-size:1.4rem;line-height:1;color:var(--turf)}
 .nr-arr:hover{border-color:var(--turf)}
 .nr-dots{display:flex;justify-content:center}
-.nr-dots button{width:1.6rem;height:1.4rem;padding:0;border:0;background:none;display:grid;place-content:center}
-.nr-dots button::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--line)}
+.nr-dots button{width:1.4rem;height:1rem;padding:0;border:0;background:none;display:grid;place-content:center}
+.nr-dots button::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--line)}
 .nr-dots button[aria-current="true"]::before{background:var(--turf)}
-@media (max-width:560px){.nr-in{gap:.3rem}.nr-arr{width:1.9rem;font-size:1.4rem}.nr-card{padding:.75rem .8rem}.nr-cta{margin-left:0}}
+.nr-dots .nr-sm{display:none}
+.nr-dots .nr-sm::before{display:none}
+@media (max-width:640px){.nr-in>.nr-arr{display:none}.nr-dots{align-items:center}.nr-dots .nr-sm{display:grid;width:2.2rem;height:1.6rem;font-size:1.3rem;color:var(--turf);font-weight:700}.nr-card{grid-template-columns:minmax(0,1fr);padding:.45rem .7rem}.nr-foot{grid-column:1;grid-row:auto;justify-content:flex-start;margin-top:.2rem}}
 table.field{display:table;width:100%;border-collapse:separate;border-spacing:0 3px}
 table.field td,table.field th{padding:7px 10px;text-align:left}
 table.field td.n{width:9rem;white-space:nowrap}
@@ -1420,7 +1423,7 @@ function nrSlide(list) {
           : `<span class="nr-wait">${dias <= 7 ? T('Participantes por confirmar', 'Field to be confirmed') : T('Los participantes se anuncian una semana antes', 'The field is announced a week before')}</span>`}
       </span>
     </${tag}>${arr(1)}</div>
-    ${many ? `<div class="nr-dots">${list.map((y, i) => `<button type="button" data-nr-go="${i}" aria-label="${esc(enW(carreraTx(y.nombre)))}"${i === nrIdx ? ' aria-current="true"' : ''}></button>`).join('')}</div>` : ''}`;
+    ${many ? `<div class="nr-dots"><button type="button" class="nr-sm" data-nr-step="-1" aria-label="${T('Carrera anterior', 'Previous race')}">‹</button>${list.map((y, i) => `<button type="button" data-nr-go="${i}" aria-label="${esc(enW(carreraTx(y.nombre)))}"${i === nrIdx ? ' aria-current="true"' : ''}></button>`).join('')}<button type="button" class="nr-sm" data-nr-step="1" aria-label="${T('Carrera siguiente', 'Next race')}">›</button></div>` : ''}`;
 }
 function nrMove(step, to) {
   const box = app.querySelector('[data-nr]'), list = nextRaces();
