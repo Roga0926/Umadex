@@ -12,35 +12,48 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 <style>
 /* Layout: hoja de programa de hipódromo. Barra de pista arriba, columna única de 72rem, fichas como "race card". */
+/* Colores de la página: 4 temas que se eligen con el botón de la paleta (se recuerda en este navegador).
+   Verde oscuro es el de siempre y el que se ve si no se ha elegido nada. */
 :root{
-  --bg:#f4f7f3; --surface:#ffffff; --sunk:#e9efe8; --line:#d3ddd3;
-  --ink:#14211a; --muted:#56665c;
-  --turf:#17663a; --turf-ink:#ffffff; --dirt:#8a5a2b; --grass:#1c9a45;
-  --g1:#1d4fc4; --g2:#c42b2b; --g3:#1f7a3a; --pre:#7a857e;
-  --sire:#e7eefc; --dam:#fcebef;
-  --gold:#d9a400; --orange:#e06a00;
+  --bg:#0d1511; --surface:#14201a; --sunk:#1a2921; --line:#2a3b31;
+  --ink:#e6eee8; --muted:#9db0a3;
+  --turf:#2f9a5a; --turf-ink:#06110a; --dirt:#c48a52; --grass:#4fd47e;
+  --g1:#6f98ff; --g2:#ff6b6b; --g3:#4fc276; --pre:#8d9a92;
+  --gold:#f2c230; --orange:#ff8a2a;
+  --sire:#1a2740; --dam:#3a1e27;
   --font-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --font-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --r:6px;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0d1511; --surface:#14201a; --sunk:#1a2921; --line:#2a3b31;
-  --ink:#e6eee8; --muted:#9db0a3;
-  --turf:#2f9a5a; --turf-ink:#06110a; --dirt:#c48a52; --grass:#4fd47e;
+:root[data-skin="verde-claro"]{
+  --bg:#eef7f1; --surface:#ffffff; --sunk:#ddefe5; --line:#b6ddc9;
+  --ink:#0d1511; --muted:#4a6355;
+  --turf:#2f9a5a; --turf-ink:#0d1511; --dirt:#8a5a2b; --grass:#1c9a45;
+  --g1:#1d4fc4; --g2:#c42b2b; --g3:#1f7a3a; --pre:#7a857e;
+  --gold:#d9a400; --orange:#e06a00;
+  --sire:#e7eefc; --dam:#fcebef;
+  color-scheme:light}
+:root[data-skin="rosa-oscuro"]{
+  --bg:#1a1012; --surface:#2f161b; --sunk:#38171d; --line:#502a32;
+  --ink:#f7e8eb; --muted:#c9a2aa;
+  --turf:#cb4359; --turf-ink:#ffffff; --dirt:#c48a52; --grass:#4fd47e;
   --g1:#6f98ff; --g2:#ff6b6b; --g3:#4fc276; --pre:#8d9a92;
-  --sire:#1a2740; --dam:#3a1e27;
   --gold:#f2c230; --orange:#ff8a2a;
-  color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0d1511; --surface:#14201a; --sunk:#1a2921; --line:#2a3b31;
-  --ink:#e6eee8; --muted:#9db0a3;
-  --turf:#2f9a5a; --turf-ink:#06110a; --dirt:#c48a52; --grass:#4fd47e;
-  --g1:#6f98ff; --g2:#ff6b6b; --g3:#4fc276; --pre:#8d9a92;
-  --sire:#1a2740; --dam:#3a1e27;
-  --gold:#f2c230; --orange:#ff8a2a;
+  --sire:#1f2540; --dam:#4a1d28;
   color-scheme:dark}
+:root[data-skin="rosa-claro"]{
+  --bg:#fcf1f3; --surface:#ffffff; --sunk:#f8e2e7; --line:#f1c8d0;
+  --ink:#1a1012; --muted:#6f4b53;
+  --turf:#cb4359; --turf-ink:#ffffff; --dirt:#8a5a2b; --grass:#1c9a45;
+  --g1:#1d4fc4; --g2:#c42b2b; --g3:#1f7a3a; --pre:#7a857e;
+  --gold:#d9a400; --orange:#e06a00;
+  --sire:#e9eefc; --dam:#fde4ea;
+  color-scheme:light}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55}
+/* al cambiar de tema los colores se funden en vez de saltar */
+.skin-anim,.skin-anim *,.skin-anim *::before{transition:background-color .35s ease,border-color .35s ease,color .35s ease,fill .35s ease!important}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--turf)}
 a{color:inherit}
 h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0;line-height:1.1}
@@ -56,20 +69,63 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;te
 .brand{display:flex;align-items:baseline;gap:.5rem;text-decoration:none;margin-right:auto}
 .brand b{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.04em}
 .brand span{font-size:.8rem;opacity:.85}
-@media (max-width:560px){.brand span{display:none}.top .wrap{gap:.6rem;flex-wrap:nowrap;padding-block:.4rem}.brand{margin-right:0}.brand b{font-size:1.35rem}}
+@media (max-width:560px){.top .wrap{gap:.5rem;padding-block:.4rem}.brand b{font-size:1.35rem}}
 .nav{display:flex;gap:.25rem;flex-wrap:wrap}
 .nav a{font-family:var(--font-display);font-weight:600;font-size:1.05rem;text-decoration:none;padding:.25rem .7rem;border-radius:999px;letter-spacing:.03em}
 .nav a[aria-current="page"]{background:var(--turf-ink);color:var(--turf)}
 .nav{--fl:0px;--fr:0px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%)}
 .ini-fb{display:inline-grid;place-content:center;flex:none;background:var(--sunk);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:var(--font-display);font-weight:700;line-height:1;text-align:center;font-size:.85rem}
 .photo .ini-fb{width:100%;aspect-ratio:1/1;border-radius:var(--r);font-family:inherit;font-weight:500;color:var(--muted);font-size:.95rem}
-@media (max-width:560px){.nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex:1 1 0;min-width:0;-webkit-overflow-scrolling:touch}.nav::-webkit-scrollbar{display:none}.nav a{flex:none;font-size:.95rem;padding:.2rem .6rem;white-space:nowrap}}
+/* Celular y pantallas angostas: las pestañas se guardan en un menú lateral que se abre con el botón de tres rayitas */
+.menu-btn,.nav-head,.scrim{display:none}
+.menu-btn{flex:none;width:2.3rem;height:2.3rem;padding:0;place-content:center;border:0;border-radius:8px;background:transparent;color:var(--turf-ink)}
+.menu-btn:hover{background:color-mix(in srgb,var(--turf-ink) 14%,transparent)}
+.menu-btn svg{display:block;width:1.45rem;height:1.45rem}
+.menu-btn:focus-visible{outline:2px solid var(--turf-ink);outline-offset:1px}
+@media (max-width:760px){
+  .top .wrap{flex-wrap:nowrap;gap:.5rem}
+  .menu-btn{display:inline-grid;margin-left:-.4rem}
+  .brand{min-width:0}
+  .nav{position:fixed;z-index:2;top:0;bottom:0;left:0;width:min(17.5rem,84vw);flex-direction:column;flex-wrap:nowrap;gap:.15rem;overflow-y:auto;overscroll-behavior:contain;
+    padding:calc(env(safe-area-inset-top,0px) + .7rem) .8rem calc(env(safe-area-inset-bottom,0px) + 1.5rem) max(.8rem,env(safe-area-inset-left,0px));
+    background:var(--surface);color:var(--ink);box-shadow:8px 0 30px rgb(0 0 0/.35);-webkit-mask-image:none;mask-image:none;
+    transform:translateX(-105%);visibility:hidden;transition:transform .3s cubic-bezier(.2,.7,.3,1),visibility 0s .3s}
+  .top.menu-open .nav{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.7,.3,1),visibility 0s}
+  .nav-head{display:flex;align-items:center;justify-content:space-between;padding:0 0 .6rem .8rem;margin-bottom:.4rem;border-bottom:1px solid var(--line)}
+  .nav-head b{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.04em;color:var(--turf)}
+  .nav-x{width:2.3rem;height:2.3rem;padding:0;justify-content:center;border:0;background:transparent;color:var(--muted);font-size:1.6rem;line-height:1}
+  .nav-x:hover{color:var(--ink);background:var(--sunk)}
+  .nav a{font-size:1.3rem;padding:.6rem .8rem;border-radius:var(--r);white-space:nowrap}
+  .nav a:hover{background:var(--sunk)}
+  .nav a[aria-current="page"]{background:var(--turf);color:var(--turf-ink)}
+  .scrim{display:block;position:fixed;z-index:1;inset:0;background:rgb(0 0 0/.5);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
+  .top.menu-open .scrim{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s}
+}
+@media (max-width:640px){.brand span{display:none}}
 /* Selector de idioma ES / EN */
 .langsw{display:inline-flex;flex:none;border:1px solid color-mix(in srgb,var(--turf-ink) 55%,transparent);border-radius:999px;overflow:hidden}
 .langsw button{border:0;border-radius:0;background:transparent;color:var(--turf-ink);font-family:var(--font-display);font-weight:700;font-size:.9rem;letter-spacing:.06em;padding:.15rem .6rem;line-height:1.3}
 .langsw button[aria-pressed="true"]{background:var(--turf-ink);color:var(--turf)}
 .langsw button:focus-visible{outline:2px solid var(--turf-ink);outline-offset:-3px}
 @media (max-width:560px){.langsw button{font-size:.8rem;padding:.12rem .45rem}}
+/* Botón de colores (al lado de ES / EN) y su recuadro, que baja suavemente */
+.skin{position:relative;flex:none}
+.skin-btn{width:2rem;height:2rem;padding:0;justify-content:center;border-radius:50%;border:1px solid color-mix(in srgb,var(--turf-ink) 55%,transparent);background:transparent;color:var(--turf-ink)}
+.skin-btn svg{width:1.15rem;height:1.15rem;display:block}
+.skin-btn:hover,.skin-btn[aria-expanded="true"]{background:var(--turf-ink);color:var(--turf)}
+.skin-btn:focus-visible{outline:2px solid var(--turf-ink);outline-offset:2px}
+.skin-pop{position:absolute;z-index:3;top:calc(100% + .6rem);right:-.4rem;width:15rem;display:grid;gap:.2rem;padding:.5rem;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px rgb(0 0 0/.3);
+  transform-origin:calc(100% - 1.4rem) 0;opacity:0;transform:translateY(-10px) scale(.96);visibility:hidden;
+  transition:opacity .22s ease,transform .3s cubic-bezier(.2,.7,.3,1),visibility 0s .3s}
+.skin-pop::before{content:"";position:absolute;top:-6px;right:1.2rem;width:11px;height:11px;background:var(--surface);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.skin.open .skin-pop{opacity:1;transform:none;visibility:visible;transition:opacity .22s ease,transform .3s cubic-bezier(.2,.7,.3,1),visibility 0s}
+.skin-tt{margin:.15rem .5rem .35rem}
+.skin-pop button{width:100%;justify-content:flex-start;gap:.7rem;border:1px solid transparent;background:none;color:var(--ink);padding:.45rem .55rem;font-weight:600;font-size:.95rem}
+.skin-pop button:hover{background:var(--sunk)}
+.skin-pop button[aria-pressed="true"]{border-color:var(--turf);background:color-mix(in srgb,var(--turf) 13%,transparent)}
+.skin-pop button[aria-pressed="true"]::after{content:"✓";margin-left:auto;color:var(--turf);font-weight:700}
+.sw{flex:none;width:1.7rem;height:1.7rem;border-radius:50%;background:linear-gradient(135deg,var(--a) 0 52%,var(--b) 52% 100%);box-shadow:inset 0 0 0 1px rgb(127 127 127/.45)}
 .rail{height:6px;background:repeating-linear-gradient(90deg,var(--surface) 0 18px,var(--turf) 18px 36px);opacity:.9}
 
 main{padding-block:1.5rem 4rem;display:grid;gap:1.5rem}
@@ -144,8 +200,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .gc .k{font-family:var(--font-display);font-size:1rem;font-weight:700;letter-spacing:.06em}
 .gc .v{font-family:var(--font-display);font-size:2.4rem;line-height:1;font-weight:700}
 .gc .s{font-size:.75rem;opacity:.92}
-:root[data-theme="dark"] .gc,:root[data-theme="dark"] .gr{color:#0d1511}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gc,:root:not([data-theme="light"]) .gr{color:#0d1511}}
+:root:not([data-skin$="claro"]) .gc,:root:not([data-skin$="claro"]) .gr{color:#0d1511}
 .gr.out{color:var(--pre)!important}
 .winlist{display:flex;flex-wrap:wrap;gap:.35rem}
 .winlist span{background:var(--sunk);border-radius:3px;padding:.15rem .5rem;font-size:.85rem}
@@ -394,14 +449,19 @@ label{font-size:.8rem;font-weight:700;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+
+<script>try{const s=localStorage.getItem('umadex-skin');if(['verde-claro','rosa-oscuro','rosa-claro'].includes(s))document.documentElement.dataset.skin=s}catch{}</script>
 </head>
 <body>
 
 
 <header class="top">
+  <div class="scrim" aria-hidden="true"></div>
   <div class="wrap">
+    <button type="button" class="menu-btn" aria-controls="nav" aria-expanded="false" aria-label="Abrir menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
     <a class="brand" href="#personajes"><b>UMADEX</b><span>Umamusume Pretty Derby · caballos reales</span></a>
-    <nav class="nav" aria-label="Secciones">
+    <nav class="nav" id="nav" aria-label="Secciones">
+      <div class="nav-head"><b>UMADEX</b><button type="button" class="nav-x" aria-label="Cerrar menú">×</button></div>
       <a href="#personajes" data-nav="personajes">Personajes</a>
       <a href="#g1" data-nav="g1">G1 del año</a>
       <a href="#hazanas" data-nav="hazanas">Hazañas</a>
@@ -409,6 +469,8 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
       <a href="#quiz" data-nav="quiz">Quiz</a>
       <a href="#agregar" data-nav="agregar">Agregar personaje</a>
     </nav>
+    <div class="skin"><button type="button" class="skin-btn" aria-controls="skin-pop" aria-expanded="false" aria-label="Colores de la página" title="Colores de la página"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.9 0-1.4-1.3-1.8-1.3-3.1 0-1.2 1-2 2.3-2H17a4 4 0 0 0 4-4c0-3.9-4-7-9-7Z"/><circle cx="7.6" cy="11.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="10" cy="7.4" r="1.3" fill="currentColor" stroke="none"/><circle cx="14.8" cy="7.4" r="1.3" fill="currentColor" stroke="none"/></svg></button>
+      <div class="skin-pop" id="skin-pop" role="group" aria-labelledby="skin-tt"><p class="label skin-tt" id="skin-tt">Colores de la página</p></div></div>
     <div class="langsw" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true" lang="es" title="Español">ES</button><button type="button" data-lang="en" aria-pressed="false" lang="en" title="English">EN</button></div>
   </div>
   <div class="rail" aria-hidden="true"></div>
@@ -2529,9 +2591,65 @@ function applyChrome() {
   const md = document.querySelector('meta[name="description"]');
   if (md) md.setAttribute('content', T('Umadex: los caballos reales detrás de cada personaje de Umamusume Pretty Derby, con su historial de carreras, pedigrí, G1 ganadas y ganancias.', 'Umadex: the real horses behind every Umamusume Pretty Derby character, with their race history, pedigree, G1 wins and earnings.'));
   document.querySelectorAll('.langsw [data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === LANG)));
+  document.querySelector('.nav').setAttribute('aria-label', T('Secciones', 'Sections'));
+  document.querySelector('.nav-x').setAttribute('aria-label', T('Cerrar menú', 'Close menu'));
+  document.querySelector('.menu-btn').setAttribute('aria-label', T('Abrir menú', 'Open menu'));
+  const sb = document.querySelector('.skin-btn'); sb.title = T('Colores de la página', 'Page colours'); sb.setAttribute('aria-label', sb.title);
+  renderSkins();
   document.getElementById('foot').innerHTML = footHTML();
   navFade();
 }
+/* ---------- colores de la página ----------
+   Cuatro temas; el elegido se guarda en este navegador (umadex-skin) y se aplica antes de pintar la página. */
+const SKINS = [
+  ['verde-oscuro', 'Verde oscuro', 'Dark green', '#0d1511', '#2f9a5a'],
+  ['verde-claro', 'Verde claro', 'Light green', '#eef7f1', '#2f9a5a'],
+  ['rosa-oscuro', 'Rosa oscuro', 'Dark pink', '#1a1012', '#cb4359'],
+  ['rosa-claro', 'Rosa claro', 'Light pink', '#fcf1f3', '#cb4359'],
+];
+const skinNow = () => document.documentElement.dataset.skin || 'verde-oscuro';
+function renderSkins() {
+  const pop = document.getElementById('skin-pop');
+  pop.querySelector('.skin-tt').textContent = T('Colores de la página', 'Page colours');
+  pop.querySelectorAll('button').forEach(b => b.remove());
+  pop.insertAdjacentHTML('beforeend', SKINS.map(([k, es, en, a, b]) =>
+    `<button type="button" data-skin="${k}" aria-pressed="${k === skinNow()}"><i class="sw" style="--a:${a};--b:${b}" aria-hidden="true"></i>${T(es, en)}</button>`).join(''));
+}
+let skinT;
+function setSkin(k) {
+  if (k === skinNow()) return;
+  const root = document.documentElement;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { root.classList.add('skin-anim'); clearTimeout(skinT); skinT = setTimeout(() => root.classList.remove('skin-anim'), 400); }
+  if (k === 'verde-oscuro') delete root.dataset.skin; else root.dataset.skin = k;
+  try { localStorage.setItem('umadex-skin', k); } catch {}
+  document.querySelectorAll('#skin-pop [data-skin]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.skin === k)));
+}
+const skinBox = document.querySelector('.skin'), skinBtn = skinBox.querySelector('.skin-btn');
+function skinOpen(on) { skinBox.classList.toggle('open', on); skinBtn.setAttribute('aria-expanded', String(on)); }
+skinBtn.addEventListener('click', () => { const on = !skinBox.classList.contains('open'); skinOpen(on); if (on) skinBox.querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true }); });
+skinBox.querySelector('.skin-pop').addEventListener('click', e => { const b = e.target.closest('[data-skin]'); if (b) setSkin(b.dataset.skin); });
+document.addEventListener('pointerdown', e => { if (skinBox.classList.contains('open') && !skinBox.contains(e.target)) skinOpen(false); });
+
+/* ---------- menú lateral (celular) ---------- */
+const topBar = document.querySelector('.top'), menuBtn = topBar.querySelector('.menu-btn');
+function menuOpen(on) {
+  if (on === topBar.classList.contains('menu-open')) return;
+  topBar.classList.toggle('menu-open', on);
+  menuBtn.setAttribute('aria-expanded', String(on));
+  document.documentElement.style.overflow = on ? 'hidden' : '';
+  if (on) { skinOpen(false); setTimeout(() => (topBar.querySelector('.nav [aria-current]') || topBar.querySelector('.nav a'))?.focus({ preventScroll: true }), 60); }
+}
+menuBtn.addEventListener('click', () => menuOpen(true));
+topBar.querySelector('.nav-x').addEventListener('click', () => { menuOpen(false); menuBtn.focus(); });
+topBar.querySelector('.scrim').addEventListener('click', () => menuOpen(false));
+topBar.querySelector('.nav').addEventListener('click', e => { if (e.target.closest('a')) menuOpen(false); });
+matchMedia('(max-width:760px)').addEventListener('change', e => { if (!e.matches) menuOpen(false); });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (topBar.classList.contains('menu-open')) { menuOpen(false); menuBtn.focus(); }
+  else if (skinBox.classList.contains('open')) { skinOpen(false); skinBtn.focus(); }
+});
+
 document.querySelectorAll('.langsw [data-lang]').forEach(b => b.addEventListener('click', () => {
   if (b.dataset.lang === LANG) return;
   LANG = b.dataset.lang;
