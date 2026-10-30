@@ -237,6 +237,7 @@ tr.win td{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .yc.none .w{color:var(--muted);font-weight:500}
 .yc.pj{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,var(--surface))}
 .fieldwrap{width:100%;max-width:46rem}
+.sc{display:inline-grid;place-content:center;min-width:1.9rem;height:1.6rem;padding:0 .3rem;border-radius:4px;border:1px solid color-mix(in srgb,var(--ink) 35%,transparent);font-weight:700;line-height:1}
 .nr{display:grid;gap:.15rem}
 .nr-in{display:flex;align-items:stretch;gap:.4rem;overflow:hidden}
 .nr-card{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.05rem 1rem;align-items:center;padding:.45rem .9rem;border-radius:var(--r);background:var(--turf);color:var(--turf-ink);text-decoration:none;border:2px solid var(--turf)}
@@ -1468,12 +1469,32 @@ app.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - nrX; nrX = null;
   if (Math.abs(dx) > 45 && nextRaces().length > 1) { e.preventDefault(); nrMove(dx < 0 ? 1 : -1); }
 });
+// Color de cada número de salida según el sorteo. Japón: color del cajón (waku), que también es el del casco;
+// con más de 8 caballos los cajones se reparten como en la JRA (los que sobran van a los cajones más altos).
+// EE. UU.: colores estándar de la mantilla por número. En otros países no hay un color fijo por número.
+const WAKU = [['#ffffff', '#14211a'], ['#14211a', '#ffffff'], ['#d7262e', '#ffffff'], ['#1f5bd6', '#ffffff'], ['#f5d000', '#14211a'], ['#1f9a46', '#ffffff'], ['#f08a00', '#14211a'], ['#f39ac4', '#14211a']];
+const MANTILLA = [null, ['#d7262e', '#ffffff'], ['#ffffff', '#14211a'], ['#1f5bd6', '#ffffff'], ['#f5d000', '#14211a'], ['#1f9a46', '#ffffff'], ['#14211a', '#f5d000'],
+  ['#f08a00', '#14211a'], ['#f39ac4', '#14211a'], ['#3fc6c0', '#14211a'], ['#6b2fa0', '#ffffff'], ['#9a9a9a', '#d7262e'], ['#9be22d', '#14211a'],
+  ['#6b4423', '#ffffff'], ['#7a1630', '#f5d000'], ['#c3b091', '#14211a'], ['#8cc8ef', '#d7262e'], ['#1d3a6b', '#ffffff'], ['#2e5e3a', '#f5d000'], ['#1a4f8a', '#d7262e'], ['#d23aa0', '#f5d000']];
+function wakuDe(n, total) {
+  if (total <= 8) return n;
+  const base = Math.floor(total / 8), extra = total % 8, cortos = 8 - extra;
+  return n <= cortos * base ? Math.ceil(n / base) : cortos + Math.ceil((n - cortos * base) / (base + 1));
+}
+function numChip(n, pais, total) {
+  if (n == null || n === '') return '';
+  let col = null, tip = '';
+  if (pais === 'JPN') { const w = wakuDe(+n, total); col = WAKU[w - 1]; tip = T(`Cajón ${w}`, `Gate ${w}`); }
+  else if (pais === 'USA') col = MANTILLA[+n];
+  return col ? `<span class="sc" style="background:${col[0]};color:${col[1]}"${tip ? ` title="${esc(tip)}"` : ''}>${esc(n)}</span>` : esc(n);
+}
 function viewNext(id) {
   const x = raceItems().find(y => y.id === id), c = x && campoDe(x);
   if (!c) { app.innerHTML = `<div class="empty">${T('Todavía no tenemos los participantes de esa carrera.', 'We don’t have the field for that race yet.')} <a href="#personajes">${T('Volver', 'Back')}</a>.</div>`; return; }
   const look = horseLookup(), fin = c.estado !== 'inscritos', conN = c.caballos.some(h => h.n != null);
   const dl = iso => diaLocal(iso).toLocaleDateString(LOC(), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const rows = c.caballos.map(h => ({ h, p: look.get(norm(h.caballo)) }));
+  const total = Math.max(0, ...c.caballos.map(h => +h.n || 0));
   const fuente = /^https?:/.test(c.fuente || '') ? `<a href="${esc(c.fuente)}" target="_blank" rel="noopener">${esc(new URL(c.fuente).hostname)}</a>` : esc(c.fuente || '');
   app.innerHTML = `
   <a class="back" href="#personajes" data-back>← ${T('Volver', 'Back')}</a>
@@ -1493,9 +1514,11 @@ function viewNext(id) {
     ${fin ? '' : `<p class="note">${c.sorteo ? T(`Lista de inscritos. Los participantes definitivos y sus números se sortean el ${dl(c.sorteo)}; puede cambiar.`, `Nomination list. The final field and post positions are drawn on ${dl(c.sorteo)}; it may change.`) : T('Lista de inscritos; los participantes definitivos todavía pueden cambiar.', 'Nomination list; the final field may still change.')}</p>`}
     <div class="scroll fieldwrap"><table class="field">
       <thead><tr><th>${conN ? T('Número', 'No.') : '#'}</th><th>${T('Caballo', 'Horse')}</th></tr></thead>
-      <tbody>${rows.map(({ h, p }, i) => `<tr class="${p ? 'pj' : ''}"><td class="n">${conN ? esc(h.n ?? '') : i + 1}</td><td>${p ? `<a href="#p-${esc(p.id)}">${esc(h.caballo)}</a>${p.personaje && norm(p.personaje) !== norm(h.caballo) ? ` <span class="muted">· ${esc(p.personaje)}</span>` : ''}` : esc(h.caballo)}${h.jp ? ` <span class="muted">${esc(h.jp)}</span>` : ''}${h.jpn ? ` <span class="tag">${esc(paisTx('JPN'))}</span>` : ''}</td></tr>`).join('')}</tbody>
+      <tbody>${rows.map(({ h, p }, i) => `<tr class="${p ? 'pj' : ''}"><td class="n">${conN ? numChip(h.n, x.pais, total) : i + 1}</td><td>${p ? `<a href="#p-${esc(p.id)}">${esc(h.caballo)}</a>${p.personaje && norm(p.personaje) !== norm(h.caballo) ? ` <span class="muted">· ${esc(p.personaje)}</span>` : ''}` : esc(h.caballo)}${h.jp ? ` <span class="muted">${esc(h.jp)}</span>` : ''}${h.jpn ? ` <span class="tag">${esc(paisTx('JPN'))}</span>` : ''}</td></tr>`).join('')}</tbody>
     </table></div>
     ${rows.some(r => r.p) ? `<p class="note"><span class="dot-inline" style="background:var(--gold)"></span>${T('Enmarcados en amarillo: caballos de personajes del índice.', 'Framed in yellow: horses of characters in the index.')}</p>` : ''}
+    ${conN && x.pais === 'JPN' ? `<p class="note">${T('Color de cada número: el del cajón que le tocó en el sorteo, que es también el color del casco del jinete.', 'Number colors: the gate drawn for each horse, which is also the colour of the jockey’s cap.')}</p>` : ''}
+    ${conN && x.pais === 'USA' ? `<p class="note">${T('Color de cada número: el de su mantilla según el número de salida. En EE. UU. el casco no va por número.', 'Number colors: the standard saddle cloth for each post position. In the US the cap colour isn’t tied to the number.')}</p>` : ''}
     ${c.reservas?.length ? `<p class="note">${T('Reservas (entran si alguien se retira)', 'Also eligible (get in if a horse scratches)')}: ${c.reservas.map(esc).join(', ')}.</p>` : ''}
     ${fuente ? `<p class="note">${T('Fuente', 'Source')}: ${fuente}</p>` : ''}
   </section>`;
