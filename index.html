@@ -92,7 +92,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;te
     transform:translateX(-105%);visibility:hidden;transition:transform .3s cubic-bezier(.2,.7,.3,1),visibility 0s .3s}
   .top.menu-open .nav{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.7,.3,1),visibility 0s}
   .nav-head{display:flex;align-items:center;justify-content:space-between;padding:0 0 .6rem .8rem;margin-bottom:.4rem;border-bottom:1px solid var(--line)}
-  .nav-head b{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.04em;color:var(--turf)}
+  .nav .nav-head a.nav-home{font-family:var(--font-display);font-weight:700;font-size:1.5rem;letter-spacing:.04em;color:var(--turf);padding:.1rem 0;background:none}
   .nav-x{width:2.3rem;height:2.3rem;padding:0;justify-content:center;border:0;background:transparent;color:var(--muted);font-size:1.6rem;line-height:1}
   .nav-x:hover{color:var(--ink);background:var(--sunk)}
   .nav a{font-size:1.3rem;padding:.6rem .8rem;border-radius:var(--r);white-space:nowrap}
@@ -292,6 +292,9 @@ tr.win td{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .yc.none .w{color:var(--muted);font-weight:500}
 .yc.pj{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,var(--surface))}
 .fieldwrap{width:100%;max-width:46rem}
+.h1link{text-decoration:none;display:inline-flex;align-items:baseline;gap:.35rem}
+.h1link span{color:var(--turf);font-size:.8em;transition:transform .2s}
+.h1link:hover{color:var(--turf)}.h1link:hover span{transform:translateX(4px)}
 .sc{display:inline-grid;place-content:center;min-width:1.9rem;height:1.6rem;padding:0 .3rem;border-radius:4px;border:1px solid color-mix(in srgb,var(--ink) 35%,transparent);font-weight:700;line-height:1}
 .nr{display:grid;gap:.15rem}
 .nr-in{display:flex;align-items:stretch;gap:.4rem;overflow:hidden}
@@ -461,7 +464,7 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
     <button type="button" class="menu-btn" aria-controls="nav" aria-expanded="false" aria-label="Abrir menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
     <a class="brand" href="#personajes"><b>UMADEX</b><span>Umamusume Pretty Derby · caballos reales</span></a>
     <nav class="nav" id="nav" aria-label="Secciones">
-      <div class="nav-head"><b>UMADEX</b><button type="button" class="nav-x" aria-label="Cerrar menú">×</button></div>
+      <div class="nav-head"><a class="nav-home" href="#personajes">UMADEX</a><button type="button" class="nav-x" aria-label="Cerrar menú">×</button></div>
       <a href="#personajes" data-nav="personajes">Personajes</a>
       <a href="#g1" data-nav="g1">G1 del año</a>
       <a href="#hazanas" data-nav="hazanas">Hazañas</a>
@@ -1394,6 +1397,14 @@ function viewYear(y) {
 /* ---------- vista: participantes de una G1 ---------- */
 // Resultados completos (todos los participantes y su orden de llegada) de las G1 que corrieron los personajes
 const PART = D.participantes || {}, PJC = D.pjCarrera || {}, G1C = D.g1Carrera || {};
+// Perfil general de la carrera (#g1-…) para una edición con participantes, si esa carrera tiene perfil
+let G1C_REV;
+function perfilDe(key) {
+  if (!G1C_REV) { G1C_REV = {}; for (const [ky, v] of Object.entries(G1C)) G1C_REV[v] = ky.split('|')[0]; }
+  const k = G1C_REV[key]; if (!k) return null;
+  const pr = RACES.find(r => r.id === k || (r.carreras || []).some(s => s.id === k));
+  return pr ? `#g1-${pr.id}${pr.id !== k ? '--' + k : ''}` : null;
+}
 const fieldLink = (key, html) => key && PART[key] ? `<a class="flink" href="#carrera-${key}" title="${T('Ver participantes', 'See the field')}">${html}</a>` : html;
 const PAISES = { JPN: ['Japón', 'Japan'], UAE: ['Emiratos Árabes Unidos', 'United Arab Emirates'], FR: ['Francia', 'France'], FRA: ['Francia', 'France'],
   HK: ['Hong Kong', 'Hong Kong'], HKG: ['Hong Kong', 'Hong Kong'], GB: ['Reino Unido', 'United Kingdom'], UK: ['Reino Unido', 'United Kingdom'],
@@ -1417,7 +1428,8 @@ function viewField(key) {
   <a class="back" href="#g1" data-back>← ${T('Volver', 'Back')}</a>
   <section class="hero">
     <span class="label">G1 · ${esc(paisTx(r.p))}</span>
-    <h1>${esc(enW(carreraTx(r.c)))}</h1>
+    ${(() => { const pf = perfilDe(key), nm = esc(enW(carreraTx(r.c)));
+      return pf ? `<h1><a class="h1link" href="${pf}" title="${T('Ver el perfil de la carrera', 'See the race profile')}">${nm}<span aria-hidden="true">›</span></a></h1>` : `<h1>${nm}</h1>`; })()}
     <div class="facts">
       <div><span class="label">${T('Fecha', 'Date')}</span><span>${esc(fecha)}</span></div>
       <div><span class="label">${T('Hipódromo', 'Racecourse')}</span><span>${esc(enW(r.h || ''))}</span></div>
@@ -2642,7 +2654,7 @@ function menuOpen(on) {
 menuBtn.addEventListener('click', () => menuOpen(true));
 topBar.querySelector('.nav-x').addEventListener('click', () => { menuOpen(false); menuBtn.focus(); });
 topBar.querySelector('.scrim').addEventListener('click', () => menuOpen(false));
-topBar.querySelector('.nav').addEventListener('click', e => { if (e.target.closest('a')) menuOpen(false); });
+topBar.querySelector('.nav').addEventListener('click', e => { const a = e.target.closest('a'); if (!a) return; menuOpen(false); if (a.getAttribute('href') === location.hash) window.scrollTo(0, 0); });
 matchMedia('(max-width:760px)').addEventListener('change', e => { if (!e.matches) menuOpen(false); });
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
