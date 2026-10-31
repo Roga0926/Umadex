@@ -724,7 +724,13 @@ function route() {
   return viewList();
 }
 function go(top = true) { route(); if (top) window.scrollTo(0, 0); }
-addEventListener('hashchange', () => go(true));
+// Al cambiar de año (flechas o tira de años) la página se queda en la misma altura
+let lastHash = location.hash.slice(1);
+addEventListener('hashchange', () => {
+  const h = location.hash.slice(1), y = scrollY, same = /^anio-/.test(h) && /^anio-/.test(lastHash);
+  lastHash = h;
+  if (same) { go(false); window.scrollTo(0, Math.min(y, document.documentElement.scrollHeight - innerHeight)); } else go(true);
+});
 
 /* ---------- vista: lista ---------- */
 const listState = { q: '', cat: 'todos', sort: 'nombre' };
@@ -1391,7 +1397,8 @@ function viewYear(y) {
     return `<div class="yc ${!w ? 'none' : linked ? 'pj' : ''}${ics.length ? ' hasav' : ''}">${ics.length ? `<span class="yav">${ics.join('')}</span>` : ''}<a class="rn" href="${href}">${dot}${esc(D.nombres[k] || k)}</a><span class="w">${winnerHTML(k, y, w).replace(T('No se corrió', 'Not run'), '—')}</span>${G1C[k + '|' + y] ? `<a class="fl" href="#carrera-${G1C[k + '|' + y]}">${T('Participantes', 'Field')} →</a>` : ''}</div>`;
   }).join('')}</div>`;
   const cur = document.querySelector('#ys [aria-current="true"]');
-  if (cur) cur.scrollIntoView({block:'nearest', inline:'center'});
+  // centra el año activo en la tira moviéndola solo de lado, sin mover la página
+  if (cur) { const ys = cur.parentElement; ys.scrollLeft = cur.offsetLeft - ys.offsetLeft - (ys.clientWidth - cur.offsetWidth) / 2; }
 }
 
 /* ---------- vista: participantes de una G1 ---------- */
