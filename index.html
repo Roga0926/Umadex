@@ -859,7 +859,7 @@ function fillGrid() {
       <div class="meta">
         <span class="num">${esc(p.anio_nacimiento || '—')}</span>
         <span><span class="num">${fmtN(r.victorias)}</span> ${r.victorias === 1 ? T('victoria', 'win') : T('victorias', 'wins')} / <span class="num">${fmtN(r.carreras)}</span> ${r.carreras === 1 ? T('carrera', 'race') : T('carreras', 'races')}</span>
-        <span class="gg"><span>${gradeChip('G2')} ${rg.G2?.ganadas || 0}</span><span>${gradeChip('G3')} ${rg.G3?.ganadas || 0}</span></span>
+        <span class="gg"><span>${gradeChip('G1')} ${rg.G1?.ganadas || 0}</span><span>${gradeChip('G2')} ${rg.G2?.ganadas || 0}</span><span>${gradeChip('G3')} ${rg.G3?.ganadas || 0}</span></span>
         ${p.categoria === 'agregado' ? `<span class="tag add">${T('Agregado', 'Added')}</span>` : p.categoria !== 'oficial' ? `<span class="tag">${esc(p.categoria)}</span>` : ''}
       </div></a>`;
   }).join('');
