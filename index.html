@@ -107,7 +107,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;te
   .nav-dd,.nav-sub,.nav-sub-in{display:contents}
   .nav-sub{visibility:inherit;opacity:1;transform:none;transition:none}
   .nav [data-nav-sub]{display:none}
-  .nav .nav-dd-games [data-nav-sub]{display:block;font-size:1.1rem;padding:.45rem .8rem .45rem 1.9rem}
+  .nav .nav-dd-games [data-nav-sub]{display:flex;font-size:1.1rem;padding:.45rem .8rem .45rem 1.9rem}
   .nav-dd.sub-on>a{background:none;color:inherit}
   .nav a,.nav .nav-sub a{font-size:1.3rem;padding:.6rem .8rem;border-radius:var(--r);white-space:nowrap;color:inherit}
   .nav a:hover{background:var(--sunk)}
@@ -504,6 +504,40 @@ a.flink:hover{text-decoration-style:solid}
 .mm-c.par{animation:mm-ok .45s ease .2s}
 @keyframes mm-ok{50%{transform:scale(1.08)}}
 @media (prefers-reduced-motion:reduce){.mm-in{transition:none}.mm-c.par,.bk-champ.on{animation:none}}
+/* iconos de juegos */
+.gi{width:1.15em;height:1.15em;flex:none;vertical-align:-.18em}
+.gi-uma{display:inline-flex;gap:2px;width:auto;height:auto;vertical-align:.05em}
+.gi-uma i{font-style:normal;font-family:var(--font-display);font-weight:700;font-size:.62em;line-height:1;width:1.45em;height:1.45em;display:grid;place-items:center;border-radius:3px;color:#fff}
+.gi-uma .no,.wd-c.no,.wd-k.no{background:#787c7e;border-color:#787c7e;color:#fff}
+.gi-uma .casi,.wd-c.casi,.wd-k.casi{background:#c9a227;border-color:#c9a227;color:#fff}
+.gi-uma .si,.wd-c.si,.wd-k.si{background:#3e9b4f;border-color:#3e9b4f;color:#fff}
+.nav .nav-sub a{display:flex;align-items:center;gap:.5rem}
+.gm-card h2,.gm-h1{display:flex;align-items:center;gap:.5rem}
+.gm-h1 .gi-uma i{font-size:.42em}
+.gm-card h2 .gi-uma i{font-size:.7em}
+/* wordle */
+.wd-board{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;max-width:36rem;width:100%;margin:0 auto}
+.wd-row{display:flex;gap:4px;justify-content:center;min-width:0}
+.wd-c{flex:0 1 2.9rem;min-width:0;min-height:0;line-height:1;aspect-ratio:1/1;display:grid;place-items:center;border:2px solid var(--line);border-radius:5px;font-family:var(--font-display);font-weight:700;font-size:clamp(.7rem,3.8vw,1.5rem);text-transform:uppercase;color:var(--ink)}
+.wd-c.lleno{border-color:var(--muted);animation:wd-pop .1s ease}
+.wd-sp{flex:0 0 clamp(.3rem,1.8vw,.9rem)}
+@media (max-width:420px){.wd-c{border-width:1.5px;border-radius:4px}.wd-row{gap:3px}}
+.wd-row.flip .wd-c{animation:wd-flip .5s ease both;animation-delay:var(--d)}
+.wd-row.mal{animation:wd-shake .35s ease}
+@keyframes wd-pop{50%{transform:scale(1.1)}}
+@keyframes wd-flip{0%{transform:rotateX(90deg);background:none;border-color:var(--line);color:transparent}49%{background:none;color:transparent}50%{transform:rotateX(90deg)}100%{transform:none}}
+@keyframes wd-shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.wd-msg{min-height:1.4rem;text-align:center;font-weight:700;color:var(--g2);margin:.6rem 0}
+.wd-kb{display:grid;gap:6px;max-width:34rem;width:100%;margin:0 auto;user-select:none}
+.wd-kb>div{display:flex;gap:5px;justify-content:center}
+.wd-k{flex:1 1 0;min-width:0;max-width:2.8rem;height:3.2rem;padding:0;justify-content:center;font-size:1rem;background:var(--sunk);border-color:var(--line)}
+.wd-k.ancho{max-width:4.4rem;flex-grow:1.6;font-size:.8rem}
+.wd-fin{display:flex;align-items:center;gap:1rem;max-width:30rem;width:100%;margin:0 auto 1rem}
+.wd-fin img{width:5rem;height:5rem;border-radius:10px;object-fit:cover;flex:none}
+.wd-fin div{display:grid;gap:.25rem}
+.wd-fin b{font-family:var(--font-display);font-size:1.5rem}
+.wd-fin.ok{border-color:#3e9b4f}
+@media (prefers-reduced-motion:reduce){.wd-row.flip .wd-c,.wd-row.mal,.wd-c.lleno{animation:none}}
 /* ganancias */
 .earn{overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.4rem;position:relative}
 .ebars{display:flex;align-items:flex-end;gap:2px;height:22rem;min-width:max-content;padding-top:1.4rem}
@@ -600,6 +634,7 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
           <a href="#quiz" data-nav-sub="quiz">Quiz</a>
           <a href="#brackets" data-nav-sub="brackets">Brackets</a>
           <a href="#memorama" data-nav-sub="memorama">Memorama</a>
+          <a href="#wordle" data-nav-sub="wordle">Wordle</a>
         </div></div>
       </div>
       <a href="#agregar" data-nav="agregar">Agregar personaje</a>
@@ -835,10 +870,10 @@ function route() {
   if (h.startsWith('calendario')) sec = 'calendario';
   if (h.startsWith('hazanas')) sec = 'hazanas';
   if (h.startsWith('ganancias')) sec = 'ganancias';
-  if (/^(juegos|quiz|brackets|memorama)$/.test(h)) sec = h;
+  if (/^(juegos|quiz|brackets|memorama|wordle)$/.test(h)) sec = h;
   document.querySelectorAll('[data-nav], [data-nav-sub]').forEach(a => { if ((a.dataset.nav || a.dataset.navSub) === sec) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   document.querySelector('.nav-dd')?.classList.toggle('sub-on', sec === 'calendario');
-  document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama)$/.test(sec));
+  document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama|wordle)$/.test(sec));
   const nav = document.querySelector('.nav'), cur = nav?.querySelector('[aria-current]');
   if (cur && nav.scrollWidth > nav.clientWidth) { const r = cur.getBoundingClientRect(), n = nav.getBoundingClientRect(); nav.scrollLeft += r.left - n.left - (n.width - r.width) / 2; }
   navFade();
@@ -859,6 +894,7 @@ function route() {
   if (h === 'juegos') return viewGames();
   if (h === 'brackets') return viewBrackets();
   if (h === 'memorama') return viewMemorama();
+  if (h === 'wordle') return viewWordle();
   if (h.startsWith('editar-')) return viewForm(h.slice(7));
   if (h.startsWith('ajustar-')) return viewForm(null, h.slice(8));
   return viewList();
@@ -2095,13 +2131,14 @@ const gameWait = () => `<div class="empty">${dbState === 'cargando' ? T('Cargand
 const GAMES = [
   { id: 'quiz', t: ['Quiz', 'Quiz'], d: ['Preguntas al azar sobre los caballos reales: ganadores, padres, colores del jinete y más.', 'Random questions about the real horses: winners, parents, racing silks and more.'] },
   { id: 'brackets', t: ['Brackets', 'Brackets'], d: ['16 umas al azar en octavos de final. Elige a tu favorita en cada duelo hasta coronar a una campeona.', '16 random umas in a round of 16. Pick your favorite in every duel until one is crowned champion.'] },
-  { id: 'memorama', t: ['Memorama', 'Memory'], d: ['Tablero de 6×6 con 18 pares de umas. Encuentra todos los pares contra el cronómetro.', 'A 6×6 board with 18 pairs of umas. Find every pair against the clock.'] }
+  { id: 'memorama', t: ['Memorama', 'Memory'], d: ['Tablero de 6×6 con 18 pares de umas. Encuentra todos los pares contra el cronómetro.', 'A 6×6 board with 18 pairs of umas. Find every pair against the clock.'] },
+  { id: 'wordle', t: ['Wordle', 'Wordle'], d: ['Adivina el nombre de una uma en 5 intentos. Las letras se pintan de gris, amarillo o verde según qué tan cerca estés.', 'Guess an uma’s name in 5 tries. Letters turn grey, yellow or green depending on how close you are.'] }
 ];
 function viewGames() {
   app.innerHTML = `
   <section class="intro"><h1>${T('Juegos', 'Games')}</h1>
     <p>${T('Pon a prueba lo que sabes de las Umamusume y sus caballos reales, o simplemente diviértete con tus favoritas.', 'Test what you know about the Umamusume and their real horses, or just have fun with your favorites.')}</p></section>
-  <div class="gm-hub">${GAMES.map(g => `<a class="panel gm-card" href="#${g.id}"><span class="label">${T('Juego', 'Game')}</span><h2>${T(...g.t)}</h2><p>${T(...g.d)}</p><span class="gm-go">${T('Jugar', 'Play')} →</span></a>`).join('')}</div>`;
+  <div class="gm-hub">${GAMES.map(g => `<a class="panel gm-card" href="#${g.id}"><span class="label">${T('Juego', 'Game')}</span><h2>${gameIcon(g.id)}${T(...g.t)}</h2><p>${T(...g.d)}</p><span class="gm-go">${T('Jugar', 'Play')} →</span></a>`).join('')}</div>`;
 }
 
 // Brackets: 16 umas, 4 rondas. w[r][m] = id elegido en el duelo m de la ronda r
@@ -2144,7 +2181,7 @@ function viewBrackets() {
     ${champ ? `<div class="bk-champ on"><img src="${esc(imgUrl(champ))}" alt=""><span class="label">${T('Campeona', 'Champion')}</span><b>${esc(champ.personaje)}</b></div>` : ''}</div>`;
   app.innerHTML = `
   <a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>
-  <section class="intro"><h1>Brackets</h1>
+  <section class="intro"><h1 class="gm-h1">${gameIcon('brackets')}Brackets</h1>
     <p>${T('16 umas al azar se enfrentan en duelos de eliminación. Toca a tu favorita en cada duelo para que avance de ronda, hasta que solo quede una. Puedes cambiar una elección cuando quieras.', '16 random umas face off in knockout duels. Tap your favorite in each duel to send her to the next round until only one is left. You can change a pick at any time.')}</p></section>
   <div class="gm-bar"><span class="label" role="status">${champ ? T(`¡${esc(champ.personaje)} es tu campeona!`, `${esc(champ.personaje)} is your champion!`) : T(`${hechos} de 15 duelos decididos`, `${hechos} of 15 duels decided`)}</span>
     <button type="button" class="primary" id="bk-reset">↻ ${T('Reiniciar bracket', 'Reset bracket')}</button></div>
@@ -2190,7 +2227,7 @@ function viewMemorama() {
   const best = memoBest(), fin = !!memo.fin;
   app.innerHTML = `
   <a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>
-  <section class="intro"><h1>${T('Memorama', 'Memory')}</h1>
+  <section class="intro"><h1 class="gm-h1">${gameIcon('memorama')}${T('Memorama', 'Memory')}</h1>
     <p>${T('Voltea dos cartas a la vez y encuentra los 18 pares de umas. El cronómetro empieza con la primera carta y en cada partida salen umas distintas.', 'Flip two cards at a time and find all 18 pairs of umas. The clock starts with the first card, and every game brings different umas.')}</p></section>
   <div class="gm-bar mm-bar">
     <div class="mm-stats"><div><span class="label">${T('Tiempo', 'Time')}</span><b id="mm-t" class="num">${memoFmt(memoMs())}</b></div>
@@ -2234,6 +2271,106 @@ function memoFlip(i, b) {
     [a, c].forEach(k => { const el = app.querySelectorAll('.mm-c')[k]; if (el) { el.classList.remove('up'); el.setAttribute('aria-label', T(`Carta ${k + 1}`, `Card ${k + 1}`)); } });
   }, 850);
 }
+
+// Ícono de cada juego (menú, portada y título)
+function gameIcon(id) {
+  const svg = d => `<svg class="gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  if (id === 'quiz') return svg('<circle cx="4.5" cy="5.5" r="1.6"/><path d="M9 5.5h11"/><circle cx="4.5" cy="12" r="1.6" fill="currentColor"/><path d="M9 12h11"/><circle cx="4.5" cy="18.5" r="1.6"/><path d="M9 18.5h11"/>');
+  if (id === 'brackets') return svg('<path d="M2 5h4.5v14H2M6.5 12H10M22 5h-4.5v14H22M17.5 12H14"/>');
+  if (id === 'memorama') return svg('<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>');
+  if (id === 'wordle') return `<span class="gi gi-uma" aria-hidden="true"><i class="no">U</i><i class="casi">M</i><i class="si">A</i></span>`;
+  return '';
+}
+
+// Wordle de umas: adivina el nombre de una uma oficial en 5 intentos
+// gris = la letra no está; amarillo = está en otro lugar; verde = está en su lugar
+const WD_MAX = 5, WD_KEY = 'umadex-wordle';
+const wdLetras = s => String(s).normalize('NFD').toUpperCase().replace(/[^A-Z]/g, '');
+const wdOficiales = () => BASE.filter(p => p.categoria === 'oficial');
+// solo nombres de letras y espacios, de 4 a 13 letras, para que el tablero quepa en el celular
+const wdPool = () => wdOficiales().filter(p => /^[A-Za-z ]+$/.test(p.personaje) && wdLetras(p.personaje).length >= 4 && wdLetras(p.personaje).length <= 13);
+var wd = null;
+function wdSave() { try { localStorage.setItem(WD_KEY, JSON.stringify({ id: wd.id, g: wd.guesses })); } catch {} }
+function wdNew() {
+  const pool = wdPool(), prev = wd?.id;
+  const opts = pool.length > 1 ? pool.filter(p => String(p.id) !== String(prev)) : pool;
+  const p = opts[Math.floor(Math.random() * opts.length)];
+  wd = { id: String(p.id), guesses: [], cur: '', msg: '' }; wdSave();
+}
+function wdLoad() {
+  try {
+    const s = JSON.parse(localStorage.getItem(WD_KEY) || 'null');
+    if (s && wdPool().some(p => String(p.id) === String(s.id))) { wd = { id: String(s.id), guesses: (s.g || []).slice(0, WD_MAX), cur: '', msg: '' }; return; }
+  } catch {}
+  wdNew();
+}
+const wdTarget = () => wdLetras(pjById(wd.id).personaje);
+const wdWon = () => wd.guesses.includes(wdTarget());
+const wdOver = () => wdWon() || wd.guesses.length >= WD_MAX;
+function wdScore(g, t) {
+  const r = Array(t.length).fill('no'), resto = {};
+  for (let i = 0; i < t.length; i++) if (g[i] === t[i]) r[i] = 'si'; else resto[t[i]] = (resto[t[i]] || 0) + 1;
+  for (let i = 0; i < t.length; i++) if (r[i] !== 'si' && resto[g[i]]) { r[i] = 'casi'; resto[g[i]]--; }
+  return r;
+}
+function wdKeys() {
+  const t = wdTarget(), k = {}, rank = { no: 1, casi: 2, si: 3 };
+  for (const g of wd.guesses) wdScore(g, t).forEach((s, i) => { if ((rank[s] || 0) > (rank[k[g[i]]] || 0)) k[g[i]] = s; });
+  return k;
+}
+function wdRow(letters, score, cls = '') {
+  const words = pjById(wd.id).personaje.split(' ');
+  let i = 0;
+  return `<div class="wd-row ${cls}">${words.map(w => Array.from(wdLetras(w), () => {
+    const L = letters[i] || '', s = score ? score[i] : '', d = i++;
+    return `<span class="wd-c${s ? ' ' + s : ''}${L && !s ? ' lleno' : ''}" style="--d:${d * 70}ms">${L}</span>`;
+  }).join('')).join('<span class="wd-sp" aria-hidden="true"></span>')}</div>`;
+}
+function viewWordle() {
+  if (!wdPool().length) { app.innerHTML = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>${gameWait()}`; return; }
+  if (!wd) wdLoad();
+  const p = pjById(wd.id), t = wdTarget(), over = wdOver(), won = wdWon(), keys = wdKeys(), justo = wd.justo;
+  wd.justo = null;
+  const words = p.personaje.split(' ').map(w => wdLetras(w).length);
+  const rows = Array.from({ length: WD_MAX }, (_, r) => r < wd.guesses.length ? wdRow(wd.guesses[r], wdScore(wd.guesses[r], t), r === justo ? 'flip' : '')
+    : r === wd.guesses.length && !over ? wdRow(wd.cur, null, 'actual' + (wd.err ? ' mal' : '')) : wdRow('', null)).join('');
+  wd.err = false;
+  const KB = ['QWERTYUIOP', 'ASDFGHJKL', '⏎ZXCVBNM⌫'];
+  const fin = over ? `<div class="wd-fin panel${won ? ' ok' : ''}">
+      ${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}
+      <div><span class="label">${won ? T(`¡Lo adivinaste en ${wd.guesses.length} ${wd.guesses.length === 1 ? 'intento' : 'intentos'}!`, `You got it in ${wd.guesses.length} ${wd.guesses.length === 1 ? 'try' : 'tries'}!`) : T('Se acabaron los intentos. La uma era:', 'Out of tries. The uma was:')}</span>
+        <b>${esc(p.personaje)}</b><a href="#p-${esc(p.id)}">${T('Ver su ficha', 'See her profile')} →</a></div></div>` : '';
+  app.innerHTML = `
+  <a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>
+  <section class="intro"><h1 class="gm-h1">${gameIcon('wordle')}Wordle</h1>
+    <p>${T(`Adivina el nombre de una uma oficial en ${WD_MAX} intentos. Llena todas las casillas con las letras que quieras y presiona Enviar. Gris: la letra no está. Amarillo: está, pero en otro lugar. Verde: está en su lugar.`, `Guess the name of an official uma in ${WD_MAX} tries. Fill every box with any letters you like and press Enter. Grey: the letter isn’t there. Yellow: it’s there, but somewhere else. Green: it’s in the right spot.`)}</p></section>
+  <div class="gm-bar"><span class="label">${t.length} ${T('letras', 'letters')}${words.length > 1 ? ` · ${words.length} ${T('palabras', 'words')} (${words.join(' + ')})` : ''} · ${T('intento', 'try')} ${Math.min(wd.guesses.length + (over ? 0 : 1), WD_MAX)} ${T('de', 'of')} ${WD_MAX}</span>
+    <button type="button" class="primary" id="wd-new">↻ ${T('Reiniciar', 'Restart')}</button></div>
+  <div class="wd-board" role="grid" aria-label="${T('Tablero', 'Board')}">${rows}</div>
+  <p class="wd-msg" role="status">${esc(wd.msg || '')}</p>
+  ${fin}
+  ${over ? '' : `<div class="wd-kb" aria-label="${T('Teclado', 'Keyboard')}">${KB.map(r => `<div>${Array.from(r).map(ch => ch === '⏎' ? `<button type="button" class="wd-k ancho" data-wk="ENTER">${T('Enviar', 'Enter')}</button>` : ch === '⌫' ? `<button type="button" class="wd-k ancho" data-wk="BACK" aria-label="${T('Borrar', 'Delete')}">⌫</button>` : `<button type="button" class="wd-k ${keys[ch] || ''}" data-wk="${ch}">${ch}</button>`).join('')}</div>`).join('')}</div>`}`;
+  wd.msg = '';
+  document.getElementById('wd-new').onclick = () => { wdNew(); viewWordle(); };
+  app.querySelectorAll('[data-wk]').forEach(b => b.onclick = () => wdKey(b.dataset.wk));
+}
+function wdKey(k) {
+  if (!wd || wdOver()) return;
+  const t = wdTarget();
+  if (k === 'BACK') wd.cur = wd.cur.slice(0, -1);
+  else if (k === 'ENTER') {
+    if (wd.cur.length < t.length) { wd.msg = T(`Faltan letras: el nombre tiene ${t.length}.`, `Not enough letters: the name has ${t.length}.`); wd.err = true; }
+    else if (wd.guesses.includes(wd.cur)) { wd.msg = T('Ya probaste ese nombre.', 'You already tried that name.'); wd.err = true; }
+    else { wd.guesses.push(wd.cur); wd.justo = wd.guesses.length - 1; wd.cur = ''; wdSave(); }
+  } else if (/^[A-Z]$/.test(k) && wd.cur.length < t.length) wd.cur += k;
+  viewWordle();
+}
+document.addEventListener('keydown', e => {
+  if (location.hash !== '#wordle' || e.ctrlKey || e.metaKey || e.altKey || e.target.closest?.('input,textarea,select')) return;
+  const k = e.key === 'Enter' ? 'ENTER' : e.key === 'Backspace' ? 'BACK' : /^[a-z]$/i.test(e.key) ? e.key.toUpperCase() : null;
+  if (!k || (k === 'ENTER' && e.target.closest?.('button'))) return;
+  e.preventDefault(); wdKey(k);
+});
 
 /* ---------- colores del jinete (seda) ---------- */
 // Un diseño por id de personaje. Piezas simples: fondo, lados (franjas laterales) y rombos {color, n} en fila;
@@ -2945,10 +3082,10 @@ function armDelete(btn, docId, msg, after, col = COL, confirmTxt = 'Confirmar bo
 const footHTML = () => T(`Datos consultados el ${esc(D.consultado)}. Récords y ganadores de Wikipedia, JBIS y netkeiba. Grados con los colores oficiales de la JRA: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Sitio de fans sin fines de lucro, no oficial y sin afiliación ni respaldo de Cygames; sigue la <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">guía de obras derivadas de Uma Musume</a>. Uma Musume: Pretty Derby © Cygames, Inc.`,
   `Data checked on ${esc(D.consultado)}. Records and winners from Wikipedia, JBIS and netkeiba. Grades shown in the JRA’s official colors: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Non-profit, unofficial fan site with no affiliation with or endorsement from Cygames; it follows the <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">Uma Musume derivative work guidelines</a>. Uma Musume: Pretty Derby © Cygames, Inc.`);
 // Textos fijos del encabezado y el pie en el idioma activo
-const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], agregar: ['Agregar personaje', 'Add character'] };
+const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], agregar: ['Agregar personaje', 'Add character'] };
 function applyChrome() {
   document.documentElement.lang = LANG;
-  document.querySelectorAll('.nav [data-nav], .nav [data-nav-sub]').forEach(a => { const t = NAV_TX[a.dataset.nav || a.dataset.navSub]; if (t) a.textContent = T(t[0], t[1]); });
+  document.querySelectorAll('.nav [data-nav], .nav [data-nav-sub]').forEach(a => { const t = NAV_TX[a.dataset.nav || a.dataset.navSub]; if (!t) return; if (a.closest('.nav-dd-games') && a.dataset.navSub) a.innerHTML = `${gameIcon(a.dataset.navSub)}<span>${T(t[0], t[1])}</span>`; else a.textContent = T(t[0], t[1]); });
   const bs = document.querySelector('.brand span'); if (bs) bs.textContent = T('Umamusume Pretty Derby · caballos reales', 'Umamusume Pretty Derby · the real horses');
   const md = document.querySelector('meta[name="description"]');
   if (md) md.setAttribute('content', T('Umadex: los caballos reales detrás de cada personaje de Umamusume Pretty Derby, con su historial de carreras, pedigrí, G1 ganadas y ganancias.', 'Umadex: the real horses behind every Umamusume Pretty Derby character, with their race history, pedigree, G1 wins and earnings.'));
