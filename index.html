@@ -701,6 +701,7 @@ tr.nuevo .ud-c{animation:wd-flip .5s ease both;animation-delay:var(--d)}
 .cr-info b{font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cr-info small{font-size:.74rem;font-weight:600;opacity:.92}
 .cr-info strong{color:#f2c94c}
+.cr-carril:has(.cr-ficha[data-fin]) .cr-info{right:3.6rem}
 .cr-pista.corre .cr-info{opacity:.55}
 .cr-ficha{position:absolute;left:.3rem;top:50%;margin-top:-1.45rem;width:2.9rem;height:2.9rem;border-radius:50%;border:3px solid #fff;background:#ddd;box-shadow:0 2px 6px rgb(0 0 0/.4);z-index:2;will-change:transform}
 .cr-ficha img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
@@ -3015,10 +3016,12 @@ function viewMasomenos() {
 }
 
 // ¡Apuesta a tu uma!: 6 umas en una pista; el orden de llegada se decide ANTES de animar
-// Peso de cada uma = 1 + 0.15 × G1 ganadas (máximo 8 G1). Los momios salen de esos mismos pesos
+// Peso de cada uma = (1 + 0.15 × G1 ganadas, máximo 8) × (0.5 + 1.5 × % de victorias ajustado). Los momios salen de esos mismos pesos
+// % ajustado = (victorias + 2) / (carreras + 6): así una carrera corta (4 de 4) no pesa más que una larga y buena (22 de 32)
 const CR_KEY = 'umadex-carrera', CR_N = 6, CR_MAXG1 = 8;
 var cr = null, crRaf = 0;
-const crPeso = p => 1 + .15 * Math.min(CR_MAXG1, p.resumen_grados?.G1?.ganadas || 0);
+const crPct = p => ((+p.record?.victorias || 0) + 2) / ((+p.record?.carreras || 0) + 6);
+const crPeso = p => (1 + .15 * Math.min(CR_MAXG1, p.resumen_grados?.G1?.ganadas || 0)) * (.5 + 1.5 * crPct(p));
 // Momios justos "X a 1": probabilidad de ganar = peso / suma de pesos
 const crMomio = (p, tot) => { const w = crPeso(p), x = (tot - w) / w; return x < 10 ? (Math.round(x * 10) / 10).toLocaleString(LOC(), { minimumFractionDigits: 1 }) : String(Math.round(x)); };
 // Orden de llegada: se sortea el 1.º según los pesos, luego el 2.º entre las que quedan, etc.
@@ -3077,17 +3080,17 @@ function viewCarrera() {
   const lugar = s.orden ? s.orden.indexOf(s.fav) + 1 : 0;
   const ord = n => T(`${n}.º`, n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
   app.innerHTML = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('carrera')}${T('¡Apuesta a tu uma!', 'Bet on your uma!')}</h1>
-    <p>${T('Seis umas al azar salen a la pista. Mira sus momios, elige a tu favorita y dale a "¡Arrancan!". Las que tienen más G1 ganadas tienen más probabilidades de ganar, pero cualquiera puede dar la sorpresa.', 'Six random umas take the track. Check their odds, pick your favorite and hit “They’re off!”. Umas with more G1 wins are more likely to win, but anyone can pull off an upset.')}</p></section>
+    <p>${T('Seis umas al azar salen a la pista. Mira sus momios, elige a tu favorita y dale a "¡Arrancan!". Las que ganaron más G1 y más carreras de las que corrieron tienen más probabilidades de ganar, pero cualquiera puede dar la sorpresa.', 'Six random umas take the track. Check their odds, pick your favorite and hit “They’re off!”. Umas that won more G1s and a bigger share of their races are more likely to win, but anyone can pull off an upset.')}</p></section>
   <div class="gm-bar"><span class="label" role="status">${s.fase === 'apuesta' ? (s.fav ? T(`Tu apuesta: ${esc(pjById(s.fav).personaje)}`, `Your pick: ${esc(pjById(s.fav).personaje)}`) : T('Elige a tu favorita', 'Pick your favorite')) : s.fase === 'carrera' ? T('¡Arrancan!', 'They’re off!') : T('Carrera terminada', 'Race finished')}</span>
     <span class="label">${T('Aciertos', 'Wins')}: <b class="num">${st.aciertos}</b> / ${st.carreras} ${st.carreras === 1 ? T('carrera', 'race') : T('carreras', 'races')}</span></div>
   <div class="cr-pista${s.fase !== 'apuesta' ? ' corre' : ''}" id="cr-pista" role="group" aria-label="${T('Pista: elige a tu favorita', 'Track: pick your favorite')}">
     ${ps.map((p, i) => `<button type="button" class="cr-carril" data-id="${esc(p.id)}" aria-pressed="${s.fav === String(p.id)}" ${s.fase !== 'apuesta' ? 'disabled' : ''}>
-      <span class="cr-info"><b>${i + 1} · ${esc(p.personaje)}</b><small>${T('Momio', 'Odds')} ${crMomio(p, tot)} ${T('a', 'to')} 1 · ${p.resumen_grados?.G1?.ganadas || 0} G1${s.fase === 'fin' ? ` · <strong>${ord(s.orden.indexOf(String(p.id)) + 1)}</strong>` : ''}</small></span>
+      <span class="cr-info"><b>${i + 1} · ${esc(p.personaje)}</b><small>${T('Momio', 'Odds')} ${crMomio(p, tot)} ${T('a', 'to')} 1 · ${p.resumen_grados?.G1?.ganadas || 0} G1 · ${T(`${+p.record?.victorias || 0} de ${+p.record?.carreras || 0} ganadas`, `won ${+p.record?.victorias || 0} of ${+p.record?.carreras || 0}`)}${s.fase === 'fin' ? ` · <strong>${ord(s.orden.indexOf(String(p.id)) + 1)}</strong>` : ''}</small></span>
       <span class="cr-ficha" data-id="${esc(p.id)}"${s.fase === 'fin' ? ' data-fin="1"' : ''}>${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}<i>${i + 1}</i></span></button>`).join('')}
     <span class="cr-meta" aria-hidden="true"></span>
   </div>
   ${s.fase === 'apuesta' ? `<button type="button" class="qz-start cr-go" id="cr-go" ${s.fav ? '' : 'disabled'}>🏁 ${T('¡Arrancan!', 'They’re off!')}</button>
-    <p class="note">${T('Los momios salen del peso de cada uma: 1 + 0.15 × sus G1 ganadas (contando hasta 8). Un momio de 2 a 1 quiere decir que, de cada 3 carreras, ganaría más o menos 1.', 'Odds come from each uma’s weight: 1 + 0.15 × her G1 wins (counting up to 8). Odds of 2 to 1 mean she would win about 1 race out of 3.')}</p>` : ''}
+    <p class="note">${T('Los momios salen del peso de cada uma, que junta dos cosas: sus G1 ganadas (1 + 0.15 por cada una, contando hasta 8) y qué parte de sus carreras ganó (0.5 + 1.5 × su porcentaje de victorias). Ese porcentaje se ajusta como si hubiera corrido 6 carreras más y ganado 2, para que una carrera corta no cuente de más: 8 de 8 queda en 71 % y 22 de 32 en 63 %. Un momio de 2 a 1 quiere decir que, de cada 3 carreras, ganaría más o menos 1.', 'Odds come from each uma’s weight, which combines two things: her G1 wins (1 + 0.15 for each, counting up to 8) and how many of her races she won (0.5 + 1.5 × her win rate). That win rate is adjusted as if she had run 6 more races and won 2, so a short career doesn’t count for too much: 8 of 8 becomes 71% and 22 of 32 becomes 63%. Odds of 2 to 1 mean she would win about 1 race out of 3.')}</p>` : ''}
   ${s.fase === 'fin' ? `<section class="panel cr-res" id="cr-res"><h2>${lugar === 1 ? T('¡Ganó tu uma! 🎉', 'Your uma won! 🎉') : T(`Tu uma llegó en ${ord(lugar)} lugar`, `Your uma finished ${ord(lugar)}`)}</h2>
       <ol>${s.orden.map((id, k) => { const p = pjById(id); return `<li class="${id === s.fav ? 'tuya' : ''}"><span class="cr-pos">${ord(k + 1)}</span>${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}<a href="#p-${esc(id)}">${esc(p.personaje)}</a>${id === s.fav ? `<span class="cr-tag">${T('Tu apuesta', 'Your pick')}</span>` : ''}</li>`; }).join('')}</ol>
       <button type="button" class="qz-start" id="cr-new">↻ ${T('Nueva carrera', 'New race')}</button></section>` : ''}`;
