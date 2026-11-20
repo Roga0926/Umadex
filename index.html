@@ -153,6 +153,7 @@ main{padding-block:1.5rem 4rem;display:grid;gap:1.5rem}
 input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:.45rem .6rem;min-width:0;width:100%}
 textarea{min-height:5rem;resize:vertical}
 .controls .grow{flex:1 1 16rem}
+@media (max-width:760px){.controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem}.controls .grow{grid-column:1/-1}}
 button,.btn{font:inherit;font-weight:700;cursor:pointer;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.45rem .9rem;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem}
 .btn.primary,button.primary{background:var(--turf);border-color:var(--turf);color:var(--turf-ink)}
 button.danger{color:var(--g2);border-color:currentColor}
@@ -168,7 +169,11 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 /* Lista de personajes */
 .count{font-size:.9rem;color:var(--muted)}
-.silk-note{display:flex;align-items:center;gap:.75rem;margin:0 0 .75rem;font-size:.9rem;color:var(--muted);max-width:44rem}
+.silk-note{display:flex;align-items:center;gap:.6rem;margin:0;padding:.35rem .4rem .35rem .5rem;font-size:.8rem;line-height:1.35;color:var(--muted);max-width:40rem;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.silk-note .silk{width:1.7rem;height:1.7rem}
+.silk-note span{flex:1;min-width:0}
+.silk-x{flex:none;border:0;background:none;color:var(--muted);font-size:1.25rem;line-height:1;padding:.15rem .4rem;font-weight:400}
+.silk-x:hover{color:var(--ink);background:var(--sunk)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr));gap:.75rem}
 .card{display:grid;grid-template-columns:1fr auto;gap:.15rem .75rem;padding:.8rem .9rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;align-items:start;transition:border-color .15s}
 .card:hover{border-color:var(--turf)}
@@ -214,6 +219,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .gc .k{font-family:var(--font-display);font-size:1rem;font-weight:700;letter-spacing:.06em}
 .gc .v{font-family:var(--font-display);font-size:2.4rem;line-height:1;font-weight:700}
 .gc .s{font-size:.75rem;opacity:.92}
+.gc.cero{background:var(--sunk);color:var(--muted)!important;box-shadow:inset 0 0 0 1px var(--line)}
 :root:not([data-skin$="claro"]) .gc,:root:not([data-skin$="claro"]) .gr{color:#0d1511}
 .gr.out{color:var(--pre)!important}
 .winlist{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -447,6 +453,22 @@ a.flink:hover{text-decoration-style:solid}
 .gm-card{display:grid;gap:.4rem;align-content:start;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
 .gm-card:hover{border-color:var(--turf);transform:translateY(-2px)}
 .gm-card h2{margin:0}.gm-card p{margin:0;color:var(--muted)}
+.gp{height:6.5rem;margin:-.2rem 0 .5rem;border-radius:var(--r);background:var(--sunk);display:grid;place-items:center;overflow:hidden;color:var(--muted)}
+.gp-quiz{display:grid;gap:.4rem;width:72%}
+.gp-quiz span{display:flex;align-items:center;gap:.45rem;padding:.3rem .45rem;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.gp-quiz b{width:.6rem;height:.6rem;border-radius:50%;border:2px solid var(--muted);flex:none}
+.gp-quiz i{height:.4rem;border-radius:3px;background:var(--line)}
+.gp-quiz .ok{border-color:#3e9b4f;background:color-mix(in srgb,#3e9b4f 22%,var(--surface))}
+.gp-quiz .ok b{background:#3e9b4f;border-color:#3e9b4f}
+.gp-bk{width:82%;max-height:5.2rem;color:var(--muted)}
+.gp-bk .gp-final{fill:var(--surface);stroke:var(--gold);stroke-width:2.5}
+.gp-bk .gp-tr{font-size:15px}
+.gp-mm{display:grid;grid-template-columns:repeat(4,2.4rem);gap:.35rem}
+.gp-mm span{height:2.4rem;border-radius:5px;background:var(--turf);background-image:repeating-linear-gradient(45deg,transparent 0 4px,color-mix(in srgb,var(--turf-ink) 12%,transparent) 4px 8px);overflow:hidden}
+.gp-mm span.up{background:var(--surface);box-shadow:0 0 0 2px var(--turf)}
+.gp-mm img{width:100%;height:100%;object-fit:cover;display:block}
+.gp-wd{display:flex;gap:.3rem}
+.gp-wd .wd-c{width:2.4rem;flex:none;font-size:1.25rem}
 .gm-go{color:var(--turf);font-weight:700;margin-top:.3rem}
 .gm-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;margin:1.1rem 0 1rem}
 /* brackets */
@@ -538,6 +560,58 @@ a.flink:hover{text-decoration-style:solid}
 .wd-fin b{font-family:var(--font-display);font-size:1.5rem}
 .wd-fin.ok{border-color:#3e9b4f}
 @media (prefers-reduced-motion:reduce){.wd-row.flip .wd-c,.wd-row.mal,.wd-c.lleno{animation:none}}
+/* modo diario / libre, racha y compartir */
+.gm-modo-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem;margin-top:1rem}
+.seg button{border:0;border-radius:0;background:none;padding:.4rem 1rem;font-size:.9rem;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.gm-diario{display:grid;gap:.9rem;max-width:34rem;width:100%;margin:0 auto 1rem}
+.gm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.gm-stats>div{display:grid;gap:.1rem;justify-items:center;text-align:center}
+.gm-stats b{font-family:var(--font-display);font-size:1.8rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.gm-stats small{font-size:.75rem;color:var(--muted)}
+.gm-share{display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap}
+.gm-share button{font-size:1.05rem;padding:.55rem 1.6rem}
+.gm-copiado{font-weight:700;color:var(--turf);min-width:5rem}
+@media (max-width:400px){.gm-stats b{font-size:1.45rem}}
+/* umadle */
+.gi-ud{display:inline-grid;grid-template-columns:repeat(3,.36em);gap:.07em;width:auto;height:auto;vertical-align:-.05em}
+.gi-ud i{width:.36em;height:.36em;border-radius:2px;background:#787c7e}
+.gi-ud i.si{background:#3e9b4f}
+.ud-search{position:relative;max-width:30rem;display:grid;gap:.3rem;margin-bottom:1rem}
+.ud-search input{font-size:1.05rem;padding:.65rem .8rem}
+.ud-list{position:absolute;z-index:5;top:100%;left:0;right:0;margin:.25rem 0 0;padding:.3rem;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgb(0 0 0/.3);max-height:22rem;overflow:auto}
+.ud-list li{display:flex;align-items:center;gap:.6rem;padding:.35rem .5rem;border-radius:6px;cursor:pointer;font-weight:600}
+.ud-list li[aria-selected="true"],.ud-list li[data-i]:hover{background:var(--sunk)}
+.ud-list li img,.ud-ph{width:2.2rem;height:2.2rem;border-radius:6px;object-fit:cover;flex:none;background:var(--sunk)}
+.ud-list .ud-none{color:var(--muted);font-weight:500;cursor:default}
+.ud-hint{display:none;margin:0 0 .3rem;font-size:.8rem;color:var(--muted)}
+@media (max-width:760px){.ud-hint{display:block}}
+.ud-wrap{overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.4rem}
+.ud-t{border-collapse:separate;border-spacing:4px;min-width:40rem;width:100%;table-layout:fixed}
+.ud-t thead th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;text-align:center;padding:.2rem;border-bottom:2px solid var(--ink)}
+.ud-t thead th:first-child{width:10.5rem;text-align:left}
+.ud-c{height:3.6rem;padding:.25rem;text-align:center;vertical-align:middle;border-radius:6px;color:#fff;font-weight:700;font-size:.8rem;line-height:1.2;overflow-wrap:anywhere}
+.ud-c span{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05rem}
+.ud-c.si{background:#3e9b4f}.ud-c.no{background:#787c7e}
+.ud-f{font-size:1.15rem;line-height:1}
+.ud-p{display:flex;align-items:center;gap:.45rem;text-align:left;font-size:.82rem;font-weight:700;text-transform:none;letter-spacing:0;color:var(--ink);line-height:1.2;padding:.2rem .3rem;border-radius:6px;background:var(--surface);border:1px solid var(--line);height:3.6rem;box-sizing:border-box}
+.ud-p.si{border-color:#3e9b4f;box-shadow:inset 0 0 0 1px #3e9b4f}
+.ud-p img{width:2.6rem;height:2.6rem;border-radius:6px;object-fit:cover;flex:none}
+.ud-p span{min-width:0;white-space:normal;overflow-wrap:anywhere;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ud-t th[scope="row"],.ud-t thead th:first-child{position:sticky;left:0;z-index:1;background:var(--bg)}
+.ud-t th[scope="row"]{background:var(--surface)}
+tr.nuevo .ud-c{animation:wd-flip .5s ease both;animation-delay:var(--d)}
+.ud-win{display:flex;align-items:center;gap:1.2rem;max-width:34rem;border-color:#3e9b4f;margin-bottom:1rem}
+.ud-win img{width:8rem;height:8rem;border-radius:12px;object-fit:cover;flex:none;border:3px solid #3e9b4f}
+.ud-win div{display:grid;gap:.3rem}
+.ud-win b{font-family:var(--font-display);font-size:1.9rem;line-height:1.1}
+@media (max-width:480px){.ud-win img{width:5.5rem;height:5.5rem}.ud-win b{font-size:1.4rem}.ud-t thead th:first-child{width:7.4rem}.ud-p img{width:2rem;height:2rem}.ud-p{font-size:.76rem;gap:.35rem}}
+.gp-ud{display:grid;gap:.3rem}
+.gp-ud div{display:flex;gap:.25rem}
+.gp-ud i{width:1.9rem;height:1.5rem;border-radius:4px;background:#787c7e;display:grid;place-items:center;color:#fff;font-style:normal;font-size:.8rem;font-weight:700}
+.gp-ud i.si{background:#3e9b4f}
+.gp-ud i.p{background:var(--surface);border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){tr.nuevo .ud-c{animation:none}}
 /* ganancias */
 .earn{overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.4rem;position:relative}
 .ebars{display:flex;align-items:flex-end;gap:2px;height:22rem;min-width:max-content;padding-top:1.4rem}
@@ -635,6 +709,7 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
           <a href="#brackets" data-nav-sub="brackets">Brackets</a>
           <a href="#memorama" data-nav-sub="memorama">Memorama</a>
           <a href="#wordle" data-nav-sub="wordle">Wordle</a>
+          <a href="#umadle" data-nav-sub="umadle">Umadle</a>
         </div></div>
       </div>
       <a href="#agregar" data-nav="agregar">Agregar personaje</a>
@@ -870,10 +945,10 @@ function route() {
   if (h.startsWith('calendario')) sec = 'calendario';
   if (h.startsWith('hazanas')) sec = 'hazanas';
   if (h.startsWith('ganancias')) sec = 'ganancias';
-  if (/^(juegos|quiz|brackets|memorama|wordle)$/.test(h)) sec = h;
+  if (/^(juegos|quiz|brackets|memorama|wordle|umadle)$/.test(h)) sec = h;
   document.querySelectorAll('[data-nav], [data-nav-sub]').forEach(a => { if ((a.dataset.nav || a.dataset.navSub) === sec) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   document.querySelector('.nav-dd')?.classList.toggle('sub-on', sec === 'calendario');
-  document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama|wordle)$/.test(sec));
+  document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama|wordle|umadle)$/.test(sec));
   const nav = document.querySelector('.nav'), cur = nav?.querySelector('[aria-current]');
   if (cur && nav.scrollWidth > nav.clientWidth) { const r = cur.getBoundingClientRect(), n = nav.getBoundingClientRect(); nav.scrollLeft += r.left - n.left - (n.width - r.width) / 2; }
   navFade();
@@ -895,6 +970,7 @@ function route() {
   if (h === 'brackets') return viewBrackets();
   if (h === 'memorama') return viewMemorama();
   if (h === 'wordle') return viewWordle();
+  if (h === 'umadle') return viewUmadle();
   if (h.startsWith('editar-')) return viewForm(h.slice(7));
   if (h.startsWith('ajustar-')) return viewForm(null, h.slice(8));
   return viewList();
@@ -930,7 +1006,7 @@ function viewList() {
         <option value="victorias">${T('Más victorias', 'Most wins')}</option><option value="anio">${T('Año de nacimiento', 'Year of birth')}</option>
       </select></div>
   </div>
-  ${(og => og && silk(og) ? `<p class="silk-note">${silk(og)}<span>${T(`Este ícono indica los colores del uniforme que vestía el jinete en la vida real. Este, por ejemplo, es el de ${esc(og.personaje)}.`, `This icon shows the colors of the silks the jockey wore in real life. This one, for example, belongs to ${esc(og.personaje)}.`)}</span></p>` : '')(all().find(x => String(x.id) === '94'))}
+  ${(og => og && silk(og) && !notaSedasOculta() ? `<p class="silk-note" id="silk-note">${silk(og)}<span>${T(`Este ícono muestra los colores del uniforme del jinete en la vida real (aquí, el de ${esc(og.personaje)}).`, `This icon shows the jockey’s real-life silks (here, ${esc(og.personaje)}’s).`)}</span><button type="button" class="silk-x" id="silk-x" aria-label="${T('Ocultar esta nota', 'Hide this note')}" title="${T('Ocultar', 'Hide')}">×</button></p>` : '')(all().find(x => String(x.id) === '94'))}
   <div class="count" id="count"></div>
   <div class="grid" id="grid"></div>`;
   const q = app.querySelector('#q'), cat = app.querySelector('#cat'), sort = app.querySelector('#sort');
@@ -938,8 +1014,13 @@ function viewList() {
   q.addEventListener('input', () => { listState.q = q.value; fillGrid(); });
   cat.addEventListener('change', () => { listState.cat = cat.value; fillGrid(); });
   sort.addEventListener('change', () => { listState.sort = sort.value; fillGrid(); });
+  const sx = document.getElementById('silk-x');
+  if (sx) sx.onclick = () => { try { localStorage.setItem(NOTA_SEDAS, '1'); } catch {} document.getElementById('silk-note')?.remove(); };
   fillGrid();
 }
+// La nota de las sedas se puede ocultar; se recuerda en este navegador
+const NOTA_SEDAS = 'umadex-nota-sedas-oculta';
+function notaSedasOculta() { try { return localStorage.getItem(NOTA_SEDAS) === '1'; } catch { return false; } }
 function fillGrid() {
   const grid = document.getElementById('grid'); if (!grid) return;
   const t = norm(listState.q);
@@ -1089,7 +1170,7 @@ function viewFicha(id) {
       <section class="panel">
         <h2>${T('Carreras de grupo ganadas', 'Graded race wins')}</h2>
         <div class="gradecard">
-          ${['G1','G2','G3'].map(k => `<div class="gc ${k.toLowerCase()}"><span class="k">${k}</span><span class="v">${rg[k]?.ganadas || 0}</span><span class="s">${T(`de ${rg[k]?.corridas || 0} corridas`, `from ${rg[k]?.corridas || 0} starts`)}</span></div>`).join('')}
+          ${['G1','G2','G3'].map(k => `<div class="gc ${k.toLowerCase()}${rg[k]?.ganadas ? '' : ' cero'}"><span class="k">${k}</span><span class="v">${rg[k]?.ganadas || 0}</span><span class="s">${T(`de ${rg[k]?.corridas || 0} corridas`, `from ${rg[k]?.corridas || 0} starts`)}</span></div>`).join('')}
         </div>
         ${(() => { const n = resumenNacional(p.carreras_grupo), t = Object.values(n).reduce((a, x) => a + x.corridas, 0);
           return t ? `<p class="note">${T('Grado nacional, no cuentan arriba', 'National grade, not counted above')}: ${Object.entries(n).filter(([, x]) => x.corridas).map(([k, x]) => `${k} ${x.ganadas} ${T('de', 'of')} ${x.corridas}`).join(' · ')}. ${T('Siguen en la tabla de abajo.', 'They are still listed in the table below.')}</p>` : ''; })()}
@@ -2132,13 +2213,27 @@ const GAMES = [
   { id: 'quiz', t: ['Quiz', 'Quiz'], d: ['Preguntas al azar sobre los caballos reales: ganadores, padres, colores del jinete y más.', 'Random questions about the real horses: winners, parents, racing silks and more.'] },
   { id: 'brackets', t: ['Brackets', 'Brackets'], d: ['16 umas al azar en octavos de final. Elige a tu favorita en cada duelo hasta coronar a una campeona.', '16 random umas in a round of 16. Pick your favorite in every duel until one is crowned champion.'] },
   { id: 'memorama', t: ['Memorama', 'Memory'], d: ['Tablero de 6×6 con 18 pares de umas. Encuentra todos los pares contra el cronómetro.', 'A 6×6 board with 18 pairs of umas. Find every pair against the clock.'] },
-  { id: 'wordle', t: ['Wordle', 'Wordle'], d: ['Adivina el nombre de una uma en 5 intentos. Las letras se pintan de gris, amarillo o verde según qué tan cerca estés.', 'Guess an uma’s name in 5 tries. Letters turn grey, yellow or green depending on how close you are.'] }
+  { id: 'wordle', t: ['Wordle', 'Wordle'], d: ['Adivina el nombre de una uma en 5 intentos. Las letras se pintan de gris, amarillo o verde según qué tan cerca estés.', 'Guess an uma’s name in 5 tries. Letters turn grey, yellow or green depending on how close you are.'] },
+  { id: 'umadle', t: ['Umadle', 'Umadle'], d: ['Adivina la uma oculta comparando sexo, pelaje, país, año, padre, G1 y carreras con cada intento.', 'Guess the hidden uma by comparing sex, coat, country, year, sire, G1 wins and starts with each try.'] }
 ];
+// Vista previa decorativa de cada juego en la portada de Juegos
+function gamePreview(id) {
+  const fotos = gameShuffle(gamePool()).slice(0, 3).map(p => imgUrl(p));
+  let in_ = '';
+  if (id === 'quiz') in_ = `<div class="gp-quiz">${[0, 1, 2].map(i => `<span class="${i === 1 ? 'ok' : ''}"><b></b><i style="width:${[70, 85, 60][i]}%"></i></span>`).join('')}</div>`;
+  else if (id === 'brackets') in_ = `<svg class="gp-bk" viewBox="0 0 200 84" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M4 10h30v20H4M34 20h20M4 54h30v20H4M34 64h20M54 20v44M54 42h22"/><path d="M196 10h-30v20h30M166 20h-20M196 54h-30v20h30M166 64h-20M146 20v44M146 42h-22"/></g>
+      <rect x="78" y="30" width="44" height="24" rx="6" class="gp-final"/><text x="100" y="47" text-anchor="middle" class="gp-tr">🏆</text></svg>`;
+  else if (id === 'memorama') in_ = `<div class="gp-mm">${Array.from({ length: 8 }, (_, i) => { const f = { 1: fotos[0], 6: fotos[0], 3: fotos[1] }[i]; return `<span class="${f ? 'up' : ''}">${f ? `<img src="${esc(f)}" alt="">` : ''}</span>`; }).join('')}</div>`;
+  else if (id === 'umadle') in_ = `<div class="gp-ud">${[['no', 'si', 'no', '↑', 'no'], ['si', 'si', 'no', '↓', 'si'], ['si', 'si', 'si', 'si', 'si']].map((r, k) => `<div><i class="p">${fotos[k] ? `<img src="${esc(fotos[k])}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:3px">` : ''}</i>${r.map(c => `<i class="${c === 'si' ? 'si' : ''}">${c.length === 1 ? c : ''}</i>`).join('')}</div>`).join('')}</div>`;
+  else if (id === 'wordle') in_ = `<div class="gp-wd">${[['O', 'si'], ['G', 'no'], ['U', 'casi'], ['R', 'si'], ['I', 'no']].map(([l, c]) => `<span class="wd-c ${c}">${l}</span>`).join('')}</div>`;
+  return `<div class="gp" aria-hidden="true">${in_}</div>`;
+}
 function viewGames() {
   app.innerHTML = `
   <section class="intro"><h1>${T('Juegos', 'Games')}</h1>
     <p>${T('Pon a prueba lo que sabes de las Umamusume y sus caballos reales, o simplemente diviértete con tus favoritas.', 'Test what you know about the Umamusume and their real horses, or just have fun with your favorites.')}</p></section>
-  <div class="gm-hub">${GAMES.map(g => `<a class="panel gm-card" href="#${g.id}"><span class="label">${T('Juego', 'Game')}</span><h2>${gameIcon(g.id)}${T(...g.t)}</h2><p>${T(...g.d)}</p><span class="gm-go">${T('Jugar', 'Play')} →</span></a>`).join('')}</div>`;
+  <div class="gm-hub">${GAMES.map(g => `<a class="panel gm-card" href="#${g.id}">${gamePreview(g.id)}<h2>${gameIcon(g.id)}${T(...g.t)}</h2><p>${T(...g.d)}</p><span class="gm-go">${T('Jugar', 'Play')} →</span></a>`).join('')}</div>`;
 }
 
 // Brackets: 16 umas, 4 rondas. w[r][m] = id elegido en el duelo m de la ronda r
@@ -2272,12 +2367,203 @@ function memoFlip(i, b) {
   }, 850);
 }
 
+/* ---------- reto diario y compartir (Wordle y Umadle) ---------- */
+// Todo lo guardado en el navegador pasa por estas dos funciones (con try/catch)
+const lsGet = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+// Fecha de hoy en la Ciudad de México (el reto cambia a medianoche de allá)
+function hoyMX() {
+  try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Mexico_City', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+  catch { return new Date(Date.now() - 6 * 3600e3).toISOString().slice(0, 10); }
+}
+const fechaCorta = f => String(f).split('-').reverse().join('/');
+const diaAntes = f => new Date(Date.parse(f + 'T12:00:00Z') - 864e5).toISOString().slice(0, 10);
+// Misma uma para todos los visitantes ese día: lista ordenada por id + semilla con la fecha
+function dailyPick(juego, pool) {
+  const s = pool.slice().sort((a, b) => String(a.id).localeCompare(String(b.id), undefined, { numeric: true }));
+  let h = 2166136261;
+  for (const ch of `${juego}|${hoyMX()}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  h ^= h >>> 15; h = Math.imul(h, 2246822507); h ^= h >>> 13;
+  return s[(h >>> 0) % s.length];
+}
+// Modo de cada juego: 'diario' (por defecto) o 'libre'
+const MODO_KEY = 'umadex-modo-', modoMem = {};
+const modoDe = j => modoMem[j] || (lsGet(MODO_KEY + j) === 'libre' ? 'libre' : 'diario');
+const modoSeg = j => `<div class="seg gm-modo" role="group" aria-label="${T('Modo de juego', 'Game mode')}">${[['diario', T('Diario', 'Daily')], ['libre', T('Libre', 'Free play')]].map(([m, t]) => `<button type="button" data-modo="${m}" aria-pressed="${modoDe(j) === m}">${t}</button>`).join('')}</div>`;
+function modoBind(j, view) {
+  app.querySelectorAll('[data-modo]').forEach(b => b.onclick = () => { if (modoDe(j) === b.dataset.modo) return; modoMem[j] = b.dataset.modo; lsSet(MODO_KEY + j, b.dataset.modo); view(); });
+}
+// Racha de días seguidos ganando el reto diario
+const rachaDe = j => lsGet('umadex-racha-' + j) || { racha: 0, mejor: 0, ultimo: '' };
+function rachaUpdate(j, gano, fecha) {
+  const r = rachaDe(j);
+  if (r.ultimo === fecha) return;
+  r.racha = gano ? (r.ultimo === diaAntes(fecha) ? (r.racha || 0) + 1 : 1) : 0;
+  r.mejor = Math.max(r.mejor || 0, r.racha); r.ultimo = fecha;
+  lsSet('umadex-racha-' + j, r);
+}
+// Tiempo hasta la medianoche de la Ciudad de México
+function msMedianoche() {
+  try {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Mexico_City', hourCycle: 'h23', hour: '2-digit', minute: '2-digit', second: '2-digit' }).formatToParts(new Date()).map(x => [x.type, x.value]));
+    return (86400 - ((+p.hour % 24) * 3600 + +p.minute * 60 + +p.second)) * 1000;
+  } catch { return 0; }
+}
+const hms = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(x => String(x).padStart(2, '0')).join(':'); };
+let cuentaTick = null, cuentaFin = false;
+function cuentaRegresiva() {
+  clearInterval(cuentaTick); cuentaFin = false;
+  const tick = () => {
+    const el = document.getElementById('gm-cuenta');
+    if (!el) { clearInterval(cuentaTick); cuentaTick = null; return; }
+    const ms = msMedianoche(); el.textContent = hms(ms);
+    // al llegar la medianoche se carga el reto nuevo
+    if (ms <= 1000 && !cuentaFin) { cuentaFin = true; setTimeout(route, 2000); }
+  };
+  tick(); cuentaTick = setInterval(tick, 1000);
+}
+function diarioPanel(j, texto) {
+  const r = rachaDe(j), act = r.ultimo === hoyMX() || r.ultimo === diaAntes(hoyMX()) ? r.racha : 0;
+  return `<div class="gm-diario panel">
+    <div class="gm-stats">
+      <div><span class="label">${T('Racha', 'Streak')}</span><b class="num">${act}</b><small>${act === 1 ? T('día seguido', 'day in a row') : T('días seguidos', 'days in a row')}</small></div>
+      <div><span class="label">${T('Mejor racha', 'Best streak')}</span><b class="num">${r.mejor || 0}</b></div>
+      <div><span class="label">${T('Siguiente reto', 'Next challenge')}</span><b class="num" id="gm-cuenta">${hms(msMedianoche())}</b></div>
+    </div>
+    <div class="gm-share"><button type="button" class="primary" id="gm-share" data-txt="${esc(texto)}">${T('Compartir', 'Share')}</button><span class="gm-copiado" id="gm-copiado" role="status" aria-live="polite"></span></div>
+  </div>`;
+}
+function diarioBind() {
+  cuentaRegresiva();
+  const b = document.getElementById('gm-share');
+  if (b) b.onclick = () => compartir(b.dataset.txt);
+}
+// Compartir: en celular usa el menú del sistema si existe; si no, copia al portapapeles
+async function compartir(txt) {
+  const st = document.getElementById('gm-copiado');
+  const aviso = m => { if (!st) return; st.textContent = m; clearTimeout(aviso.t); aviso.t = setTimeout(() => { st.textContent = ''; }, 2500); };
+  if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+    try { await navigator.share({ text: txt }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(txt); aviso(T('¡Copiado!', 'Copied!')); return; } catch {}
+  try {
+    const t = document.createElement('textarea'); t.value = txt; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(t); t.select(); const ok = document.execCommand('copy'); t.remove();
+    aviso(ok ? T('¡Copiado!', 'Copied!') : T('No se pudo copiar', 'Couldn’t copy'));
+  } catch { aviso(T('No se pudo copiar', 'Couldn’t copy')); }
+}
+
+// Umadle (estilo Loldle): adivina la uma oculta comparando sus datos con los de cada intento
+// Verde = coincide; gris = no coincide; en año, G1 y carreras, la flecha dice si el valor de la oculta es mayor (↑) o menor (↓)
+const UD_KEY = 'umadex-umadle';
+const UD_COLS = [
+  { k: 'sexo', t: ['Sexo', 'Sex'], v: p => p.sexo, tx: p => T(p.sexo, SEXO_EN[p.sexo] || p.sexo) },
+  { k: 'pelaje', t: ['Pelaje', 'Coat'], v: p => p.pelaje, tx: p => T(p.pelaje, PELAJE_EN[p.pelaje] || p.pelaje) },
+  { k: 'pais', t: ['País', 'Country'], v: p => p.pais_nacimiento, tx: p => paisTx(p.pais_nacimiento) },
+  { k: 'anio', t: ['Año', 'Year'], v: p => +p.anio_nacimiento || 0, num: true },
+  { k: 'padre', t: ['Padre', 'Sire'], v: p => norm(p.pedigri?.padre || ''), tx: p => p.pedigri?.padre || '—' },
+  { k: 'g1', t: ['G1 ganadas', 'G1 wins'], v: p => p.resumen_grados?.G1?.ganadas || 0, num: true },
+  { k: 'carreras', t: ['Carreras', 'Starts'], v: p => +p.record?.carreras || 0, num: true }
+];
+const udGuessable = () => roster.filter(p => p.personaje);
+var ud = null;
+function udSave() { if (ud.modo === 'diario') lsSet(UD_KEY + '-diario', { fecha: ud.fecha, g: ud.guesses }); else lsSet(UD_KEY, { id: ud.id, g: ud.guesses }); }
+function udDaily() {
+  const f = hoyMX(), s = lsGet(UD_KEY + '-diario');
+  ud = { modo: 'diario', fecha: f, id: String(dailyPick('umadle', gamePool()).id), guesses: s && s.fecha === f ? (s.g || []).filter(byId).map(String) : [], q: '' };
+}
+function udStart() { if (modoDe('umadle') === 'diario') udDaily(); else udLoad(); }
+function udShare() {
+  const n = ud.guesses.length, filas = ud.guesses.map(udEmoji), MAX = 10;
+  return [`Umadex Umadle · ${fechaCorta(ud.fecha)} · ${n} ${n === 1 ? T('intento', 'try') : T('intentos', 'tries')}`,
+    ...(filas.length > MAX ? [...filas.slice(0, MAX - 1), `… +${filas.length - MAX}`, filas[filas.length - 1]] : filas), 'umadexfan.com'].join('\n');
+}
+function udNew() {
+  const pool = gamePool(), prev = ud?.id;
+  const opts = pool.length > 1 ? pool.filter(p => String(p.id) !== String(prev)) : pool;
+  ud = { modo: 'libre', id: String(opts[Math.floor(Math.random() * opts.length)].id), guesses: [], q: '' }; udSave();
+}
+function udLoad() {
+  try {
+    const s = JSON.parse(localStorage.getItem(UD_KEY) || 'null');
+    if (s && gamePool().some(p => String(p.id) === String(s.id))) { ud = { modo: 'libre', id: String(s.id), guesses: (s.g || []).filter(byId).map(String), q: '' }; return; }
+  } catch {}
+  udNew();
+}
+const udWon = () => ud.guesses.includes(ud.id);
+// Resultado de una columna: 'si' / 'no' y, en las numéricas, la flecha hacia el valor de la oculta
+function udCmp(col, g, h) {
+  const a = col.v(g), b = col.v(h);
+  if (a === b) return { s: 'si', f: '' };
+  return { s: 'no', f: col.num ? (b > a ? '↑' : '↓') : '' };
+}
+function udRow(gid, nuevo) {
+  const g = byId(gid), h = byId(ud.id);
+  const cells = UD_COLS.map((c, i) => { const r = udCmp(c, g, h); return `<td class="ud-c ${r.s}" style="--d:${(i + 1) * 90}ms"><span>${esc(c.tx ? c.tx(g) : c.k === 'anio' ? String(c.v(g) || '—') : String(c.v(g)))}${r.f ? `<b class="ud-f" aria-label="${r.f === '↑' ? T('mayor', 'higher') : T('menor', 'lower')}">${r.f}</b>` : ''}</span></td>`; }).join('');
+  return `<tr class="${nuevo ? 'nuevo' : ''}"><th scope="row" class="ud-p ${gid === ud.id ? 'si' : ''}">${imgUrl(g) ? `<img src="${esc(imgUrl(g))}" alt="">` : ''}<span>${esc(g.personaje)}</span></th>${cells}</tr>`;
+}
+// Fila de cuadritos para compartir o para la vista previa
+const udEmoji = gid => UD_COLS.map(c => udCmp(c, byId(gid), byId(ud.id)).s === 'si' ? '🟩' : '⬜').join('');
+function viewUmadle() {
+  if (gamePool().length < 2) { app.innerHTML = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>${gameWait()}`; return; }
+  if (!ud || ud.modo !== modoDe('umadle') || (ud.modo === 'diario' && ud.fecha !== hoyMX())) udStart();
+  const diario = ud.modo === 'diario';
+  const h = byId(ud.id), won = udWon(), nuevo = ud.nuevo; ud.nuevo = null;
+  const n = ud.guesses.length;
+  app.innerHTML = `
+  <a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>
+  <section class="intro"><h1 class="gm-h1">${gameIcon('umadle')}Umadle</h1>
+    <p>${T('Adivina la uma oculta. Escribe el nombre de cualquier uma y compara sus datos con los de la oculta: verde si coinciden, gris si no. En año, G1 y carreras, la flecha indica si el valor de la oculta es mayor (↑) o menor (↓). Tienes intentos ilimitados.', 'Guess the hidden uma. Type any uma’s name and compare her data with the hidden one: green if they match, grey if not. For year, G1 wins and starts, the arrow shows whether the hidden uma’s value is higher (↑) or lower (↓). You have unlimited tries.')}</p></section>
+  <div class="gm-modo-bar">${modoSeg('umadle')}<span class="label">${diario ? T(`Reto del ${fechaCorta(ud.fecha)}`, `Challenge for ${fechaCorta(ud.fecha)}`) : T('Partida libre', 'Free play')}</span></div>
+  <div class="gm-bar"><span class="label" role="status">${T(`Intentos: ${n}`, `Tries: ${n}`)}</span>
+    ${diario ? '' : `<button type="button" class="primary" id="ud-new">↻ ${T('Reiniciar', 'Restart')}</button>`}</div>
+  ${won ? `<div class="ud-win panel">${imgUrl(h) ? `<img src="${esc(imgUrl(h))}" alt="">` : ''}<div><span class="label">${T(`¡La adivinaste en ${n} ${n === 1 ? 'intento' : 'intentos'}!`, `You got her in ${n} ${n === 1 ? 'try' : 'tries'}!`)}</span><b>${esc(h.personaje)}</b><a href="#p-${esc(h.id)}">${T('Ver su ficha', 'See her profile')} →</a></div></div>${diario ? diarioPanel('umadle', udShare()) : ''}`
+    : `<div class="ud-search"><label class="label" for="ud-q">${T('Escribe el nombre de una uma', 'Type an uma’s name')}</label>
+      <input id="ud-q" type="search" autocomplete="off" spellcheck="false" placeholder="${T('Por ejemplo: Special Week', 'For example: Special Week')}" value="${esc(ud.q || '')}" role="combobox" aria-expanded="false" aria-controls="ud-list" aria-autocomplete="list">
+      <ul id="ud-list" class="ud-list" role="listbox" hidden></ul></div>`}
+  ${n ? `<p class="ud-hint">${T('Desliza la tabla hacia los lados para ver todas las columnas →', 'Swipe the table sideways to see every column →')}</p><div class="ud-wrap"><table class="ud-t"><thead><tr><th scope="col">Uma</th>${UD_COLS.map(c => `<th scope="col">${T(...c.t)}</th>`).join('')}</tr></thead>
+    <tbody>${ud.guesses.slice().reverse().map(g => udRow(g, g === nuevo)).join('')}</tbody></table></div>` : ''}`;
+  const nw = document.getElementById('ud-new'); if (nw) nw.onclick = () => { udNew(); viewUmadle(); };
+  modoBind('umadle', viewUmadle);
+  if (diario && won) diarioBind();
+  const q = document.getElementById('ud-q');
+  if (q) udSearch(q);
+}
+function udSearch(q) {
+  const list = document.getElementById('ud-list');
+  let items = [], sel = 0;
+  const pick = p => { if (!p) return; ud.guesses.push(String(p.id)); ud.nuevo = String(p.id); ud.q = ''; udSave(); if (ud.modo === 'diario' && udWon()) rachaUpdate('umadle', true, ud.fecha); viewUmadle(); document.getElementById('ud-q')?.focus(); };
+  const draw = () => {
+    const t = norm(q.value.trim());
+    ud.q = q.value;
+    items = !t ? [] : udGuessable().filter(p => !ud.guesses.includes(String(p.id)) && norm(p.personaje).includes(t))
+      .sort((a, b) => norm(a.personaje).indexOf(t) - norm(b.personaje).indexOf(t) || a.personaje.localeCompare(b.personaje)).slice(0, 8);
+    sel = Math.min(sel, Math.max(0, items.length - 1));
+    const repetida = t && !items.length && udGuessable().some(p => ud.guesses.includes(String(p.id)) && norm(p.personaje).includes(t));
+    list.innerHTML = items.length ? items.map((p, i) => `<li role="option" id="ud-o${i}" data-i="${i}" aria-selected="${i === sel}">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : '<span class="ud-ph"></span>'}<span>${esc(p.personaje)}</span></li>`).join('')
+      : t ? `<li class="ud-none">${repetida ? T('Ya probaste esa uma.', 'You already tried that uma.') : T('No hay ninguna uma con ese nombre.', 'No uma with that name.')}</li>` : '';
+    list.hidden = !t;
+    q.setAttribute('aria-expanded', String(!!items.length));
+    if (items.length) q.setAttribute('aria-activedescendant', 'ud-o' + sel); else q.removeAttribute('aria-activedescendant');
+  };
+  q.addEventListener('input', () => { sel = 0; draw(); });
+  q.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { if (!items.length) return; e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; draw(); }
+    else if (e.key === 'Enter') { e.preventDefault(); pick(items[sel]); }
+    else if (e.key === 'Escape') { q.value = ''; draw(); }
+  });
+  list.addEventListener('mousedown', e => e.preventDefault());
+  list.addEventListener('click', e => { const li = e.target.closest('li[data-i]'); if (li) pick(items[+li.dataset.i]); });
+  if (q.value) draw();
+}
+
 // Ícono de cada juego (menú, portada y título)
 function gameIcon(id) {
   const svg = d => `<svg class="gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
   if (id === 'quiz') return svg('<circle cx="4.5" cy="5.5" r="1.6"/><path d="M9 5.5h11"/><circle cx="4.5" cy="12" r="1.6" fill="currentColor"/><path d="M9 12h11"/><circle cx="4.5" cy="18.5" r="1.6"/><path d="M9 18.5h11"/>');
   if (id === 'brackets') return svg('<path d="M2 5h4.5v14H2M6.5 12H10M22 5h-4.5v14H22M17.5 12H14"/>');
   if (id === 'memorama') return svg('<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>');
+  if (id === 'umadle') return `<span class="gi gi-ud" aria-hidden="true"><i class="si"></i><i></i><i class="si"></i><i></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span>`;
   if (id === 'wordle') return `<span class="gi gi-uma" aria-hidden="true"><i class="no">U</i><i class="casi">M</i><i class="si">A</i></span>`;
   return '';
 }
@@ -2290,17 +2576,25 @@ const wdOficiales = () => BASE.filter(p => p.categoria === 'oficial');
 // solo nombres de letras y espacios, de 4 a 13 letras, para que el tablero quepa en el celular
 const wdPool = () => wdOficiales().filter(p => /^[A-Za-z ]+$/.test(p.personaje) && wdLetras(p.personaje).length >= 4 && wdLetras(p.personaje).length <= 13);
 var wd = null;
-function wdSave() { try { localStorage.setItem(WD_KEY, JSON.stringify({ id: wd.id, g: wd.guesses })); } catch {} }
+function wdSave() { if (wd.modo === 'diario') lsSet(WD_KEY + '-diario', { fecha: wd.fecha, g: wd.guesses }); else lsSet(WD_KEY, { id: wd.id, g: wd.guesses }); }
+// Reto diario: la uma sale de la fecha; los intentos de hoy se guardan aparte
+function wdDaily() {
+  const f = hoyMX(), s = lsGet(WD_KEY + '-diario');
+  wd = { modo: 'diario', fecha: f, id: String(dailyPick('wordle', wdPool()).id), guesses: s && s.fecha === f ? (s.g || []).slice(0, WD_MAX) : [], cur: '', msg: '' };
+}
+function wdStart() { if (modoDe('wordle') === 'diario') wdDaily(); else wdLoad(); }
+const wdShare = () => [`Umadex Wordle · ${fechaCorta(wd.fecha)} · ${wdWon() ? wd.guesses.length : 'X'}/${WD_MAX}`,
+  ...wd.guesses.map(g => wdScore(g, wdTarget()).map(x => ({ si: '🟩', casi: '🟨', no: '⬜' })[x]).join('')), 'umadexfan.com'].join('\n');
 function wdNew() {
   const pool = wdPool(), prev = wd?.id;
   const opts = pool.length > 1 ? pool.filter(p => String(p.id) !== String(prev)) : pool;
   const p = opts[Math.floor(Math.random() * opts.length)];
-  wd = { id: String(p.id), guesses: [], cur: '', msg: '' }; wdSave();
+  wd = { modo: 'libre', id: String(p.id), guesses: [], cur: '', msg: '' }; wdSave();
 }
 function wdLoad() {
   try {
     const s = JSON.parse(localStorage.getItem(WD_KEY) || 'null');
-    if (s && wdPool().some(p => String(p.id) === String(s.id))) { wd = { id: String(s.id), guesses: (s.g || []).slice(0, WD_MAX), cur: '', msg: '' }; return; }
+    if (s && wdPool().some(p => String(p.id) === String(s.id))) { wd = { modo: 'libre', id: String(s.id), guesses: (s.g || []).slice(0, WD_MAX), cur: '', msg: '' }; return; }
   } catch {}
   wdNew();
 }
@@ -2328,7 +2622,8 @@ function wdRow(letters, score, cls = '') {
 }
 function viewWordle() {
   if (!wdPool().length) { app.innerHTML = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>${gameWait()}`; return; }
-  if (!wd) wdLoad();
+  if (!wd || wd.modo !== modoDe('wordle') || (wd.modo === 'diario' && wd.fecha !== hoyMX())) wdStart();
+  const diario = wd.modo === 'diario';
   const p = pjById(wd.id), t = wdTarget(), over = wdOver(), won = wdWon(), keys = wdKeys(), justo = wd.justo;
   wd.justo = null;
   const words = p.personaje.split(' ').map(w => wdLetras(w).length);
@@ -2339,19 +2634,22 @@ function viewWordle() {
   const fin = over ? `<div class="wd-fin panel${won ? ' ok' : ''}">
       ${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}
       <div><span class="label">${won ? T(`¡Lo adivinaste en ${wd.guesses.length} ${wd.guesses.length === 1 ? 'intento' : 'intentos'}!`, `You got it in ${wd.guesses.length} ${wd.guesses.length === 1 ? 'try' : 'tries'}!`) : T('Se acabaron los intentos. La uma era:', 'Out of tries. The uma was:')}</span>
-        <b>${esc(p.personaje)}</b><a href="#p-${esc(p.id)}">${T('Ver su ficha', 'See her profile')} →</a></div></div>` : '';
+        <b>${esc(p.personaje)}</b><a href="#p-${esc(p.id)}">${T('Ver su ficha', 'See her profile')} →</a></div></div>${diario ? diarioPanel('wordle', wdShare()) : ''}` : '';
   app.innerHTML = `
   <a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>
   <section class="intro"><h1 class="gm-h1">${gameIcon('wordle')}Wordle</h1>
     <p>${T(`Adivina el nombre de una uma oficial en ${WD_MAX} intentos. Llena todas las casillas con las letras que quieras y presiona Enviar. Gris: la letra no está. Amarillo: está, pero en otro lugar. Verde: está en su lugar.`, `Guess the name of an official uma in ${WD_MAX} tries. Fill every box with any letters you like and press Enter. Grey: the letter isn’t there. Yellow: it’s there, but somewhere else. Green: it’s in the right spot.`)}</p></section>
+  <div class="gm-modo-bar">${modoSeg('wordle')}<span class="label">${diario ? T(`Reto del ${fechaCorta(wd.fecha)}`, `Challenge for ${fechaCorta(wd.fecha)}`) : T('Partida libre', 'Free play')}</span></div>
   <div class="gm-bar"><span class="label">${t.length} ${T('letras', 'letters')}${words.length > 1 ? ` · ${words.length} ${T('palabras', 'words')} (${words.join(' + ')})` : ''} · ${T('intento', 'try')} ${Math.min(wd.guesses.length + (over ? 0 : 1), WD_MAX)} ${T('de', 'of')} ${WD_MAX}</span>
-    <button type="button" class="primary" id="wd-new">↻ ${T('Reiniciar', 'Restart')}</button></div>
+    ${diario ? '' : `<button type="button" class="primary" id="wd-new">↻ ${T('Reiniciar', 'Restart')}</button>`}</div>
   <div class="wd-board" role="grid" aria-label="${T('Tablero', 'Board')}">${rows}</div>
   <p class="wd-msg" role="status">${esc(wd.msg || '')}</p>
   ${fin}
   ${over ? '' : `<div class="wd-kb" aria-label="${T('Teclado', 'Keyboard')}">${KB.map(r => `<div>${Array.from(r).map(ch => ch === '⏎' ? `<button type="button" class="wd-k ancho" data-wk="ENTER">${T('Enviar', 'Enter')}</button>` : ch === '⌫' ? `<button type="button" class="wd-k ancho" data-wk="BACK" aria-label="${T('Borrar', 'Delete')}">⌫</button>` : `<button type="button" class="wd-k ${keys[ch] || ''}" data-wk="${ch}">${ch}</button>`).join('')}</div>`).join('')}</div>`}`;
   wd.msg = '';
-  document.getElementById('wd-new').onclick = () => { wdNew(); viewWordle(); };
+  const nw = document.getElementById('wd-new'); if (nw) nw.onclick = () => { wdNew(); viewWordle(); };
+  modoBind('wordle', viewWordle);
+  if (diario && over) diarioBind();
   app.querySelectorAll('[data-wk]').forEach(b => b.onclick = () => wdKey(b.dataset.wk));
 }
 function wdKey(k) {
@@ -2361,7 +2659,7 @@ function wdKey(k) {
   else if (k === 'ENTER') {
     if (wd.cur.length < t.length) { wd.msg = T(`Faltan letras: el nombre tiene ${t.length}.`, `Not enough letters: the name has ${t.length}.`); wd.err = true; }
     else if (wd.guesses.includes(wd.cur)) { wd.msg = T('Ya probaste ese nombre.', 'You already tried that name.'); wd.err = true; }
-    else { wd.guesses.push(wd.cur); wd.justo = wd.guesses.length - 1; wd.cur = ''; wdSave(); }
+    else { wd.guesses.push(wd.cur); wd.justo = wd.guesses.length - 1; wd.cur = ''; wdSave(); if (wd.modo === 'diario' && wdOver()) rachaUpdate('wordle', wdWon(), wd.fecha); }
   } else if (/^[A-Z]$/.test(k) && wd.cur.length < t.length) wd.cur += k;
   viewWordle();
 }
@@ -3079,10 +3377,19 @@ function armDelete(btn, docId, msg, after, col = COL, confirmTxt = 'Confirmar bo
 }
 
 /* ---------- pie ---------- */
-const footHTML = () => T(`Datos consultados el ${esc(D.consultado)}. Récords y ganadores de Wikipedia, JBIS y netkeiba. Grados con los colores oficiales de la JRA: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Sitio de fans sin fines de lucro, no oficial y sin afiliación ni respaldo de Cygames; sigue la <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">guía de obras derivadas de Uma Musume</a>. Uma Musume: Pretty Derby © Cygames, Inc.`,
-  `Data checked on ${esc(D.consultado)}. Records and winners from Wikipedia, JBIS and netkeiba. Grades shown in the JRA’s official colors: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Non-profit, unofficial fan site with no affiliation with or endorsement from Cygames; it follows the <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">Uma Musume derivative work guidelines</a>. Uma Musume: Pretty Derby © Cygames, Inc.`);
+// Fecha del resultado más reciente cargado (ediciones de las G1, incluidas las subcarreras)
+function ultimaAct() {
+  const hoy = new Date().toISOString().slice(0, 10);
+  let m = '';
+  const f = e => { const d = e?.fecha; if (e?.ganador && d && d <= hoy && d > m) m = d; };
+  for (const r of RACES) { f(r.edicion_resumida); for (const x of r.carreras || []) f(x.edicion || x.edicion_resumida); }
+  return m || D.consultado || '';
+}
+const fechaLarga = iso => /^\d{4}-\d\d-\d\d$/.test(iso) ? new Date(iso + 'T00:00:00').toLocaleDateString(LOC(), { day: 'numeric', month: 'long', year: 'numeric' }) : iso;
+const footHTML = () => T(`Última actualización: ${esc(fechaLarga(ultimaAct()))}. Récords y ganadores de Wikipedia, JBIS y netkeiba. Grados con los colores oficiales de la JRA: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Sitio de fans sin fines de lucro, no oficial y sin afiliación ni respaldo de Cygames; sigue la <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">guía de obras derivadas de Uma Musume</a>. Uma Musume: Pretty Derby © Cygames, Inc.`,
+  `Last updated: ${esc(fechaLarga(ultimaAct()))}. Records and winners from Wikipedia, JBIS and netkeiba. Grades shown in the JRA’s official colors: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Non-profit, unofficial fan site with no affiliation with or endorsement from Cygames; it follows the <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">Uma Musume derivative work guidelines</a>. Uma Musume: Pretty Derby © Cygames, Inc.`);
 // Textos fijos del encabezado y el pie en el idioma activo
-const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], agregar: ['Agregar personaje', 'Add character'] };
+const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], umadle: ['Umadle', 'Umadle'], agregar: ['Agregar personaje', 'Add character'] };
 function applyChrome() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('.nav [data-nav], .nav [data-nav-sub]').forEach(a => { const t = NAV_TX[a.dataset.nav || a.dataset.navSub]; if (!t) return; if (a.closest('.nav-dd-games') && a.dataset.navSub) a.innerHTML = `${gameIcon(a.dataset.navSub)}<span>${T(t[0], t[1])}</span>`; else a.textContent = T(t[0], t[1]); });
