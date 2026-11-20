@@ -80,7 +80,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;te
 .nav{display:flex;gap:.25rem;flex-wrap:wrap}
 .nav a{font-family:var(--font-display);font-weight:600;font-size:1.05rem;text-decoration:none;padding:.25rem .7rem;border-radius:999px;letter-spacing:.03em}
 .nav a[aria-current="page"]{background:var(--turf-ink);color:var(--turf)}
-/* Submenú de "G1 del año" (PC): se abre al pasar el cursor y ofrece G1 del año y Calendario */
+/* Submenús (PC): "Personajes" ofrece Personajes y Comparar; "Carreras G1 del año" ofrece esa misma página y Calendario */
 .nav-dd{position:relative;display:flex}
 .nav-sub{position:absolute;z-index:4;top:100%;left:50%;padding-top:.45rem;min-width:11.5rem;opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s ease,transform .22s cubic-bezier(.2,.7,.3,1),visibility 0s .22s}
 .nav-sub-in{display:grid;gap:.15rem;padding:.4rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgb(0 0 0/.3)}
@@ -123,6 +123,11 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;te
   .top.menu-open .scrim{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s}
 }
 @media (max-width:640px){.brand span{display:none}}
+@media (min-width:761px){
+  .brand{flex:1 1 0;min-width:7.2rem;flex-wrap:wrap;row-gap:2rem;max-height:2.5rem;overflow:hidden}
+  .brand span{white-space:nowrap}
+}
+@media (min-width:761px) and (max-width:1099px){.top .wrap{gap:.6rem}.nav{gap:.1rem}.nav>a,.nav-dd>a{padding:.25rem .5rem;font-size:1rem}}
 /* Selector de idioma ES / EN */
 .langsw{display:inline-flex;flex:none;border:1px solid color-mix(in srgb,var(--turf-ink) 55%,transparent);border-radius:999px;overflow:hidden}
 .langsw button{border:0;border-radius:0;background:transparent;color:var(--turf-ink);font-family:var(--font-display);font-weight:700;font-size:.9rem;letter-spacing:.06em;padding:.15rem .6rem;line-height:1.3}
@@ -540,7 +545,7 @@ a.flink:hover{text-decoration-style:solid}
 .gi-uma .no,.wd-c.no,.wd-k.no{background:#787c7e;border-color:#787c7e;color:#fff}
 .gi-uma .casi,.wd-c.casi,.wd-k.casi{background:#c9a227;border-color:#c9a227;color:#fff}
 .gi-uma .si,.wd-c.si,.wd-k.si{background:#3e9b4f;border-color:#3e9b4f;color:#fff}
-.nav .nav-sub a{display:flex;align-items:center;gap:.5rem}
+.nav .nav-dd-games .nav-sub a{display:flex;align-items:center;gap:.5rem}
 .gm-card h2,.gm-h1{display:flex;align-items:center;gap:.5rem}
 .gm-h1 .gi-uma i{font-size:.42em}
 .gm-card h2 .gi-uma i{font-size:.7em}
@@ -750,6 +755,7 @@ a.col-c:hover{transform:translateY(-2px)}
 .col-album{display:grid;gap:.7rem;margin-top:1.4rem}
 .col-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem}
 .col-head h2{margin:0}
+.col-ley{margin:0}
 .col-rars{display:flex;gap:.8rem;font-weight:700;font-size:.85rem}
 .col-rars .r1{color:var(--muted)}.col-rars .r2{color:#4a7fd6}.col-rars .r3{color:#c0921a}
 .col-bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden}
@@ -899,17 +905,22 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
     <a class="brand" href="#personajes"><b>UMADEX</b><span>Umamusume Pretty Derby · caballos reales</span></a>
     <nav class="nav" id="nav" aria-label="Secciones">
       <div class="nav-head"><a class="nav-home" href="#personajes">UMADEX</a><button type="button" class="nav-x" aria-label="Cerrar menú">×</button></div>
-      <a href="#personajes" data-nav="personajes">Personajes</a>
-      <div class="nav-dd">
-        <a href="#g1" data-nav="g1">G1 del año</a>
+      <div class="nav-dd nav-dd-pj">
+        <a href="#personajes" data-nav="personajes">Personajes</a>
         <div class="nav-sub"><div class="nav-sub-in">
-          <a href="#g1" data-nav-sub="g1">G1 del año</a>
+          <a href="#personajes" data-nav-sub="personajes">Personajes</a>
+          <a href="#comparar" data-nav="comparar">Comparar</a>
+        </div></div>
+      </div>
+      <div class="nav-dd nav-dd-g1">
+        <a href="#g1" data-nav="g1">Carreras G1 del año</a>
+        <div class="nav-sub"><div class="nav-sub-in">
+          <a href="#g1" data-nav-sub="g1">Carreras G1 del año</a>
           <a href="#calendario" data-nav="calendario">Calendario</a>
         </div></div>
       </div>
       <a href="#hazanas" data-nav="hazanas">Hazañas</a>
       <a href="#ganancias" data-nav="ganancias">Ganancias</a>
-      <a href="#comparar" data-nav="comparar">Comparar</a>
       <div class="nav-dd nav-dd-games">
         <a href="#juegos" data-nav="juegos">Juegos</a>
         <div class="nav-sub"><div class="nav-sub-in">
@@ -1160,7 +1171,8 @@ function route() {
   if (h.startsWith('comparar')) sec = 'comparar';
   if (/^(juegos|quiz|brackets|memorama|wordle|umadle|silueta|masomenos|carrera|coleccion)$/.test(h)) sec = h;
   document.querySelectorAll('[data-nav], [data-nav-sub]').forEach(a => { if ((a.dataset.nav || a.dataset.navSub) === sec) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-  document.querySelector('.nav-dd')?.classList.toggle('sub-on', sec === 'calendario');
+  document.querySelector('.nav-dd-g1')?.classList.toggle('sub-on', sec === 'calendario');
+  document.querySelector('.nav-dd-pj')?.classList.toggle('sub-on', sec === 'comparar');
   document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama|wordle|umadle|silueta|masomenos|carrera|coleccion)$/.test(sec));
   const nav = document.querySelector('.nav'), cur = nav?.querySelector('[aria-current]');
   if (cur && nav.scrollWidth > nav.clientWidth) { const r = cur.getBoundingClientRect(), n = nav.getBoundingClientRect(); nav.scrollLeft += r.left - n.left - (n.width - r.width) / 2; }
@@ -3073,15 +3085,15 @@ function viewCarrera() {
 
 // Colección de umas (prueba): 10 tiradas gratis al día; rareza por G1 ganadas
 const COL_KEY = 'umadex-coleccion', COL_DIA = 10;
-const COL_RAREZA = [{ n: 1, p: .70 }, { n: 2, p: .25 }, { n: 3, p: .05 }];
-const colRareza = p => { const g = p.resumen_grados?.G1?.ganadas || 0; return g >= 4 ? 3 : g >= 1 ? 2 : 1; };
+const COL_RAREZA = [{ n: 1, p: .55 }, { n: 2, p: .35 }, { n: 3, p: .10 }];
+const colRareza = p => { const g = p.resumen_grados?.G1?.ganadas || 0; return g >= 4 ? 3 : g >= 2 ? 2 : 1; };
 const colEstrellas = n => '★'.repeat(n);
 var colUlt = [], colConfirmar = false, colAnim = false;
 function colEstado() {
   const s = lsGet(COL_KEY) || {}, hoy = hoyMX();
   return { cartas: s.cartas && typeof s.cartas === 'object' ? s.cartas : {}, dia: hoy, usadas: s.dia === hoy ? Math.min(COL_DIA, +s.usadas || 0) : 0 };
 }
-// Primero se sortea la rareza (70 % / 25 % / 5 %) y luego una uma de esa rareza
+// Primero se sortea la rareza (55 % / 35 % / 10 %) y luego una uma de esa rareza
 function colTirar(n) {
   const s = colEstado(), pool = gamePool(), quedan = COL_DIA - s.usadas, k = Math.min(n, quedan), out = [];
   for (let i = 0; i < k; i++) {
@@ -3108,7 +3120,7 @@ function viewColeccion() {
   const album = pool.slice().sort((a, b) => colRareza(b) - colRareza(a) || a.personaje.localeCompare(b.personaje));
   const porRar = [3, 2, 1].map(n => ({ n, tot: pool.filter(p => colRareza(p) === n).length, mias: pool.filter(p => colRareza(p) === n && s.cartas[String(p.id)]).length }));
   app.innerHTML = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('coleccion')}${T('Colección de umas', 'Uma collection')}</h1>
-    <p>${T(`Tienes ${COL_DIA} tiradas gratis al día (se renuevan a medianoche de la Ciudad de México). Cada tirada te da una carta al azar: ★ si la uma no ganó ninguna G1, ★★ si ganó de 1 a 3 y ★★★ si ganó 4 o más. Las de tres estrellas salen muy poco.`, `You get ${COL_DIA} free pulls a day (they reset at midnight Mexico City time). Each pull gives you a random card: ★ if the uma won no G1, ★★ if she won 1 to 3 and ★★★ if she won 4 or more. Three-star cards are rare.`)} <span class="muted">${T('Modo de prueba.', 'Test mode.')}</span></p></section>
+    <p>${T(`Tienes ${COL_DIA} tiradas gratis al día (se renuevan a medianoche de la Ciudad de México). Cada tirada te da una carta al azar: ★ si la uma ganó 0 o 1 G1 (sale el 55 % de las veces), ★★ si ganó 2 o 3 (35 %) y ★★★ si ganó 4 o más (10 %).`, `You get ${COL_DIA} free pulls a day (they reset at midnight Mexico City time). Each pull gives you a random card: ★ if the uma won 0 or 1 G1 (55 % of pulls), ★★ if she won 2 or 3 (35 %) and ★★★ if she won 4 or more (10 %).`)} <span class="muted">${T('Modo de prueba.', 'Test mode.')}</span></p></section>
   <div class="panel col-tir">
     <div class="col-btns">
       <button type="button" class="primary col-b" id="col-1" ${quedan ? '' : 'disabled'}>${T('Tirar', 'Pull')}</button>
@@ -3120,6 +3132,7 @@ function viewColeccion() {
   <section class="col-album">
     <div class="col-head"><h2>${T('Álbum', 'Album')} <span class="num">${tengo.length}/${pool.length}</span></h2>
       <span class="col-rars">${porRar.map(x => `<span class="r${x.n}">${colEstrellas(x.n)} ${x.mias}/${x.tot}</span>`).join('')}</span></div>
+    <p class="note col-ley">${T('★ = 0 o 1 G1 ganada (55 %) · ★★ = 2 o 3 G1 (35 %) · ★★★ = 4 G1 o más (10 %)', '★ = 0 or 1 G1 win (55 %) · ★★ = 2 or 3 G1 wins (35 %) · ★★★ = 4 or more G1 wins (10 %)')}</p>
     <div class="col-bar" aria-hidden="true"><i style="width:${100 * tengo.length / pool.length}%"></i></div>
     <div class="col-grid">${album.map(p => { const id = String(p.id), n = s.cartas[id] || 0; return n ? `<a href="#p-${esc(id)}" class="col-c r${colRareza(p)}" title="${esc(p.personaje)}">${colCarta(p, n > 1 ? `<span class="col-rep" aria-label="${T(`${n - 1} repetidas`, `${n - 1} duplicates`)}">+${n - 1}</span>` : '')}</a>`
       : `<span class="col-c no r${colRareza(p)}" aria-label="${T('Carta que aún no tienes', 'Card you don’t have yet')}"><span class="col-rar">${colEstrellas(colRareza(p))}</span><span class="col-sil">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="" loading="lazy">` : ''}<i>?</i></span><b class="col-n">?</b></span>`; }).join('')}</div>
@@ -4118,7 +4131,7 @@ const fechaLarga = iso => /^\d{4}-\d\d-\d\d$/.test(iso) ? new Date(iso + 'T00:00
 const footHTML = () => T(`Última actualización: ${esc(fechaLarga(ultimaAct()))}. Récords y ganadores de Wikipedia, JBIS y netkeiba. Grados con los colores oficiales de la JRA: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Sitio de fans sin fines de lucro, no oficial y sin afiliación ni respaldo de Cygames; sigue la <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">guía de obras derivadas de Uma Musume</a>. Uma Musume: Pretty Derby © Cygames, Inc.`,
   `Last updated: ${esc(fechaLarga(ultimaAct()))}. Records and winners from Wikipedia, JBIS and netkeiba. Grades shown in the JRA’s official colors: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Non-profit, unofficial fan site with no affiliation with or endorsement from Cygames; it follows the <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">Uma Musume derivative work guidelines</a>. Uma Musume: Pretty Derby © Cygames, Inc.`);
 // Textos fijos del encabezado y el pie en el idioma activo
-const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], comparar: ['Comparar', 'Compare'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], umadle: ['Umadle', 'Umadle'], silueta: ['¿Quién es esa uma?', 'Who’s that uma?'], masomenos: ['¿Más o menos?', 'Higher or lower?'], carrera: ['¡Apuesta a tu uma!', 'Bet on your uma!'], coleccion: ['Colección', 'Collection'], agregar: ['Agregar personaje', 'Add character'] };
+const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['Carreras G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], comparar: ['Comparar', 'Compare'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], umadle: ['Umadle', 'Umadle'], silueta: ['¿Quién es esa uma?', 'Who’s that uma?'], masomenos: ['¿Más o menos?', 'Higher or lower?'], carrera: ['¡Apuesta a tu uma!', 'Bet on your uma!'], coleccion: ['Colección', 'Collection'], agregar: ['Agregar personaje', 'Add character'] };
 function applyChrome() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('.nav [data-nav], .nav [data-nav-sub]').forEach(a => { const t = NAV_TX[a.dataset.nav || a.dataset.navSub]; if (!t) return; if (a.closest('.nav-dd-games') && a.dataset.navSub) a.innerHTML = `${gameIcon(a.dataset.navSub)}<span>${T(t[0], t[1])}</span>`; else a.textContent = T(t[0], t[1]); });
