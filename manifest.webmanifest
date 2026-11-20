@@ -1,0 +1,16 @@
+{
+  "name": "Umadex · Los caballos reales de Umamusume",
+  "short_name": "Umadex",
+  "description": "Historial, pedigrí, G1 ganadas y ganancias de los caballos reales detrás de cada Umamusume, más calendario de carreras y juegos.",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0d1511",
+  "theme_color": "#2f9a5a",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
