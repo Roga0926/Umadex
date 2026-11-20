@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Umadex</title>
 <meta name="description" content="Umadex: los caballos reales detrás de cada personaje de Umamusume Pretty Derby, con su historial de carreras, pedigrí, G1 ganadas y ganancias.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Umadex">
+<meta property="og:title" content="Umadex · Los caballos reales de Umamusume">
+<meta property="og:description" content="Historial, pedigrí, G1 ganadas y ganancias de los caballos reales detrás de cada Umamusume, más calendario de carreras y juegos.">
+<meta property="og:url" content="https://umadexfan.com/">
+<meta property="og:image" content="https://umadexfan.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2317663a%27/%3E%3Cpath d=%27M18 14v20a14 14 0 0 0 28 0V14%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%2718%27 cy=%2724%27 r=%272%27 fill=%27%2317663a%27/%3E%3Ccircle cx=%2746%27 cy=%2724%27 r=%272%27 fill=%27%2317663a%27/%3E%3C/svg%3E">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -612,6 +619,206 @@ tr.nuevo .ud-c{animation:wd-flip .5s ease both;animation-delay:var(--d)}
 .gp-ud i.si{background:#3e9b4f}
 .gp-ud i.p{background:var(--surface);border:1px solid var(--line)}
 @media (prefers-reduced-motion:reduce){tr.nuevo .ud-c{animation:none}}
+/* ¿quién es esa uma? */
+.sil-stage{position:relative;width:min(17rem,72vw);aspect-ratio:1/1;margin:.3rem auto 1rem;border-radius:16px;border:1px solid var(--line);overflow:hidden;background:radial-gradient(circle at 50% 38%,#ffffff 0 35%,#dfe7e2 100%);display:grid;place-items:center}
+.sil-stage canvas,.sil-stage img{width:100%;height:100%;display:block;filter:brightness(0)}
+.sil-stage img.sil-css{filter:grayscale(1) brightness(.56) contrast(60);mix-blend-mode:multiply}
+.sil-stage>*{grid-area:1/1}
+.sil-stage img.sil-foto{filter:none;object-fit:cover}
+.sil-stage.anim canvas,.sil-stage.anim img.sil-css{animation:sil-out .7s ease both}
+.sil-stage.anim img.sil-foto{animation:sil-in .7s ease both}
+@keyframes sil-out{0%{transform:scale(1)}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1.05);opacity:0}}
+@keyframes sil-in{0%{opacity:0;transform:scale(.94)}45%{opacity:0}100%{opacity:1;transform:none}}
+.sil-load{color:#4d5a52;font-weight:700}
+.sil-opts{grid-template-columns:minmax(0,1fr);width:100%;max-width:40rem;margin:0 auto}
+@media (min-width:640px){.sil-opts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sil-opts button{justify-content:center;text-align:center}
+.sil-opts button.ok{background:#2e8540;border-color:#2e8540;color:#fff;opacity:1}
+.sil-opts button.mal{background:#c0392b;border-color:#c0392b;color:#fff;opacity:1}
+.sil-opts button.off{opacity:.5}
+.sil-head{max-width:40rem;margin:0 auto}
+.sil-fin{width:100%;max-width:34rem;justify-items:center;text-align:center;margin:0 auto}
+.sil-fin p{margin:0}
+@media (min-width:640px){.sil-res{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.sil-pts{font-family:var(--font-display);font-size:3rem;line-height:1}
+.sil-res{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem;width:100%;text-align:left}
+.sil-res li{display:flex;align-items:center;gap:.4rem;padding:.25rem .4rem;border:1px solid var(--line);border-radius:8px;min-width:0}
+.sil-res li a{display:flex;align-items:center;gap:.4rem;min-width:0;flex:1;color:inherit;text-decoration:none;font-size:.82rem;font-weight:600}
+.sil-res li a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sil-res img{width:1.8rem;height:1.8rem;border-radius:5px;object-fit:cover;flex:none}
+.sil-res li.ok b{color:#2e8540}.sil-res li.mal b{color:#c0392b}
+:root:not([data-skin$="claro"]) .sil-res li.ok b{color:#5fd07a}:root:not([data-skin$="claro"]) .sil-res li.mal b{color:#ff7b6b}
+/* ¿más o menos? */
+.mym-duo{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.6rem;width:100%;max-width:36rem;margin:0 auto}
+.mym-c{justify-items:center;text-align:center;gap:.35rem;padding:.7rem .5rem;transition:border-color .2s}
+.mym-c img,.mym-ph{width:100%;max-width:10rem;aspect-ratio:1/1;border-radius:10px;object-fit:cover;background:var(--sunk);display:block}
+.mym-n{font-size:.95rem;line-height:1.2;min-height:2.4em;display:flex;align-items:center;overflow-wrap:anywhere}
+.mym-v{font-family:var(--font-display);font-weight:700;font-size:clamp(.95rem,3.6vw,1.25rem);line-height:1.15;min-height:2.3em;display:flex;align-items:center;justify-content:center}
+.mym-v.oculto{font-size:2rem;color:var(--muted)}
+.mym-c.ok{border-color:#2e8540;box-shadow:inset 0 0 0 2px #2e8540}
+.mym-c.mal{border-color:#c0392b;box-shadow:inset 0 0 0 2px #c0392b}
+.mym-c.ok .mym-v,.mym-c.mal .mym-v{animation:mym-pop .35s ease}
+.mym-vs{font-family:var(--font-display);font-weight:700;color:var(--muted);font-size:.9rem}
+.mym-q{text-align:center;font-size:clamp(1.1rem,4vw,1.5rem);line-height:1.25;max-width:36rem;margin:1.1rem auto .8rem}
+.mym-btns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.7rem;width:100%;max-width:30rem;margin:0 auto}
+.mym-b{justify-content:center;font-size:1.2rem;padding:.9rem .5rem;min-height:3.6rem}
+.mym-b[data-r="mas"]{background:var(--turf);border-color:var(--turf);color:var(--turf-ink)}
+.mym-b:not(:disabled):hover{filter:brightness(1.08)}
+.mym-btns+.qz-msg{text-align:center}
+.mym-fin{width:100%;max-width:30rem;margin:0 auto;justify-items:center;text-align:center}
+.mym-fin p{margin:0}
+.mym-duo.entra .mym-c:first-child{animation:mym-izq .45s ease both}
+.mym-duo.entra .mym-c:last-child{animation:mym-der .45s ease both}
+@keyframes mym-izq{from{transform:translateX(60%);opacity:.4}to{transform:none;opacity:1}}
+@keyframes mym-der{from{transform:translateX(40%);opacity:0}to{transform:none;opacity:1}}
+@keyframes mym-pop{50%{transform:scale(1.15)}}
+.gp-sil{display:flex;align-items:center;gap:.7rem}
+.gp-sil .st{width:4.6rem;height:4.6rem;border-radius:10px;background:radial-gradient(circle at 50% 38%,#fff 0 35%,#dfe7e2 100%);overflow:hidden;position:relative}
+.gp-sil .st img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.56) contrast(60);mix-blend-mode:multiply}
+.gp-sil .st b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:1.6rem;font-family:var(--font-display)}
+.gp-sil .op{display:grid;gap:.3rem}
+.gp-sil .op i{display:block;width:4.2rem;height:.75rem;border-radius:4px;background:var(--line)}
+.gp-sil .op i.ok{background:#2e8540}
+.gp-mym{display:flex;align-items:center;gap:.5rem}
+.gp-mym span{width:3.6rem;display:grid;gap:.2rem;justify-items:center;padding:.3rem;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.gp-mym img,.gp-mym em{width:2.8rem;height:2.8rem;border-radius:6px;object-fit:cover;background:var(--sunk)}
+.gp-mym b{font-family:var(--font-display);font-size:.95rem;color:var(--ink)}
+.gp-mym strong{display:grid;font-size:1rem;line-height:1.1;color:var(--turf)}
+@media (prefers-reduced-motion:reduce){.sil-stage.anim canvas,.sil-stage.anim img.sil-css,.sil-stage.anim img.sil-foto,.mym-duo.entra .mym-c,.mym-c.ok .mym-v,.mym-c.mal .mym-v{animation:none}}
+/* ¡apuesta a tu uma! */
+.cr-pista{position:relative;display:grid;gap:0;width:100%;box-sizing:border-box;max-width:52rem;margin:0 auto;padding:.4rem;border-radius:14px;background:#2d6b3b;border:3px solid #e9e2cf;box-shadow:inset 0 0 0 2px #1f4f2a}
+.cr-carril{position:relative;display:block;width:100%;height:3.6rem;padding:0;border:0;border-radius:0;border-bottom:2px dashed rgb(255 255 255/.28);background:repeating-linear-gradient(90deg,#3b8a4b 0 2.6rem,#348043 2.6rem 5.2rem);color:#fff;text-align:left;overflow:hidden}
+.cr-carril:last-of-type{border-bottom:0}
+.cr-carril:disabled{opacity:1;cursor:default}
+.cr-carril:not(:disabled):hover{filter:brightness(1.1)}
+.cr-carril[aria-pressed="true"]{box-shadow:inset 0 0 0 3px #f2c94c;background:repeating-linear-gradient(90deg,#4a9c59 0 2.6rem,#418f50 2.6rem 5.2rem)}
+.cr-info{position:absolute;left:3.6rem;right:1.6rem;top:50%;transform:translateY(-50%);display:grid;gap:.05rem;line-height:1.15;pointer-events:none;text-shadow:0 1px 2px rgb(0 0 0/.55)}
+.cr-info b{font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-info small{font-size:.74rem;font-weight:600;opacity:.92}
+.cr-info strong{color:#f2c94c}
+.cr-pista.corre .cr-info{opacity:.55}
+.cr-ficha{position:absolute;left:.3rem;top:50%;margin-top:-1.45rem;width:2.9rem;height:2.9rem;border-radius:50%;border:3px solid #fff;background:#ddd;box-shadow:0 2px 6px rgb(0 0 0/.4);z-index:2;will-change:transform}
+.cr-ficha img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.cr-ficha i{position:absolute;right:-.35rem;bottom:-.3rem;width:1.15rem;height:1.15rem;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:.68rem;font-weight:800;background:#1b1b1b;color:#fff;border:2px solid #fff}
+.cr-carril[aria-pressed="true"] .cr-ficha{border-color:#f2c94c}
+.cr-meta{position:absolute;top:.4rem;bottom:.4rem;right:.9rem;width:10px;background:conic-gradient(#fff 25%,#111 0 50%,#fff 0 75%,#111 0) 0 0/10px 10px;pointer-events:none;z-index:1}
+.cr-go{display:flex;margin:1rem auto .3rem;font-size:1.15rem;padding:.7rem 1.8rem}
+.cr-go+.note{text-align:center;max-width:40rem;margin:0 auto}
+.cr-res{width:100%;max-width:34rem;margin:1rem auto 0}
+.cr-res h2{margin:0;text-align:center}
+.cr-res ol{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+.cr-res li{display:flex;align-items:center;gap:.6rem;padding:.35rem .5rem;border:1px solid var(--line);border-radius:10px;min-width:0}
+.cr-res li.tuya{border-color:#c9a227;box-shadow:inset 0 0 0 1px #c9a227}
+.cr-res li img{width:2.4rem;height:2.4rem;border-radius:8px;object-fit:cover;flex:none}
+.cr-res li a{font-weight:700;color:inherit;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cr-pos{font-family:var(--font-display);font-weight:700;font-size:1.15rem;width:2.4rem;flex:none;text-align:center}
+.cr-res li:first-child .cr-pos{color:#c9a227}
+.cr-tag{margin-left:auto;flex:none;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#b08a16;border-radius:999px;padding:.15rem .5rem}
+.cr-res .qz-start{justify-self:center;margin:.2rem 0 0}
+.gp-cr{width:84%;display:grid;gap:3px;padding:4px;border-radius:8px;background:#2d6b3b}
+.gp-cr span{position:relative;height:1.3rem;background:repeating-linear-gradient(90deg,#3b8a4b 0 1rem,#348043 1rem 2rem);border-radius:2px}
+.gp-cr img,.gp-cr b{position:absolute;top:50%;width:1.15rem;height:1.15rem;margin-top:-.575rem;border-radius:50%;border:1.5px solid #fff;object-fit:cover;background:#ddd}
+.gp-cr span::after{content:"";position:absolute;right:6px;top:0;bottom:0;width:4px;background:conic-gradient(#fff 25%,#111 0 50%,#fff 0 75%,#111 0) 0 0/4px 4px}
+/* colección de umas */
+.col-tir{max-width:52rem;justify-items:center;text-align:center}
+.col-btns{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+.col-b{font-size:1.1rem;padding:.65rem 1.6rem;min-width:9rem;justify-content:center}
+.col-mano{display:grid;grid-template-columns:repeat(auto-fill,minmax(6.4rem,1fr));gap:.6rem;width:100%;perspective:900px}
+.col-c{--rc:#9aa3a8;position:relative;display:grid;gap:.2rem;justify-items:center;align-content:start;padding:.35rem .35rem .45rem;border-radius:12px;border:3px solid var(--rc);background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 22%,var(--surface)),var(--surface) 60%);color:var(--ink);text-decoration:none;min-width:0;box-shadow:0 2px 8px rgb(0 0 0/.18)}
+.col-c.r2{--rc:#4a7fd6}
+.col-c.r3{--rc:#d4a62a;background:linear-gradient(135deg,color-mix(in srgb,#f6d36b 40%,var(--surface)),var(--surface) 45%,color-mix(in srgb,#f6d36b 30%,var(--surface)))}
+a.col-c:hover{transform:translateY(-2px)}
+.col-c img,.col-ph,.col-sil{width:100%;aspect-ratio:1/1;border-radius:8px;object-fit:cover;display:block;background:var(--sunk)}
+.col-rar{font-size:.78rem;letter-spacing:.05em;color:var(--rc);font-weight:800;line-height:1;text-shadow:0 0 1px rgb(0 0 0/.25)}
+.col-c.r1 .col-rar{color:color-mix(in srgb,var(--rc) 70%,var(--ink))}
+.col-n{font-size:.74rem;line-height:1.15;text-align:center;overflow-wrap:anywhere;min-height:2.3em;display:flex;align-items:center}
+.col-rep,.col-new{position:absolute;top:1.3rem;right:-.35rem;font-size:.7rem;font-weight:800;padding:.1rem .4rem;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:0 1px 3px rgb(0 0 0/.3)}
+.col-new{background:#d1517a;color:#fff;left:-.35rem;right:auto}
+.col-c.no{border-style:dashed;border-width:2px;background:var(--surface);box-shadow:none;opacity:.85}
+.col-sil{position:relative;overflow:hidden;background:radial-gradient(circle at 50% 38%,#fff 0 35%,#dfe7e2 100%)}
+.col-sil img{width:100%;height:100%;filter:grayscale(1) brightness(.56) contrast(60);mix-blend-mode:multiply;background:none}
+.col-sil i{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-style:normal;font-family:var(--font-display);font-size:1.8rem;font-weight:700;text-shadow:0 1px 3px rgb(0 0 0/.5)}
+.col-c.no .col-n{color:var(--muted)}
+.col-dorso{display:none}
+.col-mano.anim .col-c{animation:col-flip .7s ease var(--d) both}
+.col-mano.anim .col-dorso{display:grid;place-items:center;position:absolute;inset:-3px;border-radius:12px;background:repeating-linear-gradient(90deg,#3b8a4b 0 .8rem,#2f7a3f .8rem 1.6rem);border:3px solid #e9e2cf;animation:col-dorso .7s linear var(--d) both;z-index:3}
+.col-dorso b{font-family:var(--font-display);color:#fff;letter-spacing:.08em;font-size:.95rem;transform:rotate(-12deg);text-shadow:0 1px 2px rgb(0 0 0/.5)}
+.col-mano.anim .col-c.r3{animation:col-flip .7s ease var(--d) both,col-brillo 1.2s ease calc(var(--d) + .7s) 2}
+@keyframes col-flip{0%{transform:rotateY(0)}50%{transform:rotateY(90deg)}100%{transform:none}}
+@keyframes col-dorso{0%,49.9%{opacity:1}50%,100%{opacity:0;visibility:hidden}}
+@keyframes col-brillo{50%{box-shadow:0 0 0 4px color-mix(in srgb,#f6d36b 70%,transparent),0 0 22px #f6d36b}}
+.col-album{display:grid;gap:.7rem;margin-top:1.4rem}
+.col-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem}
+.col-head h2{margin:0}
+.col-rars{display:flex;gap:.8rem;font-weight:700;font-size:.85rem}
+.col-rars .r1{color:var(--muted)}.col-rars .r2{color:#4a7fd6}.col-rars .r3{color:#c0921a}
+.col-bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden}
+.col-bar i{display:block;height:100%;background:var(--turf)}
+.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(5.6rem,1fr));gap:.55rem}
+@media (max-width:400px){.col-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.col-mano{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.col-reset{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-top:.6rem}
+.gp-col{display:flex;gap:.4rem;align-items:flex-end}
+.gp-col span{width:2.8rem;padding:.2rem;border-radius:7px;border:2px solid #9aa3a8;background:var(--surface);display:grid;gap:.1rem;justify-items:center;font-size:.5rem;color:#9aa3a8;line-height:1}
+.gp-col span.r2{border-color:#4a7fd6;color:#4a7fd6}.gp-col span.r3{border-color:#d4a62a;color:#d4a62a;transform:translateY(-.4rem)}
+.gp-col img,.gp-col em{width:100%;aspect-ratio:1/1;border-radius:4px;object-fit:cover;background:var(--sunk)}
+.gp-col span.d{background:repeating-linear-gradient(90deg,#3b8a4b 0 .4rem,#2f7a3f .4rem .8rem);border-color:#e9e2cf;height:3.9rem}
+@media (prefers-reduced-motion:reduce){.col-mano.anim .col-c,.col-mano.anim .col-c.r3{animation:none}.col-mano.anim .col-dorso{display:none}}
+/* favoritas, compartir, tal día como hoy, hijos y comparador */
+.card{position:relative}
+.card-a{display:flex;align-items:center;gap:.5rem;min-width:0;color:inherit;text-decoration:none}
+.card-a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.card:focus-within{border-color:var(--turf)}
+.card .meta{grid-column:1}
+.card .side{gap:.9rem}
+.fav{position:relative;z-index:1;width:2rem;height:2rem;padding:0;justify-content:center;border-radius:50%;font-size:1.1rem;line-height:1;color:var(--muted);background:var(--surface);flex:none}
+.fav[aria-pressed="true"]{color:#d4a017;border-color:#d4a017}
+.fav:hover{border-color:#d4a017}
+.p-acts{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.2rem 0 .3rem}
+.p-acts .btn,.p-acts button{font-size:.88rem;padding:.4rem .8rem}
+.fav-lg{position:static;margin-left:0;width:auto;height:auto;border-radius:var(--r);font-size:.88rem;padding:.4rem .8rem;color:var(--ink)}
+.fav-lg[aria-pressed="true"]{color:#b8860b;background:color-mix(in srgb,#f2c94c 18%,var(--surface))}
+:root:not([data-skin$="claro"]) .fav-lg[aria-pressed="true"]{color:#f2c94c}
+.sh-w{display:inline-flex;align-items:center;gap:.5rem}
+.sh-st{font-weight:700;color:var(--turf);font-size:.85rem}
+:root:not([data-skin$="claro"]) .sh-st{color:var(--grass)}
+.taldia{display:flex;align-items:center;gap:.8rem;text-decoration:none;color:inherit;padding:.7rem .9rem;margin:0 0 1rem;max-width:40rem;grid-template-columns:none}
+.taldia:hover{border-color:var(--turf)}
+.taldia img{width:3.4rem;height:3.4rem;border-radius:10px;object-fit:cover;flex:none}
+.taldia>span{display:grid;gap:.15rem;min-width:0}
+.td-t{font-size:.95rem;line-height:1.3}
+.td-go{font-size:.82rem;font-weight:700;color:var(--turf)}
+:root:not([data-skin$="claro"]) .td-go{color:var(--grass)}
+.hijos{display:grid;gap:.5rem;margin-top:.4rem}
+.hijos h3{font-size:1rem;margin:0}
+.hijos-l{display:flex;flex-wrap:wrap;gap:.5rem}
+.hijos-l a{display:flex;align-items:center;gap:.45rem;padding:.25rem .6rem .25rem .25rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:inherit;font-weight:700;font-size:.88rem;background:var(--surface)}
+.hijos-l a:hover{border-color:var(--turf)}
+.hijos-l img,.hijos-l .ud-ph{width:1.9rem;height:1.9rem;border-radius:50%;object-fit:cover}
+.cmp-picks{display:grid;gap:.6rem;margin-bottom:1rem}
+@media (min-width:640px){.cmp-picks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cmp-pick{max-width:none;margin:0}
+.cmp-t{display:grid;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface);margin-bottom:1.25rem}
+.cmp-r{display:grid;grid-template-columns:minmax(5.5rem,.8fr) minmax(0,1fr) minmax(0,1fr);align-items:center;border-top:1px solid var(--line)}
+.cmp-r:first-child{border-top:0}
+.cmp-r>*{padding:.55rem .6rem;min-width:0}
+.cmp-r>.label{font-size:.68rem}
+.cmp-hd{align-items:end}
+.cmp-pj{display:grid;justify-items:center;gap:.3rem;text-align:center;text-decoration:none;color:inherit}
+.cmp-pj img,.cmp-pj .ud-ph{width:min(7rem,100%);aspect-ratio:1/1;height:auto;border-radius:10px;object-fit:cover}
+.cmp-pj b{font-size:.95rem;line-height:1.15;overflow-wrap:anywhere}
+.cmp-v{text-align:center;font-weight:600;font-size:.9rem;overflow-wrap:anywhere;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.2rem .35rem}
+.cmp-v.mejor{background:color-mix(in srgb,#3e9b4f 20%,var(--surface));font-weight:800}
+.cmp-up{font-style:normal;font-size:.7rem;color:#2e8540}
+:root:not([data-skin$="claro"]) .cmp-up{color:#5fd07a}
+.cmp-v.igual{background:color-mix(in srgb,var(--g1) 14%,var(--surface))}
+.cmp-v small{font-size:.68rem;color:var(--muted);font-weight:700;width:100%}
+.cmp-res{margin:0;font-size:1.05rem}
+.cmp-h{width:100%;border-collapse:collapse;font-size:.88rem}
+.cmp-h th,.cmp-h td{padding:.4rem .5rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.cmp-h th{white-space:normal;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.cmp-h td:first-child{white-space:nowrap}
+.cmp-h td.adel{background:color-mix(in srgb,#3e9b4f 18%,transparent);font-weight:700}
+@media (max-width:480px){.cmp-r{grid-template-columns:minmax(4.6rem,.7fr) minmax(0,1fr) minmax(0,1fr)}.cmp-r>*{padding:.45rem .35rem}.cmp-v{font-size:.8rem}.cmp-h{font-size:.8rem}.cmp-h th,.cmp-h td{padding:.4rem .3rem}}
 /* ganancias */
 .earn{overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.4rem;position:relative}
 .ebars{display:flex;align-items:flex-end;gap:2px;height:22rem;min-width:max-content;padding-top:1.4rem}
@@ -702,6 +909,7 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
       </div>
       <a href="#hazanas" data-nav="hazanas">Hazañas</a>
       <a href="#ganancias" data-nav="ganancias">Ganancias</a>
+      <a href="#comparar" data-nav="comparar">Comparar</a>
       <div class="nav-dd nav-dd-games">
         <a href="#juegos" data-nav="juegos">Juegos</a>
         <div class="nav-sub"><div class="nav-sub-in">
@@ -710,6 +918,10 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
           <a href="#memorama" data-nav-sub="memorama">Memorama</a>
           <a href="#wordle" data-nav-sub="wordle">Wordle</a>
           <a href="#umadle" data-nav-sub="umadle">Umadle</a>
+          <a href="#silueta" data-nav-sub="silueta">¿Quién es esa uma?</a>
+          <a href="#masomenos" data-nav-sub="masomenos">¿Más o menos?</a>
+          <a href="#carrera" data-nav-sub="carrera">¡Apuesta a tu uma!</a>
+          <a href="#coleccion" data-nav-sub="coleccion">Colección</a>
         </div></div>
       </div>
       <a href="#agregar" data-nav="agregar">Agregar personaje</a>
@@ -945,10 +1157,11 @@ function route() {
   if (h.startsWith('calendario')) sec = 'calendario';
   if (h.startsWith('hazanas')) sec = 'hazanas';
   if (h.startsWith('ganancias')) sec = 'ganancias';
-  if (/^(juegos|quiz|brackets|memorama|wordle|umadle)$/.test(h)) sec = h;
+  if (h.startsWith('comparar')) sec = 'comparar';
+  if (/^(juegos|quiz|brackets|memorama|wordle|umadle|silueta|masomenos|carrera|coleccion)$/.test(h)) sec = h;
   document.querySelectorAll('[data-nav], [data-nav-sub]').forEach(a => { if ((a.dataset.nav || a.dataset.navSub) === sec) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   document.querySelector('.nav-dd')?.classList.toggle('sub-on', sec === 'calendario');
-  document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama|wordle|umadle)$/.test(sec));
+  document.querySelector('.nav-dd-games')?.classList.toggle('sub-on', /^(quiz|brackets|memorama|wordle|umadle|silueta|masomenos|carrera|coleccion)$/.test(sec));
   const nav = document.querySelector('.nav'), cur = nav?.querySelector('[aria-current]');
   if (cur && nav.scrollWidth > nav.clientWidth) { const r = cur.getBoundingClientRect(), n = nav.getBoundingClientRect(); nav.scrollLeft += r.left - n.left - (n.width - r.width) / 2; }
   navFade();
@@ -965,12 +1178,17 @@ function route() {
   if (h === 'agregar') return viewForm(null);
   if (h.startsWith('hazanas')) return viewFeats(h.slice(8));
   if (h === 'ganancias') return viewEarn();
+  if (h === 'comparar' || h.startsWith('comparar-')) return viewComparar(h.slice(9));
   if (h === 'quiz') return viewQuiz();
   if (h === 'juegos') return viewGames();
   if (h === 'brackets') return viewBrackets();
   if (h === 'memorama') return viewMemorama();
   if (h === 'wordle') return viewWordle();
   if (h === 'umadle') return viewUmadle();
+  if (h === 'silueta') return viewSilueta();
+  if (h === 'masomenos') return viewMasomenos();
+  if (h === 'carrera') return viewCarrera();
+  if (h === 'coleccion') return viewColeccion();
   if (h.startsWith('editar-')) return viewForm(h.slice(7));
   if (h.startsWith('ajustar-')) return viewForm(null, h.slice(8));
   return viewList();
@@ -987,7 +1205,7 @@ addEventListener('hashchange', () => {
 /* ---------- vista: lista ---------- */
 const listState = { q: '', cat: 'todos', sort: 'nombre' };
 function viewList() {
-  app.innerHTML = `${nextBanner()}
+  app.innerHTML = `${nextBanner()}${talDiaBox()}
   <section class="intro">
     <span class="label">Roster · ${BASE.length} ${T('personajes', 'characters')}${extras.length ? ` + ${extras.length} ${T('agregados', 'added')}` : ''}</span>
     <h1>${T('Datos de carrera de cada Umamusume', 'Racing records of every Umamusume')}</h1>
@@ -996,7 +1214,7 @@ function viewList() {
     <div class="field grow"><label for="q">${T('Buscar', 'Search')}</label><input id="q" type="search" placeholder="${T('Nombre, nombre japonés, padre…', 'Name, Japanese name, sire…')}" value="${esc(listState.q)}"></div>
     <div class="field"><label for="cat">${T('Grupo', 'Group')}</label>
       <select id="cat">
-        <option value="todos">${T('Todos', 'All')}</option><option value="oficial">${T('Oficiales', 'Official')}</option>
+        <option value="todos">${T('Todos', 'All')}</option><option value="favoritas">★ ${T('Favoritas', 'Favorites')}</option><option value="oficial">${T('Oficiales', 'Official')}</option>
         <option value="Cinderella Gray">Cinderella Gray</option><option value="Supporting">Supporting</option>
         <option value="agregado" class="ed-only">${T('Agregados por ti', 'Added by you')}</option>
       </select></div>
@@ -1017,6 +1235,7 @@ function viewList() {
   const sx = document.getElementById('silk-x');
   if (sx) sx.onclick = () => { try { localStorage.setItem(NOTA_SEDAS, '1'); } catch {} document.getElementById('silk-note')?.remove(); };
   fillGrid();
+  favBind(document.getElementById('grid'), () => { if (listState.cat === 'favoritas') fillGrid(); });
 }
 // La nota de las sedas se puede ocultar; se recuerda en este navegador
 const NOTA_SEDAS = 'umadex-nota-sedas-oculta';
@@ -1024,7 +1243,7 @@ function notaSedasOculta() { try { return localStorage.getItem(NOTA_SEDAS) === '
 function fillGrid() {
   const grid = document.getElementById('grid'); if (!grid) return;
   const t = norm(listState.q);
-  let rows = all().filter(p => listState.cat === 'todos' || p.categoria === listState.cat);
+  let rows = all().filter(p => listState.cat === 'todos' || (listState.cat === 'favoritas' ? esFav(p.id) : p.categoria === listState.cat));
   if (t) rows = rows.filter(p => [p.personaje, p.caballo_real, p.pedigri?.padre, p.pedigri?.madre].some(v => norm(v).includes(t)) || String(p.nombre_japones || '').includes(listState.q.trim()));
   const g1 = p => p.resumen_grados?.G1?.ganadas || 0;
   const cmp = {
@@ -1036,7 +1255,8 @@ function fillGrid() {
   rows.sort(cmp);
   document.getElementById('count').textContent = `${rows.length} ${rows.length === 1 ? T('personaje', 'character') : T('personajes', 'characters')}`;
   if (!rows.length) {
-    grid.innerHTML = listState.cat === 'agregado'
+    grid.innerHTML = listState.cat === 'favoritas' && !t ? `<div class="empty">${T('Todavía no tienes favoritas. Toca la estrella ☆ de una tarjeta o de una ficha para guardarla aquí.', 'You have no favorites yet. Tap the ☆ star on a card or profile to save it here.')}</div>`
+      : listState.cat === 'agregado'
       ? `<div class="empty">Todavía no has agregado personajes. <a href="#agregar">Agrega el primero</a>.</div>`
       : `<div class="empty">${T('Ningún personaje coincide con la búsqueda.', 'No character matches your search.')}</div>`;
     return;
@@ -1044,16 +1264,16 @@ function fillGrid() {
   grid.innerHTML = rows.map(p => {
     const r = p.record || {}, rg = p.resumen_grados || {};
     const sk = silk(p);
-    return `<a class="card${sk ? ' has-silk' : ''}" href="#p-${esc(p.id)}">
-      <h3>${imgUrl(p) ? `<img class="av" src="${esc(imgUrl(p))}" alt="" data-n="${esc(p.personaje)}" loading="lazy">` : ''}<span class="nm">${esc(p.personaje)}</span></h3>
-      ${sk ? '<div class="side">' : ''}<div class="tote"><b>${g1(p)}</b><small>G1</small></div>${sk ? sk + '</div>' : ''}
+    return `<div class="card${sk ? ' has-silk' : ''}">
+      <h3><a class="card-a" href="#p-${esc(p.id)}">${imgUrl(p) ? `<img class="av" src="${esc(imgUrl(p))}" alt="" data-n="${esc(p.personaje)}" loading="lazy">` : ''}<span class="nm">${esc(p.personaje)}</span></a></h3>
+      <div class="side"><div class="tote"><b>${g1(p)}</b><small>G1</small></div>${sk || ''}${favBtn(p)}</div>
       <div class="jp">${esc(p.nombre_japones || '')}${p.caballo_real && p.caballo_real !== p.personaje ? ` · ${esc(p.caballo_real)}` : ''}</div>
       <div class="meta">
         <span class="num">${esc(p.anio_nacimiento || '—')}</span>
         <span><span class="num">${fmtN(r.victorias)}</span> ${r.victorias === 1 ? T('victoria', 'win') : T('victorias', 'wins')} / <span class="num">${fmtN(r.carreras)}</span> ${r.carreras === 1 ? T('carrera', 'race') : T('carreras', 'races')}</span>
         <span class="gg"><span>${gradeChip('G1')} ${rg.G1?.ganadas || 0}</span><span>${gradeChip('G2')} ${rg.G2?.ganadas || 0}</span><span>${gradeChip('G3')} ${rg.G3?.ganadas || 0}</span></span>
         ${p.categoria === 'agregado' ? `<span class="tag add">${T('Agregado', 'Added')}</span>` : p.categoria !== 'oficial' ? `<span class="tag">${esc(p.categoria)}</span>` : ''}
-      </div></a>`;
+      </div></div>`;
   }).join('');
 }
 
@@ -1149,6 +1369,7 @@ function viewFicha(id) {
     <span class="label">${p.categoria === 'agregado' ? (EDIT ? 'Agregado por ti' : T('Personaje agregado', 'Added character')) : p.categoria === 'oficial' ? T('Personaje oficial', 'Official character') : esc(p.categoria)}</span>
     <div class="hname"><h1>${esc(p.personaje)}</h1>${silk(p, 'lg')}</div>
     ${p.nombre_japones ? `<div class="jp">${esc(p.nombre_japones)}</div>` : ''}
+    <div class="p-acts" id="p-acts">${(on => `<button type="button" class="fav fav-lg" data-fav="${esc(p.id)}" aria-pressed="${on}" aria-label="${esc(favLabel(p, on))}" title="${esc(favLabel(p, on))}">${on ? '★' : '☆'} ${on ? T('Favorita', 'Favorite') : T('Marcar favorita', 'Add to favorites')}</button>`)(esFav(p.id))}<a class="btn" href="#comparar-${esc(p.id)}">⇄ ${T('Comparar', 'Compare')}</a>${shareBtn()}</div>
     <div class="facts">${facts.map(([k, v]) => `<div><span class="label">${k}</span><span>${esc(String(v).charAt(0).toUpperCase() + String(v).slice(1))}</span></div>`).join('')}</div>
     ${p.caballo_real ? `<a class="nk" href="${esc(nkUrl(p))}" target="_blank" rel="noopener"><svg viewBox="0 0 48 48" width="22" height="22" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="7" fill="none" stroke="currentColor" stroke-width="3"/></svg>${T('Foto real del caballo', 'Photo of the real horse')} <small>${p.netkeiba ? 'netkeiba ↗' : T('buscar en netkeiba ↗', 'search on netkeiba ↗')}</small></a>` : ''}
     ${p.nota ? `<p class="note">${esc(L(p, 'nota'))}</p>` : ''}
@@ -1180,7 +1401,7 @@ function viewFicha(id) {
     <section class="panel">
       <h2>${T('Pedigrí', 'Pedigree')}</h2>
       ${pedigree(p.pedigri, p)}
-      ${hijos.length ? `<p class="note">${T('Descendencia en el índice', 'Offspring in the index')}: ${hijos.map(h => `<a href="#p-${esc(h.id)}">${esc(h.personaje)}</a>`).join(', ')}</p>` : ''}
+      ${hijos.length ? `<div class="hijos"><h3>${T('Sus hijos en Umadex', 'Offspring in Umadex')}</h3><div class="hijos-l">${hijos.map(h => `<a href="#p-${esc(h.id)}">${imgUrl(h) ? `<img src="${esc(imgUrl(h))}" alt="" loading="lazy">` : '<span class="ud-ph"></span>'}<span>${esc(h.personaje)}</span></a>`).join('')}</div></div>` : ''}
     </section>
   </div>
   <section class="panel">
@@ -1193,6 +1414,7 @@ function viewFicha(id) {
   </section>` : ''}`;
   wireHist(p);
   wirePhoto(p, PJ);
+  favBind(document.getElementById('p-acts'));
   const del = document.getElementById('del');
   if (del) armDelete(del, p.docId, document.getElementById('delmsg'), () => { location.hash = 'agregar'; });
   const restore = document.getElementById('restore');
@@ -1524,6 +1746,7 @@ function viewRace(id) {
   <section class="hero">
     <span class="label">${T(`G1 n.º ${r.orden} del calendario`, `G1 no. ${r.orden} on the calendar`)} · ${esc(r.pais)}</span>
     <h1>${esc(enW(r.nombre))}</h1>
+    <div class="p-acts">${shareBtn()}</div>
     ${r.nombre_japones ? `<div class="jp">${esc(r.nombre_japones)}</div>` : ''}
     <div class="facts">
       <div><span class="label">${T('Hipódromo', 'Racecourse')}</span><span>${esc(enW(r.hipodromo))}</span></div>
@@ -1694,6 +1917,7 @@ function viewField(key) {
     <span class="label">G1 · ${esc(paisTx(r.p))}</span>
     ${(() => { const pf = perfilDe(key), nm = esc(enW(carreraTx(r.c)));
       return pf ? `<h1><a class="h1link" href="${pf}" title="${T('Ver el perfil de la carrera', 'See the race profile')}">${nm}<span aria-hidden="true">›</span></a></h1>` : `<h1>${nm}</h1>`; })()}
+    <div class="p-acts">${shareBtn()}</div>
     <div class="facts">
       <div><span class="label">${T('Fecha', 'Date')}</span><span>${esc(fecha)}</span></div>
       <div><span class="label">${T('Hipódromo', 'Racecourse')}</span><span>${esc(enW(r.h || ''))}</span></div>
@@ -2214,7 +2438,11 @@ const GAMES = [
   { id: 'brackets', t: ['Brackets', 'Brackets'], d: ['16 umas al azar en octavos de final. Elige a tu favorita en cada duelo hasta coronar a una campeona.', '16 random umas in a round of 16. Pick your favorite in every duel until one is crowned champion.'] },
   { id: 'memorama', t: ['Memorama', 'Memory'], d: ['Tablero de 6×6 con 18 pares de umas. Encuentra todos los pares contra el cronómetro.', 'A 6×6 board with 18 pairs of umas. Find every pair against the clock.'] },
   { id: 'wordle', t: ['Wordle', 'Wordle'], d: ['Adivina el nombre de una uma en 5 intentos. Las letras se pintan de gris, amarillo o verde según qué tan cerca estés.', 'Guess an uma’s name in 5 tries. Letters turn grey, yellow or green depending on how close you are.'] },
-  { id: 'umadle', t: ['Umadle', 'Umadle'], d: ['Adivina la uma oculta comparando sexo, pelaje, país, año, padre, G1 y carreras con cada intento.', 'Guess the hidden uma by comparing sex, coat, country, year, sire, G1 wins and starts with each try.'] }
+  { id: 'umadle', t: ['Umadle', 'Umadle'], d: ['Adivina la uma oculta comparando sexo, pelaje, país, año, padre, G1 y carreras con cada intento.', 'Guess the hidden uma by comparing sex, coat, country, year, sire, G1 wins and starts with each try.'] },
+  { id: 'silueta', t: ['¿Quién es esa uma?', 'Who’s that uma?'], d: ['Adivina a la uma por su silueta entre 4 opciones. 10 rondas por partida.', 'Guess the uma from her silhouette out of 4 options. 10 rounds per game.'] },
+  { id: 'masomenos', t: ['¿Más o menos?', 'Higher or lower?'], d: ['¿Tiene más o menos G1, victorias o carreras que la otra uma? Encadena la racha más larga.', 'Does she have more or fewer G1s, wins or starts than the other uma? Build the longest streak.'] },
+  { id: 'carrera', t: ['¡Apuesta a tu uma!', 'Bet on your uma!'], d: ['Seis umas en la pista. Mira los momios, elige a tu favorita y sigue la carrera hasta la meta.', 'Six umas on the track. Check the odds, pick your favorite and follow the race to the finish line.'] },
+  { id: 'coleccion', t: ['Colección de umas', 'Uma collection'], d: ['10 tiradas gratis al día para conseguir cartas de ★ a ★★★ y llenar tu álbum con todas las umas.', '10 free pulls a day to get ★ to ★★★ cards and fill your album with every uma.'] }
 ];
 // Vista previa decorativa de cada juego en la portada de Juegos
 function gamePreview(id) {
@@ -2226,6 +2454,10 @@ function gamePreview(id) {
       <rect x="78" y="30" width="44" height="24" rx="6" class="gp-final"/><text x="100" y="47" text-anchor="middle" class="gp-tr">🏆</text></svg>`;
   else if (id === 'memorama') in_ = `<div class="gp-mm">${Array.from({ length: 8 }, (_, i) => { const f = { 1: fotos[0], 6: fotos[0], 3: fotos[1] }[i]; return `<span class="${f ? 'up' : ''}">${f ? `<img src="${esc(f)}" alt="">` : ''}</span>`; }).join('')}</div>`;
   else if (id === 'umadle') in_ = `<div class="gp-ud">${[['no', 'si', 'no', '↑', 'no'], ['si', 'si', 'no', '↓', 'si'], ['si', 'si', 'si', 'si', 'si']].map((r, k) => `<div><i class="p">${fotos[k] ? `<img src="${esc(fotos[k])}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:3px">` : ''}</i>${r.map(c => `<i class="${c === 'si' ? 'si' : ''}">${c.length === 1 ? c : ''}</i>`).join('')}</div>`).join('')}</div>`;
+  else if (id === 'silueta') in_ = `<div class="gp-sil"><span class="st">${fotos[0] ? `<img src="${esc(fotos[0])}" alt="">` : ''}<b>?</b></span><span class="op"><i></i><i class="ok"></i><i></i><i></i></span></div>`;
+  else if (id === 'masomenos') in_ = `<div class="gp-mym"><span>${fotos[0] ? `<img src="${esc(fotos[0])}" alt="">` : '<em></em>'}<b>3</b></span><strong>↑<br>↓</strong><span>${fotos[1] ? `<img src="${esc(fotos[1])}" alt="">` : '<em></em>'}<b>?</b></span></div>`;
+  else if (id === 'carrera') in_ = `<div class="gp-cr">${[62, 30, 78].map((x, k) => `<span>${fotos[k] ? `<img src="${esc(fotos[k])}" alt="" style="left:${x}%">` : `<b style="left:${x}%"></b>`}</span>`).join('')}</div>`;
+  else if (id === 'coleccion') in_ = `<div class="gp-col">${[['r1', 0], ['r3', 1], ['r2', 2]].map(([r, k]) => `<span class="${r}">${'★'.repeat(+r[1])}${fotos[k] ? `<img src="${esc(fotos[k])}" alt="">` : '<em></em>'}</span>`).join('')}<span class="d"></span></div>`;
   else if (id === 'wordle') in_ = `<div class="gp-wd">${[['O', 'si'], ['G', 'no'], ['U', 'casi'], ['R', 'si'], ['I', 'no']].map(([l, c]) => `<span class="wd-c ${c}">${l}</span>`).join('')}</div>`;
   return `<div class="gp" aria-hidden="true">${in_}</div>`;
 }
@@ -2557,6 +2789,499 @@ function udSearch(q) {
   if (q.value) draw();
 }
 
+// ¿Quién es esa uma?: se ve la silueta de una uma y hay que elegir su nombre entre 4
+const SIL_N = 10, SIL_MEJOR = 'umadex-silueta-mejor';
+var sil = null;
+const silCache = new Map();
+// Recorta el fondo blanco de la foto (relleno desde los bordes) para que la silueta tenga forma.
+// Devuelve un canvas con el fondo transparente, 'css' si el navegador no deja leer la imagen, o null si no sirve
+function silCorte(p) {
+  if (silCache.has(String(p.id))) return silCache.get(String(p.id));
+  const pr = new Promise(res => {
+    const im = new Image();
+    im.onload = () => {
+      try {
+        const S = 320, c = document.createElement('canvas'); c.width = c.height = S;
+        const x = c.getContext('2d', { willReadFrequently: true });
+        x.drawImage(im, 0, 0, S, S);
+        const d = x.getImageData(0, 0, S, S), a = d.data, seen = new Uint8Array(S * S), st = [];
+        const add = i => { if (!seen[i] && a[i * 4] >= 228 && a[i * 4 + 1] >= 228 && a[i * 4 + 2] >= 228) { seen[i] = 1; st.push(i); } };
+        for (let k = 0; k < S; k++) { add(k); add((S - 1) * S + k); add(k * S); add(k * S + S - 1); }
+        let n = 0;
+        while (st.length) {
+          const i = st.pop(), col = i % S; n++; a[i * 4 + 3] = 0;
+          if (col > 0) add(i - 1); if (col < S - 1) add(i + 1); if (i >= S) add(i - S); if (i < S * S - S) add(i + S);
+        }
+        if (n < S * S * .1) return res(null);
+        x.putImageData(d, 0, 0); res(c);
+      } catch { res('css'); }
+    };
+    im.onerror = () => res(null);
+    im.src = imgUrl(p);
+  });
+  silCache.set(String(p.id), pr);
+  return pr;
+}
+function silNueva() {
+  sil = { orden: gameShuffle(gamePool()).map(p => String(p.id)), k: 0, i: 0, aciertos: 0, rondas: [], cur: null, elegida: null, cargando: false, anim: false, fin: false };
+}
+// Prepara la ronda siguiente: la primera uma de la lista cuya silueta sirva, sin repetir dentro de la partida
+async function silPrep() {
+  while (sil.k < sil.orden.length) {
+    const p = pjById(sil.orden[sil.k++]);
+    if (!p) continue;
+    const c = await silCorte(p);
+    if (!c) continue;
+    const otros = gameShuffle(gamePool().filter(q => String(q.id) !== String(p.id))).slice(0, 3);
+    // carga de antemano las dos siguientes
+    sil.orden.slice(sil.k, sil.k + 2).forEach(id => { const q = pjById(id); if (q) silCorte(q); });
+    return { id: String(p.id), corte: c, opts: gameShuffle([p, ...otros]).map(q => String(q.id)) };
+  }
+  return null;
+}
+function silCargar() {
+  if (sil.cargando) return;
+  sil.cargando = true;
+  const s = sil;
+  silPrep().then(cur => {
+    if (sil !== s) return;
+    s.cargando = false; s.cur = cur;
+    if (!cur) s.fin = true;
+    if (location.hash === '#silueta') viewSilueta();
+  });
+}
+function viewSilueta() {
+  const back = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>`;
+  if (gamePool().length < 4) { app.innerHTML = back + gameWait(); return; }
+  if (!sil) silNueva();
+  const s = sil, intro = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('silueta')}${T('¿Quién es esa uma?', 'Who’s that uma?')}</h1>
+    <p>${T(`Mira la silueta y elige el nombre correcto entre las 4 opciones. Son ${SIL_N} rondas.`, `Look at the silhouette and pick the right name out of 4 options. There are ${SIL_N} rounds.`)}</p></section>`;
+  if (s.fin || s.i >= SIL_N) {
+    const n = s.rondas.length, prev = +lsGet(SIL_MEJOR) || 0, mejor = Math.max(prev, s.aciertos);
+    if (!s.guardado) { s.guardado = true; s.record = s.aciertos > prev && n > 0; if (s.record) lsSet(SIL_MEJOR, s.aciertos); }
+    app.innerHTML = `${intro}
+    <div class="panel sil-fin"><span class="label">${T('Resultado', 'Result')}</span>
+      <b class="sil-pts">${s.aciertos}/${n || SIL_N}</b>
+      <p>${s.record ? T('¡Nuevo récord!', 'New best score!') : s.aciertos === n ? T('¡Perfecto! Las reconoces a todas.', 'Perfect! You know them all.') : s.aciertos >= n * .7 ? T('¡Muy bien!', 'Great job!') : T('Sigue practicando.', 'Keep practicing.')}</p>
+      <p class="muted">${T('Mejor puntaje', 'Best score')}: <b>${mejor}/${SIL_N}</b></p>
+      <ul class="sil-res">${s.rondas.map(r => { const p = pjById(r.id); return `<li class="${r.ok ? 'ok' : 'mal'}"><a href="#p-${esc(r.id)}">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}<span>${esc(p.personaje)}</span></a><b aria-label="${r.ok ? T('Acertaste', 'Correct') : T('Fallaste', 'Wrong')}">${r.ok ? '✓' : '✗'}</b></li>`; }).join('')}</ul>
+      <button type="button" class="qz-start" id="sil-otra">${T('Jugar otra vez', 'Play again')}</button></div>`;
+    document.getElementById('sil-otra').onclick = () => { silNueva(); viewSilueta(); window.scrollTo(0, 0); };
+    return;
+  }
+  const bar = `<span class="label" role="status">${T('Ronda', 'Round')} ${s.i + 1} ${T('de', 'of')} ${SIL_N} · ${s.aciertos} ${s.aciertos === 1 ? T('acierto', 'correct') : T('aciertos', 'correct')}</span>
+    <div class="qz-bar" aria-hidden="true"><i style="width:${100 * s.i / SIL_N}%"></i></div>`;
+  if (!s.cur) {
+    app.innerHTML = `${intro}${bar}<div class="sil-stage" role="img" aria-label="${T('Cargando la silueta', 'Loading the silhouette')}"><span class="sil-load">${T('Cargando…', 'Loading…')}</span></div>`;
+    silCargar();
+    return;
+  }
+  const c = s.cur, done = s.elegida !== null, p = pjById(c.id), anim = s.anim; s.anim = false;
+  app.innerHTML = `${intro}${bar}
+  <div class="sil-stage${done ? ' rev' : ''}${anim ? ' anim' : ''}" role="img" aria-label="${done ? esc(p.personaje) : T('Silueta de una uma misteriosa', 'Silhouette of a mystery uma')}">
+    ${done && !anim ? '' : c.corte === 'css' ? `<img class="sil-css" src="${esc(imgUrl(p))}" alt="" aria-hidden="true">` : '<canvas id="sil-cv" width="320" height="320" aria-hidden="true"></canvas>'}${done ? `<img class="sil-foto" src="${esc(imgUrl(p))}" alt="" aria-hidden="true">` : ''}</div>
+  <div class="qz-opts sil-opts" role="group" aria-label="${T('Opciones', 'Options')}">${c.opts.map(id => { const o = pjById(id); return `<button type="button" data-id="${esc(id)}" class="${done ? (id === c.id ? 'ok' : id === s.elegida ? 'mal' : 'off') : ''}" ${done ? 'disabled' : ''}>${esc(o.personaje)}</button>`; }).join('')}</div>
+  <p class="qz-msg" role="status">${done ? (s.elegida === c.id ? T(`¡Correcto! Es ${esc(p.personaje)}.`, `Correct! It’s ${esc(p.personaje)}.`) : T(`Incorrecto. Era ${esc(p.personaje)}.`, `Wrong. It was ${esc(p.personaje)}.`)) : ''}</p>
+  ${done ? `<button type="button" class="qz-start" id="sil-next">${s.i + 1 < SIL_N ? T('Siguiente', 'Next') : T('Ver resultado', 'See results')}</button>` : ''}
+  <p class="note"><a href="#" id="sil-rei">↻ ${T('Empezar de nuevo', 'Start over')}</a></p>`;
+  const cv = document.getElementById('sil-cv');
+  if (cv) cv.getContext('2d').drawImage(c.corte, 0, 0);
+  app.querySelectorAll('.sil-opts button').forEach(b => b.onclick = () => {
+    if (s.elegida !== null) return;
+    s.elegida = b.dataset.id; s.anim = true;
+    const ok = s.elegida === c.id; if (ok) s.aciertos++;
+    s.rondas.push({ id: c.id, ok });
+    viewSilueta(); document.getElementById('sil-next')?.focus();
+  });
+  const next = document.getElementById('sil-next');
+  if (next) next.onclick = () => { s.i++; s.elegida = null; s.cur = null; viewSilueta(); };
+  document.getElementById('sil-rei').onclick = e => { e.preventDefault(); silNueva(); viewSilueta(); };
+}
+
+// ¿Más o menos?: ¿la uma de la derecha tiene más o menos que la de la izquierda en el dato de la ronda?
+const MYM_MEJOR = 'umadex-masomenos-mejor';
+const mymYen = p => { const g = ganYen(p.ganancias); return g && !g.conv && g.yen > 0 ? g.yen : null; };
+const mymNum = x => (x === null || x === undefined || x === '' || isNaN(+x)) ? null : +x;
+const MYM_DATOS = [
+  { k: 'g1', v: p => mymNum(p.resumen_grados?.G1?.ganadas ?? 0), u: n => T(`${n} G1 ${n === 1 ? 'ganada' : 'ganadas'}`, `${n} G1 ${n === 1 ? 'win' : 'wins'}`),
+    q: (b, a) => T(`¿${b} tiene más o menos G1 ganadas que ${a}?`, `Does ${b} have more or fewer G1 wins than ${a}?`) },
+  { k: 'victorias', v: p => mymNum(p.record?.victorias), u: n => T(`${n} ${n === 1 ? 'victoria' : 'victorias'}`, `${n} ${n === 1 ? 'win' : 'wins'}`),
+    q: (b, a) => T(`¿${b} tiene más o menos victorias que ${a}?`, `Does ${b} have more or fewer wins than ${a}?`) },
+  { k: 'carreras', v: p => mymNum(p.record?.carreras), u: n => T(`${n} ${n === 1 ? 'carrera corrida' : 'carreras corridas'}`, `${n} ${n === 1 ? 'start' : 'starts'}`),
+    q: (b, a) => T(`¿${b} tiene más o menos carreras corridas que ${a}?`, `Does ${b} have more or fewer starts than ${a}?`) },
+  { k: 'anio', v: p => mymNum(p.anio_nacimiento) || null, u: n => T(`nació en ${n}`, `born in ${n}`), anio: true,
+    q: (b, a) => T(`¿${b} nació antes o después que ${a}?`, `Was ${b} born before or after ${a}?`) },
+  { k: 'ganancias', v: mymYen, u: n => T(`${fmtM(n)} millones de ¥`, `¥${fmtM(n)} million`),
+    q: (b, a) => T(`¿${b} tiene más o menos ganancias que ${a}?`, `Does ${b} have more or less prize money than ${a}?`) }
+];
+var mym = null;
+// Elige la uma nueva y un dato que tengan las dos (distinto del de la ronda anterior si se puede)
+function mymRonda(aId, prevK) {
+  const a = pjById(aId), pool = gamePool().filter(p => String(p.id) !== String(aId) && !mym.vistos.includes(String(p.id)));
+  const cands = (pool.length ? pool : gamePool().filter(p => String(p.id) !== String(aId)));
+  for (const b of gameShuffle(cands)) {
+    const ds = MYM_DATOS.filter(d => d.v(a) !== null && d.v(b) !== null);
+    const sin = ds.filter(d => d.k !== prevK), elegibles = sin.length ? sin : ds;
+    if (elegibles.length) return { a: String(aId), b: String(b.id), k: elegibles[Math.floor(Math.random() * elegibles.length)].k };
+  }
+  return null;
+}
+function mymNueva() {
+  const a = gameShuffle(gamePool())[0];
+  mym = { racha: 0, vistos: [String(a.id)], fin: false, resp: null, anim: '' };
+  mym.r = mymRonda(String(a.id), '');
+  if (mym.r) mym.vistos.push(mym.r.b);
+}
+function viewMasomenos() {
+  const back = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>`;
+  if (gamePool().length < 3) { app.innerHTML = back + gameWait(); return; }
+  if (!mym || !mym.r) mymNueva();
+  const s = mym, r = s.r, d = MYM_DATOS.find(x => x.k === r.k), a = pjById(r.a), b = pjById(r.b);
+  const va = d.v(a), vb = d.v(b), done = s.resp !== null, ok = done && (vb === va || (s.resp === 'mas') === (vb > va));
+  const mejorPrev = +lsGet(MYM_MEJOR) || 0;
+  if (s.fin && !s.guardado) { s.guardado = true; s.record = s.racha > mejorPrev; if (s.record) lsSet(MYM_MEJOR, s.racha); }
+  const mejor = Math.max(mejorPrev, s.racha), anim = s.anim; s.anim = '';
+  const carta = (p, v, lado) => `<div class="panel mym-c${lado === 'b' && done ? (ok ? ' ok' : ' mal') : ''}">
+      ${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : '<span class="mym-ph"></span>'}
+      <b class="mym-n">${esc(p.personaje)}</b>
+      <span class="mym-v${lado === 'b' && !done ? ' oculto' : ''}">${lado === 'b' && !done ? '?' : esc(d.u(v))}</span></div>`;
+  const [tMas, tMenos] = d.anio ? [T('Después ↑', 'After ↑'), T('Antes ↓', 'Before ↓')] : [T('Más ↑', 'More ↑'), T('Menos ↓', 'Less ↓')];
+  app.innerHTML = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('masomenos')}${T('¿Más o menos?', 'Higher or lower?')}</h1>
+    <p>${T('Compara a las dos umas: ¿la de la derecha tiene más o menos que la de la izquierda? El dato cambia en cada ronda. Si empatan, cuenta como acierto. Un error y se acaba la partida.', 'Compare the two umas: does the one on the right have more or less than the one on the left? The stat changes every round. A tie counts as correct. One mistake and the game is over.')}</p></section>
+  <div class="gm-bar"><span class="label" role="status">${T('Racha', 'Streak')}: <b class="num">${s.racha}</b> · ${T('Mejor', 'Best')}: <b class="num">${mejor}</b></span></div>
+  <div class="mym-duo${anim ? ' ' + anim : ''}">${carta(a, va, 'a')}<span class="mym-vs" aria-hidden="true">VS</span>${carta(b, vb, 'b')}</div>
+  <h2 class="mym-q">${esc(d.q(b.personaje, a.personaje))}</h2>
+  ${s.fin ? `<div class="panel mym-fin"><span class="label">${T('Fin de la partida', 'Game over')}</span>
+      <p>${T(`Lograste una racha de <b>${s.racha}</b>.`, `You got a streak of <b>${s.racha}</b>.`)} ${s.record ? T('¡Nuevo récord!', 'New best!') : T(`Tu mejor racha es <b>${mejor}</b>.`, `Your best streak is <b>${mejor}</b>.`)}</p>
+      <button type="button" class="qz-start" id="mym-otra">${T('Jugar otra vez', 'Play again')}</button></div>`
+    : `<div class="mym-btns" role="group" aria-label="${T('Tu respuesta', 'Your answer')}">
+      <button type="button" class="mym-b" data-r="mas" ${done ? 'disabled' : ''}>${tMas}</button>
+      <button type="button" class="mym-b" data-r="menos" ${done ? 'disabled' : ''}>${tMenos}</button></div>
+      <p class="qz-msg" role="status">${done ? (vb === va ? T('¡Empate! Cuenta como acierto.', 'A tie! That counts as correct.') : T('¡Correcto!', 'Correct!')) : ''}</p>`}`;
+  app.querySelectorAll('.mym-b').forEach(btn => btn.onclick = () => {
+    if (s.resp !== null || s.fin) return;
+    s.resp = btn.dataset.r;
+    const bien = vb === va || (s.resp === 'mas') === (vb > va);
+    if (!bien) { s.fin = true; viewMasomenos(); document.getElementById('mym-otra')?.focus(); return; }
+    s.racha++; viewMasomenos();
+    // tras ver el valor, la de la derecha pasa a la izquierda y entra una nueva
+    setTimeout(() => {
+      if (mym !== s || location.hash !== '#masomenos') return;
+      const nr = mymRonda(r.b, r.k);
+      if (!nr) { s.fin = true; viewMasomenos(); return; }
+      s.vistos.push(nr.b); if (s.vistos.length > gamePool().length - 2) s.vistos = [nr.a, nr.b];
+      s.r = nr; s.resp = null; s.anim = 'entra'; viewMasomenos();
+      app.querySelector('.mym-b')?.focus({ preventScroll: true });
+    }, 1400);
+  });
+  document.getElementById('mym-otra')?.addEventListener('click', () => { mymNueva(); viewMasomenos(); });
+}
+
+// ¡Apuesta a tu uma!: 6 umas en una pista; el orden de llegada se decide ANTES de animar
+// Peso de cada uma = 1 + 0.15 × G1 ganadas (máximo 8 G1). Los momios salen de esos mismos pesos
+const CR_KEY = 'umadex-carrera', CR_N = 6, CR_MAXG1 = 8;
+var cr = null, crRaf = 0;
+const crPeso = p => 1 + .15 * Math.min(CR_MAXG1, p.resumen_grados?.G1?.ganadas || 0);
+// Momios justos "X a 1": probabilidad de ganar = peso / suma de pesos
+const crMomio = (p, tot) => { const w = crPeso(p), x = (tot - w) / w; return x < 10 ? (Math.round(x * 10) / 10).toLocaleString(LOC(), { minimumFractionDigits: 1 }) : String(Math.round(x)); };
+// Orden de llegada: se sortea el 1.º según los pesos, luego el 2.º entre las que quedan, etc.
+function crOrden(ids) {
+  const rest = ids.slice(), out = [];
+  while (rest.length) {
+    const tot = rest.reduce((a, id) => a + crPeso(pjById(id)), 0);
+    let r = Math.random() * tot, k = 0;
+    for (; k < rest.length - 1; k++) { r -= crPeso(pjById(rest[k])); if (r <= 0) break; }
+    out.push(rest.splice(k, 1)[0]);
+  }
+  return out;
+}
+// Avance por tramos de cada uma: puntos [tiempo, posición 0–1] irregulares que terminan en su tiempo de llegada
+function crPlan(orden, reducido) {
+  const T = reducido ? 1.2 : 7.6, TR = 8, plan = {};
+  let t = T;
+  orden.forEach((id, i) => {
+    if (i) t += (reducido ? .05 : .18) + Math.random() * (reducido ? .08 : .32);
+    const inc = Array.from({ length: TR }, () => .45 + Math.random() * 1.1);
+    // a veces la ganadora (o la 2.ª) sale lenta y remonta al final
+    if (i < 2 && Math.random() < .55) inc.forEach((v, k) => { inc[k] = v * (k < TR / 2 ? .55 : 1.5); });
+    // y alguna de atrás sale muy rápido y se cae al final
+    if (i >= 3 && Math.random() < .5) inc.forEach((v, k) => { inc[k] = v * (k < TR / 2 ? 1.7 : .6); });
+    const sum = inc.reduce((a, b) => a + b, 0);
+    let acc = 0;
+    plan[id] = [[0, 0], ...inc.map((v, k) => { acc += v; return [t * (k + 1) / TR, acc / sum]; })];
+  });
+  return { plan, fin: t };
+}
+const crPos = (pts, s) => { if (s >= pts[pts.length - 1][0]) return 1; for (let k = 1; k < pts.length; k++) if (s <= pts[k][0]) { const [t0, p0] = pts[k - 1], [t1, p1] = pts[k]; return p0 + (p1 - p0) * (s - t0) / (t1 - t0); } return 1; };
+const crStats = () => { const s = lsGet(CR_KEY); return { aciertos: +s?.aciertos || 0, carreras: +s?.carreras || 0 }; };
+function crNueva() { cancelAnimationFrame(crRaf); cr = { ids: gameShuffle(gamePool()).slice(0, CR_N).map(p => String(p.id)), fav: null, fase: 'apuesta' }; }
+function crAnimar() {
+  cancelAnimationFrame(crRaf);
+  const s = cr, pista = document.getElementById('cr-pista');
+  if (!pista || s.fase !== 'carrera') return;
+  const fichas = [...pista.querySelectorAll('.cr-ficha')];
+  const frame = () => {
+    if (cr !== s || !document.body.contains(pista)) return;
+    const seg = (performance.now() - s.t0) / 1000;
+    fichas.forEach(f => {
+      const lane = f.parentElement, rango = lane.clientWidth - f.offsetWidth - 14;
+      f.style.transform = `translateX(${Math.max(0, rango * crPos(s.plan[f.dataset.id], seg))}px)`;
+    });
+    if (seg >= s.fin + .5) { s.fase = 'fin'; viewCarrera(); document.getElementById('cr-res')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' }); return; }
+    crRaf = requestAnimationFrame(frame);
+  };
+  frame();
+}
+function viewCarrera() {
+  const back = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>`;
+  if (gamePool().length < CR_N) { app.innerHTML = back + gameWait(); return; }
+  if (!cr) crNueva();
+  const s = cr, ps = s.ids.map(pjById), tot = ps.reduce((a, p) => a + crPeso(p), 0), st = s.fase === 'carrera' && s.prev ? s.prev : crStats();
+  const lugar = s.orden ? s.orden.indexOf(s.fav) + 1 : 0;
+  const ord = n => T(`${n}.º`, n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
+  app.innerHTML = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('carrera')}${T('¡Apuesta a tu uma!', 'Bet on your uma!')}</h1>
+    <p>${T('Seis umas al azar salen a la pista. Mira sus momios, elige a tu favorita y dale a "¡Arrancan!". Las que tienen más G1 ganadas tienen más probabilidades de ganar, pero cualquiera puede dar la sorpresa.', 'Six random umas take the track. Check their odds, pick your favorite and hit “They’re off!”. Umas with more G1 wins are more likely to win, but anyone can pull off an upset.')}</p></section>
+  <div class="gm-bar"><span class="label" role="status">${s.fase === 'apuesta' ? (s.fav ? T(`Tu apuesta: ${esc(pjById(s.fav).personaje)}`, `Your pick: ${esc(pjById(s.fav).personaje)}`) : T('Elige a tu favorita', 'Pick your favorite')) : s.fase === 'carrera' ? T('¡Arrancan!', 'They’re off!') : T('Carrera terminada', 'Race finished')}</span>
+    <span class="label">${T('Aciertos', 'Wins')}: <b class="num">${st.aciertos}</b> / ${st.carreras} ${st.carreras === 1 ? T('carrera', 'race') : T('carreras', 'races')}</span></div>
+  <div class="cr-pista${s.fase !== 'apuesta' ? ' corre' : ''}" id="cr-pista" role="group" aria-label="${T('Pista: elige a tu favorita', 'Track: pick your favorite')}">
+    ${ps.map((p, i) => `<button type="button" class="cr-carril" data-id="${esc(p.id)}" aria-pressed="${s.fav === String(p.id)}" ${s.fase !== 'apuesta' ? 'disabled' : ''}>
+      <span class="cr-info"><b>${i + 1} · ${esc(p.personaje)}</b><small>${T('Momio', 'Odds')} ${crMomio(p, tot)} ${T('a', 'to')} 1 · ${p.resumen_grados?.G1?.ganadas || 0} G1${s.fase === 'fin' ? ` · <strong>${ord(s.orden.indexOf(String(p.id)) + 1)}</strong>` : ''}</small></span>
+      <span class="cr-ficha" data-id="${esc(p.id)}"${s.fase === 'fin' ? ' data-fin="1"' : ''}>${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}<i>${i + 1}</i></span></button>`).join('')}
+    <span class="cr-meta" aria-hidden="true"></span>
+  </div>
+  ${s.fase === 'apuesta' ? `<button type="button" class="qz-start cr-go" id="cr-go" ${s.fav ? '' : 'disabled'}>🏁 ${T('¡Arrancan!', 'They’re off!')}</button>
+    <p class="note">${T('Los momios salen del peso de cada uma: 1 + 0.15 × sus G1 ganadas (contando hasta 8). Un momio de 2 a 1 quiere decir que, de cada 3 carreras, ganaría más o menos 1.', 'Odds come from each uma’s weight: 1 + 0.15 × her G1 wins (counting up to 8). Odds of 2 to 1 mean she would win about 1 race out of 3.')}</p>` : ''}
+  ${s.fase === 'fin' ? `<section class="panel cr-res" id="cr-res"><h2>${lugar === 1 ? T('¡Ganó tu uma! 🎉', 'Your uma won! 🎉') : T(`Tu uma llegó en ${ord(lugar)} lugar`, `Your uma finished ${ord(lugar)}`)}</h2>
+      <ol>${s.orden.map((id, k) => { const p = pjById(id); return `<li class="${id === s.fav ? 'tuya' : ''}"><span class="cr-pos">${ord(k + 1)}</span>${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}<a href="#p-${esc(id)}">${esc(p.personaje)}</a>${id === s.fav ? `<span class="cr-tag">${T('Tu apuesta', 'Your pick')}</span>` : ''}</li>`; }).join('')}</ol>
+      <button type="button" class="qz-start" id="cr-new">↻ ${T('Nueva carrera', 'New race')}</button></section>` : ''}`;
+  // en la meta, cada ficha se queda al final de su carril
+  if (s.fase === 'fin') app.querySelectorAll('.cr-ficha').forEach(f => { f.style.transform = `translateX(${f.parentElement.clientWidth - f.offsetWidth - 14}px)`; });
+  app.querySelectorAll('.cr-carril').forEach(b => b.onclick = () => { if (s.fase !== 'apuesta') return; s.fav = b.dataset.id; viewCarrera(); app.querySelector(`.cr-carril[data-id="${CSS.escape(s.fav)}"]`)?.focus(); });
+  const go = document.getElementById('cr-go');
+  if (go) go.onclick = () => {
+    if (!s.fav) return;
+    s.orden = crOrden(s.ids);
+    const pl = crPlan(s.orden, matchMedia('(prefers-reduced-motion: reduce)').matches);
+    s.plan = pl.plan; s.fin = pl.fin; s.fase = 'carrera'; s.t0 = performance.now();
+    // el resultado ya está decidido: se cuenta al arrancar
+    const n = crStats(); s.prev = n; lsSet(CR_KEY, { aciertos: n.aciertos + (s.orden[0] === s.fav ? 1 : 0), carreras: n.carreras + 1 });
+    viewCarrera();
+  };
+  document.getElementById('cr-new')?.addEventListener('click', () => { crNueva(); viewCarrera(); window.scrollTo(0, 0); });
+  if (s.fase === 'carrera') crAnimar();
+}
+
+// Colección de umas (prueba): 10 tiradas gratis al día; rareza por G1 ganadas
+const COL_KEY = 'umadex-coleccion', COL_DIA = 10;
+const COL_RAREZA = [{ n: 1, p: .70 }, { n: 2, p: .25 }, { n: 3, p: .05 }];
+const colRareza = p => { const g = p.resumen_grados?.G1?.ganadas || 0; return g >= 4 ? 3 : g >= 1 ? 2 : 1; };
+const colEstrellas = n => '★'.repeat(n);
+var colUlt = [], colConfirmar = false, colAnim = false;
+function colEstado() {
+  const s = lsGet(COL_KEY) || {}, hoy = hoyMX();
+  return { cartas: s.cartas && typeof s.cartas === 'object' ? s.cartas : {}, dia: hoy, usadas: s.dia === hoy ? Math.min(COL_DIA, +s.usadas || 0) : 0 };
+}
+// Primero se sortea la rareza (70 % / 25 % / 5 %) y luego una uma de esa rareza
+function colTirar(n) {
+  const s = colEstado(), pool = gamePool(), quedan = COL_DIA - s.usadas, k = Math.min(n, quedan), out = [];
+  for (let i = 0; i < k; i++) {
+    let r = Math.random(), rar = 1;
+    for (const x of COL_RAREZA) { if (r < x.p) { rar = x.n; break; } r -= x.p; }
+    let cands = pool.filter(p => colRareza(p) === rar);
+    if (!cands.length) cands = pool;
+    const p = cands[Math.floor(Math.random() * cands.length)], id = String(p.id);
+    out.push({ id, nueva: !s.cartas[id] });
+    s.cartas[id] = (s.cartas[id] || 0) + 1;
+  }
+  s.usadas += k;
+  lsSet(COL_KEY, s);
+  return out;
+}
+const colCarta = (p, extra = '') => `<span class="col-rar">${colEstrellas(colRareza(p))}</span>${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="" loading="lazy">` : '<span class="col-ph"></span>'}<b class="col-n">${esc(p.personaje)}</b>${extra}`;
+function viewColeccion() {
+  const back = `<a class="back" href="#juegos">← ${T('Juegos', 'Games')}</a>`;
+  const pool = gamePool();
+  if (pool.length < 10) { app.innerHTML = back + gameWait(); return; }
+  const s = colEstado(), quedan = COL_DIA - s.usadas, anim = colAnim; colAnim = false;
+  const ids = new Set(pool.map(p => String(p.id)));
+  const tengo = Object.keys(s.cartas).filter(id => ids.has(id) && s.cartas[id] > 0);
+  const album = pool.slice().sort((a, b) => colRareza(b) - colRareza(a) || a.personaje.localeCompare(b.personaje));
+  const porRar = [3, 2, 1].map(n => ({ n, tot: pool.filter(p => colRareza(p) === n).length, mias: pool.filter(p => colRareza(p) === n && s.cartas[String(p.id)]).length }));
+  app.innerHTML = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('coleccion')}${T('Colección de umas', 'Uma collection')}</h1>
+    <p>${T(`Tienes ${COL_DIA} tiradas gratis al día (se renuevan a medianoche de la Ciudad de México). Cada tirada te da una carta al azar: ★ si la uma no ganó ninguna G1, ★★ si ganó de 1 a 3 y ★★★ si ganó 4 o más. Las de tres estrellas salen muy poco.`, `You get ${COL_DIA} free pulls a day (they reset at midnight Mexico City time). Each pull gives you a random card: ★ if the uma won no G1, ★★ if she won 1 to 3 and ★★★ if she won 4 or more. Three-star cards are rare.`)} <span class="muted">${T('Modo de prueba.', 'Test mode.')}</span></p></section>
+  <div class="panel col-tir">
+    <div class="col-btns">
+      <button type="button" class="primary col-b" id="col-1" ${quedan ? '' : 'disabled'}>${T('Tirar', 'Pull')}</button>
+      <button type="button" class="primary col-b" id="col-10" ${quedan ? '' : 'disabled'}>${quedan >= COL_DIA ? T('Tirar ×10', 'Pull ×10') : T(`Tirar ×${quedan || 10}`, `Pull ×${quedan || 10}`)}</button>
+    </div>
+    <span class="label" role="status">${quedan ? T(`Te ${quedan === 1 ? 'queda' : 'quedan'} ${quedan} ${quedan === 1 ? 'tirada' : 'tiradas'} hoy`, `${quedan} ${quedan === 1 ? 'pull' : 'pulls'} left today`) : `${T('Ya usaste tus tiradas de hoy. Nuevas tiradas en', 'You’ve used today’s pulls. New pulls in')} <b class="num" id="gm-cuenta">${hms(msMedianoche())}</b>`}</span>
+    ${colUlt.length ? `<div class="col-mano${anim ? ' anim' : ''}" aria-label="${T('Cartas que te salieron', 'Cards you got')}">${colUlt.map((c, i) => { const p = pjById(c.id); return p ? `<a href="#p-${esc(c.id)}" class="col-c r${colRareza(p)}" style="--d:${i * 140}ms">${colCarta(p, c.nueva ? `<span class="col-new">${T('¡Nueva!', 'New!')}</span>` : '')}<span class="col-dorso" aria-hidden="true"><b>UMADEX</b></span></a>` : ''; }).join('')}</div>` : ''}
+  </div>
+  <section class="col-album">
+    <div class="col-head"><h2>${T('Álbum', 'Album')} <span class="num">${tengo.length}/${pool.length}</span></h2>
+      <span class="col-rars">${porRar.map(x => `<span class="r${x.n}">${colEstrellas(x.n)} ${x.mias}/${x.tot}</span>`).join('')}</span></div>
+    <div class="col-bar" aria-hidden="true"><i style="width:${100 * tengo.length / pool.length}%"></i></div>
+    <div class="col-grid">${album.map(p => { const id = String(p.id), n = s.cartas[id] || 0; return n ? `<a href="#p-${esc(id)}" class="col-c r${colRareza(p)}" title="${esc(p.personaje)}">${colCarta(p, n > 1 ? `<span class="col-rep" aria-label="${T(`${n - 1} repetidas`, `${n - 1} duplicates`)}">+${n - 1}</span>` : '')}</a>`
+      : `<span class="col-c no r${colRareza(p)}" aria-label="${T('Carta que aún no tienes', 'Card you don’t have yet')}"><span class="col-rar">${colEstrellas(colRareza(p))}</span><span class="col-sil">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="" loading="lazy">` : ''}<i>?</i></span><b class="col-n">?</b></span>`; }).join('')}</div>
+    <div class="col-reset">${colConfirmar ? `<span>${T('¿Seguro? Se borrarán todas tus cartas (las tiradas de hoy no se recuperan).', 'Are you sure? All your cards will be deleted (today’s pulls aren’t restored).')}</span>
+      <button type="button" class="danger" id="col-si">${T('Sí, borrar', 'Yes, delete')}</button><button type="button" id="col-no">${T('Cancelar', 'Cancel')}</button>`
+      : `<button type="button" class="danger" id="col-reset" ${tengo.length ? '' : 'disabled'}>${T('Reiniciar colección', 'Reset collection')}</button>`}</div>
+  </section>`;
+  const tirar = n => { colUlt = colTirar(n); colAnim = !matchMedia('(prefers-reduced-motion: reduce)').matches; colConfirmar = false; viewColeccion(); };
+  const b1 = document.getElementById('col-1'), b10 = document.getElementById('col-10');
+  if (b1) b1.onclick = () => tirar(1);
+  if (b10) b10.onclick = () => tirar(COL_DIA);
+  if (!quedan) cuentaRegresiva();
+  document.getElementById('col-reset')?.addEventListener('click', () => { colConfirmar = true; viewColeccion(); document.getElementById('col-no')?.focus(); });
+  document.getElementById('col-no')?.addEventListener('click', () => { colConfirmar = false; viewColeccion(); });
+  document.getElementById('col-si')?.addEventListener('click', () => { const e = colEstado(); lsSet(COL_KEY, { cartas: {}, dia: e.dia, usadas: e.usadas }); colUlt = []; colConfirmar = false; viewColeccion(); });
+}
+
+/* ---------- favoritas, compartir enlace, tal día como hoy y comparador ---------- */
+const FAV_KEY = 'umadex-favoritas';
+const favs = () => { const a = lsGet(FAV_KEY); return Array.isArray(a) ? a.map(String) : []; };
+const esFav = id => favs().includes(String(id));
+function favToggle(id) { const f = favs(), i = f.indexOf(String(id)); if (i >= 0) f.splice(i, 1); else f.push(String(id)); lsSet(FAV_KEY, f); return i < 0; }
+const favLabel = (p, on) => on ? T(`Quitar a ${p.personaje} de favoritas`, `Remove ${p.personaje} from favorites`) : T(`Marcar a ${p.personaje} como favorita`, `Add ${p.personaje} to favorites`);
+const favBtn = (p, cls = '') => { const on = esFav(p.id); return `<button type="button" class="fav ${cls}" data-fav="${esc(p.id)}" aria-pressed="${on}" aria-label="${esc(favLabel(p, on))}" title="${esc(favLabel(p, on))}">${on ? '★' : '☆'}</button>`; };
+// Al tocar una estrella se actualiza en su lugar (sin volver a dibujar la página)
+function favBind(root, alCambiar) {
+  root.addEventListener('click', e => {
+    const b = e.target.closest('[data-fav]'); if (!b || !root.contains(b)) return;
+    e.preventDefault(); e.stopPropagation();
+    const p = byId(b.dataset.fav); if (!p) return;
+    const on = favToggle(p.id);
+    root.querySelectorAll(`[data-fav="${CSS.escape(String(p.id))}"]`).forEach(x => { x.setAttribute('aria-pressed', String(on)); x.textContent = x.classList.contains('fav-lg') ? `${on ? '★' : '☆'} ${on ? T('Favorita', 'Favorite') : T('Marcar favorita', 'Add to favorites')}` : on ? '★' : '☆'; x.setAttribute('aria-label', favLabel(p, on)); x.title = favLabel(p, on); });
+    if (alCambiar) alCambiar(on);
+  });
+}
+// Enlace directo a la página en umadexfan.com: menú del sistema en celular o copiar al portapapeles
+const enlaceDirecto = () => `https://umadexfan.com/#${location.hash.slice(1)}`;
+async function compartirEnlace(btn) {
+  const url = enlaceDirecto(), st = btn.parentElement.querySelector('.sh-st');
+  const aviso = m => { if (!st) return; st.textContent = m; clearTimeout(st._t); st._t = setTimeout(() => { st.textContent = ''; }, 2500); };
+  if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+    try { await navigator.share({ title: document.title, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(url); aviso(T('¡Copiado!', 'Copied!')); return; } catch {}
+  try {
+    const t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(t); t.select(); const ok = document.execCommand('copy'); t.remove();
+    aviso(ok ? T('¡Copiado!', 'Copied!') : T('No se pudo copiar', 'Couldn’t copy'));
+  } catch { aviso(T('No se pudo copiar', 'Couldn’t copy')); }
+}
+const shareBtn = () => `<span class="sh-w"><button type="button" class="sh-b" data-share><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.3 10.8 7.4-4.4M8.3 13.2l7.4 4.4"/></svg>${T('Compartir', 'Share')}</button><span class="sh-st" role="status" aria-live="polite"></span></span>`;
+function shareBind() { app.querySelectorAll('[data-share]').forEach(b => b.onclick = () => compartirEnlace(b)); }
+
+// Tal día como hoy: una G1 que ganó alguna uma en este día y mes de otro año (o la más cercana)
+function talDiaBox() {
+  const hoy = hoyMX(), Y = +hoy.slice(0, 4), base = Date.UTC(2000, +hoy.slice(5, 7) - 1, +hoy.slice(8, 10));
+  const wins = [];
+  for (const p of all()) for (const c of p.carreras_grupo || []) {
+    if (c.grado !== 'G1' || String(c.puesto) !== '1' || !/^\d{4}-\d{2}-\d{2}$/.test(c.fecha || '') || +c.fecha.slice(0, 4) >= Y) continue;
+    let d = Math.round((Date.UTC(2000, +c.fecha.slice(5, 7) - 1, +c.fecha.slice(8, 10)) - base) / 864e5);
+    if (d > 183) d -= 366; else if (d < -183) d += 366;
+    wins.push({ p, c, d: Math.abs(d) });
+  }
+  if (!wins.length) return '';
+  const min = Math.min(...wins.map(w => w.d)), cands = wins.filter(w => w.d === min).sort((a, b) => a.c.fecha.localeCompare(b.c.fecha) || String(a.p.id).localeCompare(String(b.p.id)));
+  let h = 0; for (const ch of 'hoy|' + hoy) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const { p, c } = cands[h % cands.length], anio = c.fecha.slice(0, 4);
+  const fecha = new Date(c.fecha + 'T12:00:00').toLocaleDateString(LOC(), { day: 'numeric', month: 'long', year: 'numeric' });
+  const tit = min === 0 ? T('Tal día como hoy', 'On this day') : min <= 3 ? T('Esta semana en la historia', 'This week in history') : T('Por estas fechas', 'Around this time of year');
+  const linea = min === 0 ? T(`En ${anio}, <b>${esc(p.personaje)}</b> ganó la ${esc(enW(carreraTx(c.carrera)))}.`, `In ${anio}, <b>${esc(p.personaje)}</b> won the ${esc(enW(carreraTx(c.carrera)))}.`)
+    : T(`El ${fecha}, <b>${esc(p.personaje)}</b> ganó la ${esc(enW(carreraTx(c.carrera)))}.`, `On ${fecha}, <b>${esc(p.personaje)}</b> won the ${esc(enW(carreraTx(c.carrera)))}.`);
+  return `<a class="panel taldia" href="#p-${esc(p.id)}">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : ''}<span><span class="label">${tit}</span><span class="td-t">${linea}</span><span class="td-go">${T('Ver su ficha', 'See her profile')} →</span></span></a>`;
+}
+
+// Comparador: dos umas lado a lado y sus enfrentamientos directos en G1
+var cmp = { a: null, b: null };
+const posNum = x => { const m = String(x).match(/^(\d+)/); return m ? +m[1] : null; };
+function cmpCara(a, b) {
+  const out = [];
+  for (const [key, r] of Object.entries(PART)) {
+    const ra = r.r.find(x => x[2] != null && String(x[2]) === String(a.id)), rb = r.r.find(x => x[2] != null && String(x[2]) === String(b.id));
+    if (ra && rb) out.push({ key, r, pa: ra[0], pb: rb[0] });
+  }
+  return out.sort((x, y) => String(x.r.f).localeCompare(String(y.r.f)));
+}
+function cmpPicker(lado) {
+  const sel = cmp[lado] ? byId(cmp[lado]) : null;
+  return `<div class="cmp-pick ud-search"><label class="label" for="cmp-${lado}">${lado === 'a' ? T('Primera uma', 'First uma') : T('Segunda uma', 'Second uma')}</label>
+    <input id="cmp-${lado}" type="search" autocomplete="off" spellcheck="false" placeholder="${sel ? esc(sel.personaje) : T('Escribe un nombre', 'Type a name')}" role="combobox" aria-expanded="false" aria-controls="cmp-l${lado}" aria-autocomplete="list">
+    <ul id="cmp-l${lado}" class="ud-list" role="listbox" hidden></ul></div>`;
+}
+function cmpBuscar(lado) {
+  const q = document.getElementById('cmp-' + lado), list = document.getElementById('cmp-l' + lado);
+  let items = [], sel = 0;
+  const pick = p => { if (!p) return; cmp[lado] = String(p.id); location.hash = 'comparar-' + [cmp.a, cmp.b].map(x => x || '').join('~'); };
+  const draw = () => {
+    const t = norm(q.value.trim());
+    items = !t ? [] : all().filter(p => norm(p.personaje).includes(t) || norm(p.caballo_real).includes(t))
+      .sort((a, b) => norm(a.personaje).indexOf(t) - norm(b.personaje).indexOf(t) || a.personaje.localeCompare(b.personaje)).slice(0, 8);
+    sel = Math.min(sel, Math.max(0, items.length - 1));
+    list.innerHTML = items.length ? items.map((p, i) => `<li role="option" id="cmp-o${lado}${i}" data-i="${i}" aria-selected="${i === sel}">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : '<span class="ud-ph"></span>'}<span>${esc(p.personaje)}</span></li>`).join('')
+      : t ? `<li class="ud-none">${T('No hay ninguna uma con ese nombre.', 'No uma with that name.')}</li>` : '';
+    list.hidden = !t;
+    q.setAttribute('aria-expanded', String(!!items.length));
+    if (items.length) q.setAttribute('aria-activedescendant', `cmp-o${lado}${sel}`); else q.removeAttribute('aria-activedescendant');
+  };
+  q.addEventListener('input', () => { sel = 0; draw(); });
+  q.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { if (!items.length) return; e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; draw(); }
+    else if (e.key === 'Enter') { e.preventDefault(); pick(items[sel]); }
+    else if (e.key === 'Escape') { q.value = ''; draw(); }
+  });
+  q.addEventListener('blur', () => setTimeout(() => { list.hidden = true; q.setAttribute('aria-expanded', 'false'); }, 150));
+  list.addEventListener('mousedown', e => e.preventDefault());
+  list.addEventListener('click', e => { const li = e.target.closest('li[data-i]'); if (li) pick(items[+li.dataset.i]); });
+}
+function viewComparar(arg) {
+  if (arg) {
+    if (arg.includes('~')) { const [x, y] = arg.split('~'); cmp.a = x && byId(x) ? x : null; cmp.b = y && byId(y) ? y : null; }
+    else if (byId(arg)) { cmp.a = arg; if (cmp.b === arg) cmp.b = null; }
+  }
+  const A = cmp.a ? byId(cmp.a) : null, B = cmp.b ? byId(cmp.b) : null;
+  let tabla = '', cara = '';
+  if (A && B) {
+    const rec = p => p.record || {}, pct = p => rec(p).carreras ? Math.round(100 * rec(p).victorias / rec(p).carreras) : null;
+    const gr = (p, k) => (p.resumen_grados || resumen(p.carreras_grupo))[k]?.ganadas || 0;
+    const yen = p => { const g = ganYen(p.ganancias); return g && g.yen > 0 ? g : null; };
+    const filas = [
+      [T('Récord', 'Record'), p => rec(p).victorias ?? null, p => rec(p).carreras != null ? T(`${fmtN(rec(p).carreras)} carreras: ${fmtN(rec(p).victorias)}-${fmtN(rec(p).segundos)}-${fmtN(rec(p).terceros)}`, `${fmtN(rec(p).carreras)} starts: ${fmtN(rec(p).victorias)}-${fmtN(rec(p).segundos)}-${fmtN(rec(p).terceros)}`) : '—'],
+      [T('% de victorias', 'Win rate'), pct, p => pct(p) != null ? pct(p) + ' %' : '—'],
+      [T('G1 ganadas', 'G1 wins'), p => gr(p, 'G1'), p => String(gr(p, 'G1'))],
+      [T('G2 ganadas', 'G2 wins'), p => gr(p, 'G2'), p => String(gr(p, 'G2'))],
+      [T('G3 ganadas', 'G3 wins'), p => gr(p, 'G3'), p => String(gr(p, 'G3'))],
+      [T('Ganancias', 'Earnings'), p => yen(p)?.yen ?? null, p => { const g = yen(p); return g ? `${g.conv ? '≈ ' : ''}${T(`${fmtM(g.yen)} millones de ¥`, `¥${fmtM(g.yen)} million`)}` : '—'; }],
+      [T('Padre', 'Sire'), null, p => p.pedigri?.padre || '—'],
+      [T('Madre', 'Dam'), null, p => p.pedigri?.madre || '—']
+    ];
+    tabla = `<div class="cmp-t" role="table" aria-label="${T('Comparación', 'Comparison')}">
+      <div class="cmp-r cmp-hd" role="row"><span role="columnheader"></span>${[A, B].map(p => `<a role="columnheader" class="cmp-pj" href="#p-${esc(p.id)}">${imgUrl(p) ? `<img src="${esc(imgUrl(p))}" alt="">` : '<span class="ud-ph"></span>'}<b>${esc(p.personaje)}</b></a>`).join('')}</div>
+      ${filas.map(([lab, v, tx]) => { const va = v ? v(A) : null, vb = v ? v(B) : null, mejor = va != null && vb != null && va !== vb ? (va > vb ? 'a' : 'b') : '';
+        const igual = !v && tx(A) !== '—' && norm(tx(A)) === norm(tx(B));
+        return `<div class="cmp-r" role="row"><span class="label" role="rowheader">${lab}</span>${[['a', A], ['b', B]].map(([k, p]) => `<span role="cell" class="cmp-v${mejor === k ? ' mejor' : ''}${igual ? ' igual' : ''}">${esc(tx(p))}${mejor === k ? `<i class="cmp-up" aria-label="${T('mejor', 'better')}">▲</i>` : ''}${igual ? `<small>${T('en común', 'shared')}</small>` : ''}</span>`).join('')}</div>`; }).join('')}
+    </div>`;
+    const cs = cmpCara(A, B), ambas = cs.filter(x => posNum(x.pa) != null && posNum(x.pb) != null);
+    const na = ambas.filter(x => posNum(x.pa) < posNum(x.pb)).length, nb = ambas.filter(x => posNum(x.pb) < posNum(x.pa)).length;
+    cara = `<section class="panel cmp-cara"><h2>${T('Enfrentamientos directos', 'Head-to-head')}</h2>
+      ${String(A.id) === String(B.id) ? `<p class="note">${T('Elige dos umas distintas.', 'Pick two different umas.')}</p>` : !cs.length ? `<p class="note">${T(`${esc(A.personaje)} y ${esc(B.personaje)} nunca coincidieron en una G1 (de las que tenemos el orden de llegada completo).`, `${esc(A.personaje)} and ${esc(B.personaje)} never met in a G1 (among those we have full results for).`)}</p>`
+      : `<p class="cmp-res">${ambas.length ? (na === nb ? T(`Van empatadas: cada una llegó adelante ${na} de ${ambas.length} veces.`, `They’re even: each finished ahead ${na} of ${ambas.length} times.`)
+          : (([w, n]) => T(`<b>${esc(w.personaje)}</b> llegó adelante ${n} de ${ambas.length} ${ambas.length === 1 ? 'vez' : 'veces'}.`, `<b>${esc(w.personaje)}</b> finished ahead ${n} of ${ambas.length} ${ambas.length === 1 ? 'time' : 'times'}.`))(na > nb ? [A, na] : [B, nb])) : ''}</p>
+        <div class="scroll"><table class="cmp-h"><thead><tr><th>${T('Fecha', 'Date')}</th><th>G1</th><th>${esc(A.personaje)}</th><th>${esc(B.personaje)}</th></tr></thead>
+        <tbody>${cs.map(x => `<tr><td class="num">${esc(x.r.f)}</td><td><a href="#carrera-${esc(x.key)}">${esc(enW(carreraTx(x.r.c)))}</a></td><td class="${posNum(x.pa) != null && posNum(x.pb) != null && posNum(x.pa) < posNum(x.pb) ? 'adel' : ''}">${posTx(x.pa)}</td><td class="${posNum(x.pa) != null && posNum(x.pb) != null && posNum(x.pb) < posNum(x.pa) ? 'adel' : ''}">${posTx(x.pb)}</td></tr>`).join('')}</tbody></table></div>`}
+    </section>`;
+  }
+  app.innerHTML = `<section class="intro"><h1>${T('Comparar umas', 'Compare umas')}</h1>
+    <p>${T('Elige dos umas para ver sus números lado a lado y las G1 en las que se enfrentaron.', 'Pick two umas to see their numbers side by side and the G1 races where they met.')}</p></section>
+  <div class="cmp-picks">${cmpPicker('a')}${cmpPicker('b')}</div>
+  ${A && B ? tabla + cara : `<div class="empty">${A || B ? T('Ahora elige la otra uma.', 'Now pick the other uma.') : T('Escribe el nombre de dos umas para compararlas.', 'Type the names of two umas to compare them.')}</div>`}`;
+  cmpBuscar('a'); cmpBuscar('b');
+}
+
+app.addEventListener('click', e => { const b = e.target.closest('[data-share]'); if (b) compartirEnlace(b); });
+
 // Ícono de cada juego (menú, portada y título)
 function gameIcon(id) {
   const svg = d => `<svg class="gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
@@ -2564,6 +3289,10 @@ function gameIcon(id) {
   if (id === 'brackets') return svg('<path d="M2 5h4.5v14H2M6.5 12H10M22 5h-4.5v14H22M17.5 12H14"/>');
   if (id === 'memorama') return svg('<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>');
   if (id === 'umadle') return `<span class="gi gi-ud" aria-hidden="true"><i class="si"></i><i></i><i class="si"></i><i></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span>`;
+  if (id === 'silueta') return svg('<path d="M6.5 10.5 6 3l4.2 4.2h3.6L18 3l-.5 7.5" fill="currentColor"/><circle cx="12" cy="13.5" r="6.5" fill="currentColor"/>');
+  if (id === 'masomenos') return svg('<path d="M7 20V4M3 8l4-4 4 4M17 4v16M13 16l4 4 4-4"/>');
+  if (id === 'carrera') return svg('<path d="M5 21V3"/><path d="M5 4h14l-2.5 4L19 12H5" fill="currentColor"/>');
+  if (id === 'coleccion') return svg('<rect x="3" y="5" width="11" height="15" rx="2" transform="rotate(-8 8.5 12.5)"/><rect x="9.5" y="3.5" width="11" height="15" rx="2" fill="currentColor"/>');
   if (id === 'wordle') return `<span class="gi gi-uma" aria-hidden="true"><i class="no">U</i><i class="casi">M</i><i class="si">A</i></span>`;
   return '';
 }
@@ -3389,7 +4118,7 @@ const fechaLarga = iso => /^\d{4}-\d\d-\d\d$/.test(iso) ? new Date(iso + 'T00:00
 const footHTML = () => T(`Última actualización: ${esc(fechaLarga(ultimaAct()))}. Récords y ganadores de Wikipedia, JBIS y netkeiba. Grados con los colores oficiales de la JRA: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Sitio de fans sin fines de lucro, no oficial y sin afiliación ni respaldo de Cygames; sigue la <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">guía de obras derivadas de Uma Musume</a>. Uma Musume: Pretty Derby © Cygames, Inc.`,
   `Last updated: ${esc(fechaLarga(ultimaAct()))}. Records and winners from Wikipedia, JBIS and netkeiba. Grades shown in the JRA’s official colors: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Non-profit, unofficial fan site with no affiliation with or endorsement from Cygames; it follows the <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">Uma Musume derivative work guidelines</a>. Uma Musume: Pretty Derby © Cygames, Inc.`);
 // Textos fijos del encabezado y el pie en el idioma activo
-const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], umadle: ['Umadle', 'Umadle'], agregar: ['Agregar personaje', 'Add character'] };
+const NAV_TX = { personajes: ['Personajes', 'Characters'], g1: ['G1 del año', 'G1 races'], calendario: ['Calendario', 'Calendar'], hazanas: ['Hazañas', 'Feats'], ganancias: ['Ganancias', 'Earnings'], comparar: ['Comparar', 'Compare'], juegos: ['Juegos', 'Games'], quiz: ['Quiz', 'Quiz'], brackets: ['Brackets', 'Brackets'], memorama: ['Memorama', 'Memory'], wordle: ['Wordle', 'Wordle'], umadle: ['Umadle', 'Umadle'], silueta: ['¿Quién es esa uma?', 'Who’s that uma?'], masomenos: ['¿Más o menos?', 'Higher or lower?'], carrera: ['¡Apuesta a tu uma!', 'Bet on your uma!'], coleccion: ['Colección', 'Collection'], agregar: ['Agregar personaje', 'Add character'] };
 function applyChrome() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('.nav [data-nav], .nav [data-nav-sub]').forEach(a => { const t = NAV_TX[a.dataset.nav || a.dataset.navSub]; if (!t) return; if (a.closest('.nav-dd-games') && a.dataset.navSub) a.innerHTML = `${gameIcon(a.dataset.navSub)}<span>${T(t[0], t[1])}</span>`; else a.textContent = T(t[0], t[1]); });
