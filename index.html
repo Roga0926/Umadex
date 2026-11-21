@@ -2347,9 +2347,9 @@ function viewAcerca() {
   <section class="panel ab">
     <h2>${T('Cómo empezó', 'How it started')}</h2>
     <ol class="ab-tl">
-      <li><b>Excel</b><span>${T('Empezó como una hoja de Excel donde Rodolfo contaba las G1 de algunas umas.', 'It started as an Excel sheet where Rodolfo counted the G1 wins of a few umas.')}</span></li>
-      <li><b>Canva</b><span>${T('Creció hasta una tabla enorme en Canva con G1, G2 y G3, año de nacimiento, padres y los ganadores desde 1980.', 'It grew into a huge Canva table with G1, G2 and G3 wins, birth years, sires and dams, and the winners since 1980.')}</span></li>
-      <li><b>${esc(fechaLarga('2026-10-24'))}</b><span>${T('Se convirtió en esta página.', 'It became this website.')}</span></li>
+      <li><b>Excel · ${esc(fechaLarga('2025-09-04'))}</b><span>${T('Empezó como una hoja de Excel donde Rodolfo contaba las G1 de algunas umas.', 'It started as an Excel sheet where Rodolfo counted the G1 wins of a few umas.')}</span></li>
+      <li><b>Canva · ${esc(fechaLarga('2025-11-25'))}</b><span>${T('Creció hasta una tabla enorme en Canva con G1, G2 y G3, año de nacimiento, padres y los ganadores desde 1980.', 'It grew into a huge Canva table with G1, G2 and G3 wins, birth years, sires and dams, and the winners since 1980.')}</span></li>
+      <li><b>${T('Página web', 'Website')} · ${esc(fechaLarga('2026-10-24'))}</b><span>${T('Se convirtió en esta página.', 'It became this website.')}</span></li>
     </ol>
   </section>
   <section class="panel ab">
@@ -4337,7 +4337,7 @@ function ultimaAct() {
 }
 const fechaLarga = iso => /^\d{4}-\d\d-\d\d$/.test(iso) ? new Date(iso + 'T00:00:00').toLocaleDateString(LOC(), { day: 'numeric', month: 'long', year: 'numeric' }) : iso;
 // Los enlaces a /uma/ y /carrera/ solo existen en umadexfan.com; en el artifact no se muestran
-const footLinks = () => `<nav class="foot-links" aria-label="${T('Sobre el sitio', 'About the site')}"><a href="#acerca">${T('Acerca de Umadex', 'About Umadex')}</a><a href="#novedades">${T('Novedades', 'What’s new')}</a>${location.hostname === 'umadexfan.com' ? `<a href="/uma/">${T('Todos los personajes', 'All characters')}</a><a href="/carrera/">${T('Carreras G1', 'G1 races')}</a>` : ''}</nav>`;
+const footLinks = () => `<nav class="foot-links" aria-label="${T('Sobre el sitio', 'About the site')}"><a href="#acerca">${T('Acerca de Umadex', 'About Umadex')}</a><a href="#novedades">${T('Novedades', 'What’s new')}</a>${location.hostname === 'umadexfan.com' ? `<a href="/uma/">${T('Índice A-Z de umas', 'A-Z uma index')}</a><a href="/carrera/">${T('Índice de carreras', 'Race index')}</a>` : ''}</nav>`;
 const footHTML = () => footLinks() + T(`Última actualización: ${esc(fechaLarga(ultimaAct()))}. Récords y ganadores de Wikipedia, JBIS y netkeiba. Grados con los colores oficiales de la JRA: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Sitio de fans sin fines de lucro, no oficial y sin afiliación ni respaldo de Cygames; sigue la <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">guía de obras derivadas de Uma Musume</a>. Uma Musume: Pretty Derby © Cygames, Inc.`,
   `Last updated: ${esc(fechaLarga(ultimaAct()))}. Records and winners from Wikipedia, JBIS and netkeiba. Grades shown in the JRA’s official colors: <span class="gr g1">G1</span> <span class="gr g2">G2</span> <span class="gr g3">G3</span>.<br>Non-profit, unofficial fan site with no affiliation with or endorsement from Cygames; it follows the <a href="https://umamusume.jp/derivativework_guidelines/" target="_blank" rel="noopener">Uma Musume derivative work guidelines</a>. Uma Musume: Pretty Derby © Cygames, Inc.`);
 // Textos fijos del encabezado y el pie en el idioma activo
