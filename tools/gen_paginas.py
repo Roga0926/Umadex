@@ -11,7 +11,7 @@ Crea:
 Uso (desde la carpeta del repositorio):  python3 tools/gen_paginas.py
 Se vuelve a ejecutar cada vez que cambia index.html; borra y regenera uma/ y carrera/.
 """
-import html, json, os, re, shutil, sys, unicodedata, datetime
+import html, json, os, re, shutil, sys, unicodedata
 
 SITIO = 'https://umadexfan.com'
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -259,10 +259,9 @@ def main():
     lista = ''.join(f'<a href="/carrera/{e(c["id"])}/"><span>{e(c["nombre"])}<br><small class="sub">{e(c.get("hipodromo",""))}</small></span></a>' for c in carreras)
     escribir('/carrera/', pagina('Carreras G1: ganadores desde 1980 | Umadex', 'Las carreras G1 que sigue Umadex, con sus ganadores desde 1980, récords y las umas que las ganaron.',
                                  '/carrera/', f'<h1>Carreras G1</h1><div class="grid">{lista}</div>', migas=[('Carreras G1', None)]))
-    hoy = datetime.date.today().isoformat()
     open(os.path.join(RAIZ, 'sitemap.xml'), 'w', encoding='utf8').write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-        ''.join(f'  <url><loc>{e(u)}</loc><lastmod>{hoy}</lastmod></url>\n' for u in urls) + '</urlset>\n')
+        ''.join(f'  <url><loc>{e(u)}</loc></url>\n' for u in urls) + '</urlset>\n')
     open(os.path.join(RAIZ, 'robots.txt'), 'w', encoding='utf8').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITIO}/sitemap.xml\n')
     print(f'{len(orden)} personajes, {len(carreras)} carreras, {len(urls)} URLs en sitemap.xml')
 
