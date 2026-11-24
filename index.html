@@ -1215,6 +1215,56 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
 .yc{align-content:start}.yc.tc{border-color:var(--orange)}.yc.tt{border-color:var(--gold)}
 .yc .rn .dia{margin-left:.4rem;vertical-align:.05rem;width:.55rem;height:.55rem}
 .ts-leg .note{font-size:.78rem}
+/* Roster: título, buscador grande, grupos como botones y orden */
+.rs-intro h1{font-size:clamp(1.9rem,4.6vw,3rem)}
+.rs-search{position:relative}
+.rs-search svg{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);width:1.15rem;height:1.15rem;color:var(--muted);pointer-events:none}
+.rs-search input{height:3rem;padding:0 1rem 0 2.7rem;font-size:1rem;border-radius:10px}
+.rs-groups{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:-.6rem}
+.rs-groups button{flex:none;border-radius:999px;padding:.38rem .85rem;font-size:.88rem;white-space:nowrap}
+.rs-groups button .num{font-weight:600;color:var(--muted);font-family:inherit}
+.rs-groups button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.rs-groups button[aria-pressed="true"] .num{color:inherit;opacity:.75}
+.rs-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem;margin-top:-.6rem}
+.rs-sort{display:inline-flex;align-items:center;gap:.6rem;font-size:.88rem;color:var(--muted)}
+.rs-sort select{width:auto;font-weight:700;color:var(--ink)}
+@media (max-width:760px){.rs-groups{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}.rs-groups::-webkit-scrollbar{display:none}}
+.rs-dec{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-top:-.6rem}
+.rs-dec-l{font-size:.8rem;font-weight:700;color:var(--muted);margin-right:.2rem}
+.rs-dec button{flex:none;border-radius:999px;padding:.32rem .75rem;font-size:.84rem;white-space:nowrap}
+.rs-dec button .num{font-weight:600;color:var(--muted);font-family:inherit}
+.rs-dec button[aria-pressed="true"]{background:var(--turf);border-color:var(--turf);color:var(--turf-ink)}
+.rs-dec button[aria-pressed="true"] .num{color:inherit;opacity:.8}
+@media (max-width:760px){.rs-dec{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}.rs-dec::-webkit-scrollbar{display:none}}
+/* Roster: cuadrícula de tarjetas con foto */
+.rs-view{flex:none}
+.rs-view button{border:0;border-radius:0;background:none;padding:.35rem .9rem;font-size:.88rem}
+.rs-view button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+@media (min-width:640px){.rgrid{grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));gap:.75rem}}
+.rc{position:relative;display:flex;flex-direction:column;gap:.15rem;padding:.45rem .45rem .6rem;border-radius:10px;background:var(--surface);border:1px solid var(--line);min-width:0;transition:border-color .15s}
+.rc:hover{border-color:var(--turf)}
+.rc:has(.rc-a:focus-visible){outline:2px solid var(--turf-tx);outline-offset:2px}
+.rc-ph{position:relative;margin-bottom:.35rem}
+.rc-ph img,.rc-ph .ini-fb{display:grid;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:8px;background:var(--sunk);border:0;font-size:1.6rem}
+.rc-g1{position:absolute;top:.35rem;left:.35rem;display:grid;justify-items:center;min-width:2.5rem;padding:.15rem .4rem .1rem;border-radius:6px;background:var(--g1);color:#fff;line-height:1}
+:root:not([data-skin$="claro"]) .rc-g1{color:#0d1511}
+.rc-g1 b{font-family:var(--font-display);font-size:1.25rem}.rc-g1 small{font-size:.55rem;font-weight:700;letter-spacing:.06em}
+.rc-g1.z{background:var(--sunk);color:var(--muted)!important;box-shadow:inset 0 0 0 1px var(--line)}
+.rc-sk{position:absolute;left:.35rem;bottom:.35rem;display:grid;line-height:0}.rc-sk .silk{width:30px;height:30px}
+.rc .rc-fav{position:absolute;z-index:2;top:.35rem;right:.35rem}
+.rc-a{font-weight:700;font-size:.98rem;line-height:1.2;text-decoration:none;overflow-wrap:anywhere}
+.rc-a::after{content:"";position:absolute;inset:0;border-radius:10px}
+.rc-a:focus-visible{outline:0}
+.rc-jp{font-size:.72rem;color:var(--muted);line-height:1.3;overflow-wrap:anywhere}
+.rc-rec{font-size:.8rem;margin-top:.2rem}
+.rc-gg{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.25rem}
+.rc-gr{display:inline-flex;gap:.25rem;align-items:baseline;font-family:var(--font-display);font-weight:700;font-size:.78rem;line-height:1;padding:.2rem .38rem;border-radius:4px;border:1px solid var(--line);color:var(--muted)}
+.rc-gr.g1{background:var(--g1);border-color:var(--g1);color:#fff}.rc-gr.g2{background:var(--g2);border-color:var(--g2);color:#fff}.rc-gr.g3{background:var(--g3);border-color:var(--g3);color:#fff}
+:root:not([data-skin$="claro"]) .rc-gr:not(.z){color:#0d1511}
+.rc .tag{align-self:flex-start;margin-top:.35rem}
+@media (max-width:640px){.rs-view button{padding:.35rem .7rem}}
+.pf-empty{padding:.9rem 1rem;border:1px dashed var(--line);border-radius:var(--r);text-align:center}
 </style>
 <script>
 /* App instalable y estadísticas de visitas: solo funciona en umadexfan.com (en el artefacto no hace nada) */
@@ -1566,35 +1616,57 @@ addEventListener('hashchange', () => {
 });
 
 /* ---------- vista: lista ---------- */
-const listState = { q: '', cat: 'todos', sort: 'nombre' };
+const listState = { q: '', cat: 'todos', sort: 'nombre', dec: 'todas', view: 'grid' };
+// Vista del roster (Cuadrícula o Lista), recordada en este navegador
+try { if (localStorage.getItem('umadex-vista') === 'lista') listState.view = 'lista'; } catch {}
+// Década de nacimiento: "70s y antes" junta todo lo anterior a 1980
+const DECADAS = [['todas', () => T('Todas', 'All')], ['pre80', () => T('70s y antes', '70s and earlier')], ['1980', () => '80s'], ['1990', () => '90s'], ['2000', () => '2000s'], ['2010', () => '2010s'], ['2020', () => '2020s']];
+const decDe = p => { const y = Number(p.anio_nacimiento); return !y ? '' : y < 1980 ? 'pre80' : String(Math.floor(y / 10) * 10); };
+function decTx(d, n) {
+  const u = n === 1 ? T('1 uma nacida', '1 uma born') : T(`${n} umas nacidas`, `${n} umas born`);
+  if (d === 'pre80') return `${u} ${T('antes de 1980', 'before 1980')}`;
+  const ab = String(d).slice(2);
+  return `${u} ${T(`en los ${Number(d) >= 2000 ? d : ab}`, `in the ${Number(d) >= 2000 ? d : ab}s`)}`;
+}
+// Grupos del roster como botones con su número; "Agregados por ti" solo si hay alguno
+function rsGroups() {
+  const n = c => all().filter(p => p.categoria === c).length;
+  if (listState.cat === 'agregado' && !extras.length) listState.cat = 'todos';
+  return [['todos', T('Todas', 'All'), all().length], ['favoritas', `★ ${T('Favoritas', 'Favorites')}`, null], ['oficial', T('Oficiales', 'Official'), n('oficial')],
+    ['Cinderella Gray', 'Cinderella Gray', n('Cinderella Gray')], ['Supporting', 'Supporting', n('Supporting')],
+    ...(extras.length ? [['agregado', T('Agregados por ti', 'Added by you'), extras.length]] : [])].filter(([v, , c]) => c !== 0 || v === 'todos');
+}
 function viewList() {
   app.innerHTML = `${nextBanner()}${talDiaBox()}
-  <section class="intro">
-    <span class="label">Roster · ${BASE.length} ${T('personajes', 'characters')}${extras.length ? ` + ${extras.length} ${T('agregados', 'added')}` : ''}</span>
-    <h1>${T('Datos de carrera de cada Umamusume', 'Racing records of every Umamusume')}</h1>
+  <section class="intro rs-intro">
+    <h1>${T('Los caballos reales detrás de cada Umamusume', 'The real horses behind every Umamusume')}</h1>
+    <p>${T(`${all().length} umas con su historia, sus carreras, su pedigrí y las G1 que ganaron. Busca a tu favorita o explora.`, `${all().length} umas with their story, their races, their pedigree and the G1 races they won. Find your favorite or explore.`)}</p>
   </section>
-  <div class="controls">
-    <div class="field grow"><label for="q">${T('Buscar', 'Search')}</label><input id="q" type="search" placeholder="${T('Nombre, nombre japonés, padre…', 'Name, Japanese name, sire…')}" value="${esc(listState.q)}"></div>
-    <div class="field"><label for="cat">${T('Grupo', 'Group')}</label>
-      <select id="cat">
-        <option value="todos">${T('Todos', 'All')}</option><option value="favoritas">★ ${T('Favoritas', 'Favorites')}</option><option value="oficial">${T('Oficiales', 'Official')}</option>
-        <option value="Cinderella Gray">Cinderella Gray</option><option value="Supporting">Supporting</option>
-        <option value="agregado" class="ed-only">${T('Agregados por ti', 'Added by you')}</option>
-      </select></div>
-    <div class="field"><label for="sort">${T('Ordenar', 'Sort by')}</label>
+  <div class="rs-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <input id="q" type="search" aria-label="${T('Buscar', 'Search')}" placeholder="${T('Buscar por nombre, nombre japonés o padre…', 'Search by name, Japanese name or sire…')}" value="${esc(listState.q)}"></div>
+  <div class="rs-groups" id="cat" role="group" aria-label="${T('Grupo', 'Group')}">${rsGroups().map(([v, tx, n]) => `<button type="button" data-cat="${esc(v)}" aria-pressed="${listState.cat === v}">${tx}${n != null ? ` <span class="num">${n}</span>` : ''}</button>`).join('')}</div>
+  <div class="rs-tools">
+    <label class="rs-sort"><span>${T('Ordenar', 'Sort by')}</span>
       <select id="sort">
         <option value="nombre">${T('Nombre (A-Z)', 'Name (A-Z)')}</option><option value="g1">${T('Más G1 ganadas', 'Most G1 wins')}</option>
         <option value="victorias">${T('Más victorias', 'Most wins')}</option><option value="anio">${T('Año de nacimiento', 'Year of birth')}</option>
-      </select></div>
+      </select></label>
+    <div class="seg rs-view" id="view" role="group" aria-label="${T('Vista', 'View')}"><button type="button" data-view="grid" aria-pressed="${listState.view === 'grid'}">${T('Cuadrícula', 'Grid')}</button><button type="button" data-view="lista" aria-pressed="${listState.view === 'lista'}">${T('Lista', 'List')}</button></div>
   </div>
+  <div class="rs-dec" id="dec" role="group" aria-label="${T('Década de nacimiento', 'Decade of birth')}"><span class="rs-dec-l">${T('Década de nacimiento:', 'Decade of birth:')}</span>${DECADAS.map(([v, tx]) => `<button type="button" data-dec="${v}" aria-pressed="${listState.dec === v}">${tx()} <span class="num"></span></button>`).join('')}</div>
   ${(og => og && silk(og) && !notaSedasOculta() ? `<p class="silk-note" id="silk-note">${silk(og)}<span>${T(`Este ícono muestra los colores del uniforme del jinete en la vida real (aquí, el de ${esc(og.personaje)}).`, `This icon shows the jockey’s real-life silks (here, ${esc(og.personaje)}’s).`)}</span><button type="button" class="silk-x" id="silk-x" aria-label="${T('Ocultar esta nota', 'Hide this note')}" title="${T('Ocultar', 'Hide')}">×</button></p>` : '')(all().find(x => String(x.id) === '94'))}
   <div class="count" id="count"></div>
   <div class="grid" id="grid"></div>`;
   const q = app.querySelector('#q'), cat = app.querySelector('#cat'), sort = app.querySelector('#sort');
-  cat.value = listState.cat; sort.value = listState.sort;
+  sort.value = listState.sort;
   q.addEventListener('input', () => { listState.q = q.value; fillGrid(); });
-  cat.addEventListener('change', () => { listState.cat = cat.value; fillGrid(); });
+  cat.addEventListener('click', ev => { const b = ev.target.closest('[data-cat]'); if (!b) return;
+    listState.cat = b.dataset.cat; cat.querySelectorAll('[data-cat]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); fillGrid(); });
   sort.addEventListener('change', () => { listState.sort = sort.value; fillGrid(); });
+  app.querySelector('#view').addEventListener('click', ev => { const b = ev.target.closest('[data-view]'); if (!b) return; listState.view = b.dataset.view;
+    try { localStorage.setItem('umadex-vista', listState.view); } catch {}
+    app.querySelectorAll('#view [data-view]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); fillGrid(); });
+  app.querySelector('#dec').addEventListener('click', ev => { const b = ev.target.closest('[data-dec]'); if (!b) return; listState.dec = b.dataset.dec; fillGrid(); });
   const sx = document.getElementById('silk-x');
   if (sx) sx.onclick = () => { try { localStorage.setItem(NOTA_SEDAS, '1'); } catch {} document.getElementById('silk-note')?.remove(); };
   fillGrid();
@@ -1608,6 +1680,10 @@ function fillGrid() {
   const t = norm(listState.q);
   let rows = all().filter(p => listState.cat === 'todos' || (listState.cat === 'favoritas' ? esFav(p.id) : p.categoria === listState.cat));
   if (t) rows = rows.filter(p => [p.personaje, p.caballo_real, p.pedigri?.padre, p.pedigri?.madre].some(v => norm(v).includes(t)) || String(p.nombre_japones || '').includes(listState.q.trim()));
+  // los números de cada década salen del grupo y la búsqueda elegidos; luego se filtra por la década
+  const dn = {}; for (const p of rows) { const d = decDe(p); if (d) dn[d] = (dn[d] || 0) + 1; }
+  document.querySelectorAll('#dec [data-dec]').forEach(b => { const v = b.dataset.dec; b.setAttribute('aria-pressed', String(v === listState.dec)); b.querySelector('.num').textContent = v === 'todas' ? rows.length : dn[v] || 0; });
+  if (listState.dec !== 'todas') rows = rows.filter(p => decDe(p) === listState.dec);
   const g1 = p => p.resumen_grados?.G1?.ganadas || 0;
   const cmp = {
     nombre: (a, b) => a.personaje.localeCompare(b.personaje),
@@ -1616,14 +1692,17 @@ function fillGrid() {
     anio: (a, b) => (a.anio_nacimiento || 9999) - (b.anio_nacimiento || 9999),
   }[listState.sort];
   rows.sort(cmp);
-  document.getElementById('count').textContent = `${rows.length} ${rows.length === 1 ? T('personaje', 'character') : T('personajes', 'characters')}`;
+  document.getElementById('count').textContent = listState.dec !== 'todas' ? decTx(listState.dec, rows.length) : `${rows.length} ${rows.length === 1 ? T('personaje', 'character') : T('personajes', 'characters')}`;
   if (!rows.length) {
     grid.innerHTML = listState.cat === 'favoritas' && !t ? `<div class="empty">${T('Todavía no tienes favoritas. Toca la estrella ☆ de una tarjeta o de una ficha para guardarla aquí.', 'You have no favorites yet. Tap the ☆ star on a card or profile to save it here.')}</div>`
       : listState.cat === 'agregado'
       ? `<div class="empty">Todavía no has agregado personajes. <a href="#agregar">Agrega el primero</a>.</div>`
+      : listState.dec !== 'todas' && !t ? `<div class="empty">${T('Ninguna uma de este grupo nació en esa década.', 'No uma in this group was born in that decade.')}</div>`
       : `<div class="empty">${T('Ningún personaje coincide con la búsqueda.', 'No character matches your search.')}</div>`;
     return;
   }
+  grid.className = listState.view === 'grid' ? 'rgrid' : 'grid';
+  if (listState.view === 'grid') { grid.innerHTML = rows.map(rosterCard).join(''); return; }
   grid.innerHTML = rows.map(p => {
     const r = p.record || {}, rg = p.resumen_grados || {};
     const sk = silk(p);
@@ -1638,6 +1717,23 @@ function fillGrid() {
         ${p.categoria === 'agregado' ? `<span class="tag add">${T('Agregado', 'Added')}</span>` : p.categoria !== 'oficial' ? `<span class="tag">${esc(p.categoria)}</span>` : ''}
       </div></div>`;
   }).join('');
+}
+
+// Tarjeta de la cuadrícula: foto grande con G1, sedas y favorita encima; debajo nombre, récord y G1/G2/G3. Toda la tarjeta abre la ficha.
+function rosterCard(p) {
+  const r = p.record || {}, rg = p.resumen_grados || {}, g1 = rg.G1?.ganadas || 0, sk = silk(p), img = imgUrl(p);
+  const iniP = String(p.personaje).split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  const gr = g => { const n = rg[g]?.ganadas || 0; return `<span class="rc-gr ${n ? g.toLowerCase() : 'z'}">${g} <b>${n}</b></span>`; };
+  const v = r.victorias || 0, c = r.carreras || 0;
+  return `<div class="rc">
+    <div class="rc-ph">${img ? `<img src="${esc(img)}" alt="" data-n="${esc(p.personaje)}" loading="lazy">` : `<span class="ini-fb">${esc(iniP)}</span>`}
+      <span class="rc-g1${g1 ? '' : ' z'}"><b>${g1}</b><small>G1</small></span>${sk ? `<span class="rc-sk">${sk}</span>` : ''}${favBtn(p, 'rc-fav')}</div>
+    <a class="rc-a" href="#p-${esc(p.id)}">${esc(p.personaje)}</a>
+    <span class="rc-jp">${[p.nombre_japones, p.anio_nacimiento].filter(Boolean).map(esc).join(' · ')}</span>
+    ${c ? `<span class="rc-rec">${T(`${v} de ${c} ${v === 1 ? 'ganada' : 'ganadas'}`, `${v} of ${c} won`)}</span>` : ''}
+    <span class="rc-gg">${gr('G1')}${gr('G2')}${gr('G3')}</span>
+    ${p.categoria === 'agregado' ? `<span class="tag add">${T('Agregado', 'Added')}</span>` : p.categoria !== 'oficial' ? `<span class="tag">${esc(p.categoria)}</span>` : ''}
+  </div>`;
 }
 
 /* ---------- vista: ficha ---------- */
@@ -1684,7 +1780,7 @@ function histModo(p) {
 function histToggle(p) {
   const full = fullHistory(p), n = (p.carreras_grupo || []).length, g = g1Rows(p).length, mode = histModo(p);
   const op = (k, tx, c) => `<a href="#" data-hist="${k}" aria-current="${mode === k}">${tx} <span class="num">${c}</span></a>`;
-  const ops = [full && op('todas', T('Todas', 'All'), full.length), n && op('grupo', T('Solo de grupo', 'Graded only'), n), g && op('g1', T('Solo G1', 'G1 only'), g)].filter(Boolean);
+  const ops = [full && op('todas', T('Todas', 'All'), full.length), (n || full) && op('grupo', T('Solo de grupo', 'Graded only'), n), g && op('g1', T('Solo G1', 'G1 only'), g)].filter(Boolean);
   if (ops.length < 2) return '';
   return `<div class="seg pf-seg" role="group" aria-label="${T('Qué carreras mostrar', 'Which races to show')}">${ops.join('')}</div>`;
 }
@@ -1701,6 +1797,7 @@ function histTable(p) {
   const notes = [];
   if (!full && p.categoria !== 'agregado') notes.push(T('No hay historial carrera por carrera para este caballo; se muestran solo sus carreras de grupo.', 'There is no race-by-race record for this horse; only its graded races are shown.'));
   if (full && p.nota_historial) notes.push(esc(L(p, 'nota_historial')));
+  if (!rows.length && mode === 'grupo' && full) return `<p class="note pf-empty">${T('No corrió carreras de grupo (G1, G2 ni G3).', 'She never ran in a graded race (G1, G2 or G3).')}</p>`;
   if (!rows.length) return `<p class="note">${T('No hay carreras registradas.', 'No races recorded.')}</p>${notes.map(n => `<p class="note">${n}</p>`).join('')}`;
   const nac = c => nacional(c) && !/^Jpn/.test(c.grado) ? ` <span class="muted" title="${T('Grado nacional, no cuenta en el resumen', 'National grade, not counted in the summary')}">${T('nac.', 'nat.')}</span>` : '';
   return `<div class="scroll"><table class="hist">
@@ -1715,7 +1812,10 @@ function histTable(p) {
 // Dónde y a qué distancia ganaba: victorias / corridas por rango de distancia y por hipódromo (máximo 5)
 function dondeBox(p) {
   const full = fullHistory(p), h = (full || p.carreras_grupo || []).filter(c => c.fecha);
-  if (h.length < 2 || !h.some(c => isWin(c.puesto))) return '';
+  if (!h.length) return '';
+  if (!h.some(c => isWin(c.puesto))) return `<section class="panel"><h2>${T('Dónde y a qué distancia ganaba', 'Where and at what distance she won')}</h2>
+    <p class="note pf-empty">${T(`No ganó ninguna de sus ${h.length} carreras, así que no hay victorias por distancia ni por hipódromo.`, `She didn’t win any of her ${h.length} races, so there are no wins by distance or racecourse.`)}</p></section>`;
+  if (h.length < 2) return '';
   const agrupa = key => { const m = new Map(); for (const c of h) { const k = key(c); if (!k) continue; const e = m.get(k) || { n: 0, w: 0, ds: [] }; e.n++; if (isWin(c.puesto)) e.w++; if (+c.distancia_m) e.ds.push(+c.distancia_m); m.set(k, e); } return m; };
   const dist = agrupa(c => rangoDe(+c.distancia_m)?.k), hip = agrupa(c => c.hipodromo ? c.hipodromo + (c.pais && c.pais !== 'JPN' ? '|' + c.pais : '') : null);
   const bar = (lab, e) => `<li><span class="pf-bl">${lab}</span><span class="pf-bt" aria-hidden="true"><i style="width:${Math.round(100 * e.w / e.n)}%"></i></span><span class="pf-bv"><b>${e.w}</b> ${T('de', 'of')} ${e.n}</span></li>`;
