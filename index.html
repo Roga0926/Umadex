@@ -381,9 +381,13 @@ tr.win td{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .yarr:focus-visible{outline:2px solid var(--turf-tx);outline-offset:2px}
 .yarr.off{opacity:.3;box-shadow:none}
 .yarr small{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:.3rem;font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
-@media (max-width:1270px){.yarr{top:auto;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:none;width:3.2rem;height:3.2rem}
-  .yarr.prev{left:1rem}.yarr.next{right:1rem}.yarr small{display:none}.yarr.off{display:none}
-  body:has(.yarr) #foot{padding-bottom:4.5rem}}
+.yhead{display:flex;align-items:center;gap:.75rem}
+@media (max-width:1270px){.yarr{position:static;transform:none;width:2.8rem;height:2.8rem;flex:none;box-shadow:none}
+  .yarr svg{width:22px;height:22px}.yarr small{display:none}.yarr.off{visibility:hidden}
+  .yhead{justify-content:space-between}}
+.years div.pend{color:var(--muted)}.years div.pend .pend{font-style:italic}
+.yearstrip{scroll-padding-inline:1rem}
+@media (max-width:760px){.yearstrip{-webkit-mask-image:linear-gradient(90deg,transparent,#000 1.2rem,#000 calc(100% - 1.2rem),transparent);mask-image:linear-gradient(90deg,transparent,#000 1.2rem,#000 calc(100% - 1.2rem),transparent);padding-inline:.9rem}}
 .yc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:.55rem .7rem;display:grid;gap:.1rem;position:relative}
 .yc .rn{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
 .yc .rn .dot-inline{width:.6rem;height:.6rem;margin-right:.35rem;vertical-align:-.02rem}
@@ -2224,7 +2228,8 @@ function linkedChars(raceId, year, name) {
   if (hit && (adj || hit.categoria === 'agregado')) pj.push(hit);
   return pj;
 }
-function winnerHTML(raceId, year, name) {
+function winnerHTML(raceId, year, name, pend) {
+  if (!name && pend) return `<span class="pend">${T('Pendiente', 'Upcoming')} · ${esc(diaLocal(pend).toLocaleDateString(LOC(), { day: 'numeric', month: 'long', year: 'numeric' }))}</span>`;
   if (!name) return `<span>${T('No se corrió', 'Not run')}</span>`;
   const pj = linkedChars(raceId, year, name);
   return pj.length ? pj.map(p => `<a href="#p-${esc(p.id)}">${esc(name)}</a>`).join(' / ') : `<span>${esc(name)}</span>`;
@@ -2240,7 +2245,8 @@ function edicionBlock(ed) {
     ${ed.segundo ? `<dt>${ed.tercero ? T('2.º / 3.º', '2nd / 3rd') : T('2.º', '2nd')}</dt><dd>${esc(enW(ed.segundo.caballo))}${ed.tercero ? ` / ${esc(enW(ed.tercero.caballo))}` : ''}</dd>` : ''}
   </dl>${ed.notas ? `<p class="note">${esc(L(ed, 'notas'))}</p>` : ''}`;
 }
-function raceBody(r, ed) {
+// pend: fecha de la edición del año en curso si todavía no se corre (estado distinto de 'corrida' y fecha de hoy en adelante)
+function raceBody(r, ed, pend) {
   const rec = r.record;
   const winners = (r.ganadores_por_anio || []).slice().reverse();
   const pjw = r.personajes_ganadores || [];
@@ -2258,7 +2264,8 @@ function raceBody(r, ed) {
     ${r.participaciones_personajes ? `<p class="note">${T(`${r.participaciones_personajes} participaciones de caballos de personajes en total.`, `${r.participaciones_personajes} starts by characters’ horses in total.`)}</p>` : ''}
   </section>
   ${winners.length ? `<section class="panel"><h2>${T('Ganadores', 'Winners')} 1980–${esc(winners[0].anio)}</h2>
-    <div class="years">${winners.map(w => `<div class="${!w.ganador ? 'none' : linkedChars(r.id, w.anio, w.ganador).length ? 'pj' : ''}"><span class="y">${fieldLink(G1C[r.id + '|' + w.anio], w.anio)}</span>${winnerHTML(r.id, w.anio, w.ganador)}</div>`).join('')}</div>
+    <div class="years">${winners.map(w => { const pd = !w.ganador && pend && String(w.anio) === pend.slice(0, 4) ? pend : null;
+      return `<div class="${!w.ganador ? (pd ? 'none pend' : 'none') : linkedChars(r.id, w.anio, w.ganador).length ? 'pj' : ''}"><span class="y">${fieldLink(G1C[r.id + '|' + w.anio], w.anio)}</span>${winnerHTML(r.id, w.anio, w.ganador, pd)}</div>`; }).join('')}</div>
   </section>` : ''}`;
 }
 function viewRace(id) {
@@ -2268,12 +2275,13 @@ function viewRace(id) {
   const idx = RACES.indexOf(r);
   const prev = RACES[idx - 1], next = RACES[idx + 1];
   let body, target = r;
+  const pendDe = s => { const f = s.fecha || r.fecha; return f && r.estado !== 'corrida' && (s.estado_2026 ?? r.estado_2026) !== 'corrida' && diaLocal(f) >= hoyLocal() ? f : null; };
   if (r.carreras) {
     const s = r.carreras.find(x => x.id === subId) || r.carreras[0];
     target = s;
     body = `<div class="subtabs">${r.carreras.map(x => `<a class="btn ${x === s ? 'primary' : ''}" href="#g1-${r.id}--${x.id}">${esc(x.nombre)}</a>`).join('')}</div>
-      <p class="note">${esc(s.nombre)} · ${surf(s.superficie || r.superficie)}${s.distancia_m ? ` · ${fmtN(s.distancia_m)} m` : ''}</p>` + raceBody(s, s.edicion);
-  } else body = raceBody(r, r.edicion_resumida);
+      <p class="note">${esc(s.nombre)} · ${surf(s.superficie || r.superficie)}${s.distancia_m ? ` · ${fmtN(s.distancia_m)} m` : ''}</p>` + raceBody(s, s.edicion, pendDe(s));
+  } else body = raceBody(r, r.edicion_resumida, pendDe(r));
   app.innerHTML = `
   <a class="back" href="#g1">← ${T('Todas las G1', 'All G1 races')}</a>
   <section class="hero">
@@ -2397,8 +2405,8 @@ function viewYear(y) {
     return t !== undefined ? `<a class="yarr ${cls}" href="#anio-${t}" aria-label="${lbl} (${t})" title="${lbl} (${t})">${ch}<small>${t}</small></a>` : `<span class="yarr ${cls} off" aria-hidden="true">${ch}</span>`; };
   app.innerHTML = g1Head('year') + `
   <div class="yearstrip" id="ys">${YEARS.map(x => `<a href="#anio-${x}" aria-current="${x === y}">${x}</a>`).join('')}</div>
-  ${arrow(-1)}${arrow(1)}<section class="intro"><h1 class="num" style="font-size:3.4rem">${y}</h1>
-    <p>${T(`${keys.filter(k => row[k]).length} carreras disputadas · ${pjCount} ganadas por caballos de personajes.`, `${keys.filter(k => row[k]).length} races run · ${pjCount} won by characters’ horses.`)}</p></section>
+  <section class="intro"><div class="yhead">${arrow(-1)}<h1 class="num" style="font-size:3.4rem">${y}</h1>${arrow(1)}</div>
+    <p>${(nr => T(`${nr} ${nr === 1 ? 'carrera disputada' : 'carreras disputadas'} · ${pjCount} ${pjCount === 1 ? 'ganada' : 'ganadas'} por caballos de personajes.`, `${nr} ${nr === 1 ? 'race' : 'races'} run · ${pjCount} won by characters’ horses.`))(keys.filter(k => row[k]).length)}</p></section>
   <div class="legend"><span><i style="background:var(--gold)"></i>${T('Triple Corona de potras', 'Fillies’ Triple Crown')}</span><span><i style="background:var(--orange)"></i>${T('Triple Corona de potros', 'Triple Crown')}</span><span><i style="background:color-mix(in srgb,var(--gold) 30%,var(--surface));border:1px solid var(--gold);border-radius:2px"></i>${T('Ganador con personaje', 'Winner with a character')}</span></div>
   <div class="yeargrid">${keys.map(k => {
     const w = row[k]; const pr = parent(k);
@@ -2411,7 +2419,9 @@ function viewYear(y) {
   }).join('')}</div>`;
   const cur = document.querySelector('#ys [aria-current="true"]');
   // centra el año activo en la tira moviéndola solo de lado, sin mover la página
-  if (cur) { const ys = cur.parentElement; ys.scrollLeft = cur.offsetLeft - ys.offsetLeft - (ys.clientWidth - cur.offsetWidth) / 2; }
+  const centra = () => { const c = document.querySelector('#ys [aria-current="true"]'); if (!c) return; const ys = c.parentElement, a = ys.getBoundingClientRect(), b = c.getBoundingClientRect();
+    ys.scrollLeft += (b.left - a.left) - (a.width - b.width) / 2; };
+  if (cur) { centra(); document.fonts?.ready.then(centra); }
 }
 
 /* ---------- vista: participantes de una G1 ---------- */
