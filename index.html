@@ -1266,6 +1266,13 @@ footer{border-top:1px solid var(--line);padding-block:1rem 2rem;font-size:.8rem;
 .rc .tag{align-self:flex-start;margin-top:.35rem}
 @media (max-width:640px){.rs-view button{padding:.35rem .7rem}}
 .pf-empty{padding:.9rem 1rem;border:1px dashed var(--line);border-radius:var(--r);text-align:center}
+/* en celular y tableta, la tira de años, el año y las flechas quedan fijos debajo del encabezado */
+.ystick{min-width:0}
+@media (max-width:1270px){.ystick{position:sticky;top:calc(var(--toph) + env(safe-area-inset-top,0px));z-index:3;margin-inline:-16px;padding:.5rem 16px .3rem;background:var(--bg);box-shadow:0 1px 0 var(--line)}
+  .ystick .yearstrip{padding-bottom:.3rem}.ystick .yearstrip a{font-size:.9rem;padding:.12rem .45rem}
+  .ystick .yhead h1{font-size:2.3rem!important;line-height:1;margin:0}
+  .ystick .yarr{width:2.5rem;height:2.5rem}
+  .ystick + .intro{margin-top:.6rem!important}}
 </style>
 <script>
 /* App instalable y estadísticas de visitas: solo funciona en umadexfan.com (en el artefacto no hace nada) */
@@ -2526,7 +2533,9 @@ function tsPanel(x, st, u) {
 }
 let tsSel = null;
 // alto de la barra de arriba, para que el recuadro fijo quede justo debajo
-function tsToph() { document.documentElement.style.setProperty('--toph', (document.querySelector('.top')?.offsetHeight || 0) + 'px'); }
+function tsToph() { const tp = document.querySelector('.top'), set = () => document.documentElement.style.setProperty('--toph', (tp?.offsetHeight || 0) + 'px'); set();
+  // el encabezado cambia de alto al cargar las fuentes o girar el celular: se vuelve a medir
+  if (tp && !tsToph.ro && window.ResizeObserver) { tsToph.ro = new ResizeObserver(set); tsToph.ro.observe(tp); } }
 function viewSeason() {
   const items = seasonItems(), um = umaLookup();
   const nx = items.find(x => !x.done), nf = nx?.fecha;
@@ -2755,9 +2764,9 @@ function viewYear(y) {
   const arrow = d => { const t = YEARS[yi + d], cls = d < 0 ? 'prev' : 'next', lbl = d < 0 ? T('Año anterior', 'Previous year') : T('Año siguiente', 'Next year'), ch = `<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="${d < 0 ? 'M15 5 L8 12 L15 19' : 'M9 5 L16 12 L9 19'}" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     return t !== undefined ? `<a class="yarr ${cls}" href="#anio-${t}" aria-label="${lbl} (${t})" title="${lbl} (${t})">${ch}<small>${t}</small></a>` : `<span class="yarr ${cls} off" aria-hidden="true">${ch}</span>`; };
   app.innerHTML = g1Head('year') + `
-  <div class="yearstrip" id="ys">${YEARS.map(x => `<a href="#anio-${x}" aria-current="${x === y}">${x}</a>`).join('')}</div>
-  <section class="intro"><div class="yhead">${arrow(-1)}<h1 class="num" style="font-size:3.4rem">${y}</h1>${arrow(1)}</div>
-    <p>${(nr => T(`${nr} ${nr === 1 ? 'carrera disputada' : 'carreras disputadas'} · ${pjCount} ${pjCount === 1 ? 'ganada' : 'ganadas'} por caballos de personajes.`, `${nr} ${nr === 1 ? 'race' : 'races'} run · ${pjCount} won by characters’ horses.`))(keys.filter(k => row[k]).length)}</p></section>
+  <div class="ystick"><div class="yearstrip" id="ys">${YEARS.map(x => `<a href="#anio-${x}" aria-current="${x === y}">${x}</a>`).join('')}</div>
+  <div class="yhead">${arrow(-1)}<h1 class="num" style="font-size:3.4rem">${y}</h1>${arrow(1)}</div></div>
+  <section class="intro" style="margin-top:-1.1rem"><p>${(nr => T(`${nr} ${nr === 1 ? 'carrera disputada' : 'carreras disputadas'} · ${pjCount} ${pjCount === 1 ? 'ganada' : 'ganadas'} por caballos de personajes.`, `${nr} ${nr === 1 ? 'race' : 'races'} run · ${pjCount} won by characters’ horses.`))(keys.filter(k => row[k]).length)}</p></section>
   <div class="ts-leg">${crownLegend(y)}${Number(y) < 1996 ? `<p class="note">${T('Hasta 1995 la tercera carrera de la Triple Tiara era la Queen Elizabeth II Cup, entonces solo para potras de 3 años; la Shuka Sho se creó en 1996.', 'Until 1995 the third Triple Tiara race was the Queen Elizabeth II Cup, then only for 3-year-old fillies; the Shuka Sho was created in 1996.')}</p>` : ''}
     <div class="ts-leg-k"><span><i class="lbg"></i>${T('Ganador con personaje', 'Winner with a character')}</span></div></div>
   <div class="yeargrid">${keys.map(k => {
@@ -2769,6 +2778,7 @@ function viewYear(y) {
     const href = pr ? `#g1-${pr.id}${pr.id !== k ? '--' + k : ''}` : '#g1';
     return `<div class="yc ${!w ? 'none' : linked ? 'pj' : ''}${ics.length ? ' hasav' : ''}${cr ? ' ' + cr : ''}">${ics.length ? `<span class="yav">${ics.join('')}</span>` : ''}<a class="rn" href="${href}">${esc(D.nombres[k] || k)}${cr ? `<i class="dia ${cr}" aria-hidden="true"></i>` : ''}</a>${cr ? `<span class="ts-c ${cr}">${crownTx(cr)}</span>` : ''}<span class="w">${winnerHTML(k, y, w).replace(T('No se corrió', 'Not run'), '—')}</span>${G1C[k + '|' + y] ? `<a class="fl" href="#carrera-${G1C[k + '|' + y]}">${T('Participantes', 'Field')} →</a>` : ''}</div>`;
   }).join('')}</div>`;
+  tsToph();
   const cur = document.querySelector('#ys [aria-current="true"]');
   // centra el año activo en la tira moviéndola solo de lado, sin mover la página
   const centra = () => { const c = document.querySelector('#ys [aria-current="true"]'); if (!c) return; const ys = c.parentElement, a = ys.getBoundingClientRect(), b = c.getBoundingClientRect();
