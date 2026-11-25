@@ -149,13 +149,14 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.01em;te
 .nav a[aria-current="page"]{background:var(--turf-ink);color:var(--turf-tx)}
 /* Submenús (PC): "Personajes" ofrece Personajes y Comparar; "Carreras G1 del año" ofrece esa misma página y Calendario */
 .nav-dd{position:relative;display:flex}
-.nav-sub{position:absolute;z-index:4;top:100%;left:50%;padding-top:.45rem;min-width:11.5rem;opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s ease,transform .22s cubic-bezier(.2,.7,.3,1),visibility 0s .22s}
+.nav-sub{position:absolute;z-index:4;top:100%;left:50%;padding-top:.45rem;min-width:min(11.5rem,calc(100vw - 16px));max-width:calc(100vw - 16px);opacity:0;visibility:hidden;transform:translate(calc(-50% + var(--nx,0px)),-6px);transition:opacity .18s ease,transform .22s cubic-bezier(.2,.7,.3,1),visibility 0s .22s}
 .nav-sub-in{display:grid;gap:.15rem;padding:.4rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgb(0 0 0/.3)}
 .nav .nav-sub a{color:var(--ink);border-radius:var(--r);padding:.4rem .75rem;white-space:nowrap}
 .nav .nav-sub a:hover{background:var(--sunk)}
 .nav .nav-sub a[aria-current="page"]{background:var(--turf);color:var(--turf-ink)}
-.nav-dd:focus-within .nav-sub{opacity:1;visibility:visible;transform:translate(-50%,0);transition-delay:0s}
-@media (hover:hover){.nav-dd:hover .nav-sub{opacity:1;visibility:visible;transform:translate(-50%,0);transition-delay:0s}}
+.nav-dd:focus-within .nav-sub{opacity:1;visibility:visible;transform:translate(calc(-50% + var(--nx,0px)),0);transition-delay:0s}
+@media (hover:hover){.nav-dd:hover .nav-sub{opacity:1;visibility:visible;transform:translate(calc(-50% + var(--nx,0px)),0);transition-delay:0s}}
+.nav .nav-sub a{overflow:hidden;text-overflow:ellipsis}
 .nav-dd.sub-on>a{background:var(--turf-ink);color:var(--turf-tx)}
 .ini-fb{display:inline-grid;place-content:center;flex:none;background:var(--sunk);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:var(--font-display);font-weight:700;line-height:1;text-align:center;font-size:.85rem}
 .photo .ini-fb{width:100%;aspect-ratio:1/1;border-radius:var(--r);font-family:inherit;font-weight:500;color:var(--muted);font-size:.95rem}
@@ -1422,6 +1423,12 @@ const navFade = () => {
   nav.style.setProperty('--fr', max > 2 && nav.scrollLeft < max - 2 ? '1.75rem' : '0px');
 };
 document.querySelector('.nav')?.addEventListener('scroll', navFade, { passive: true });
+// submenús del encabezado (Personajes, Carreras G1, Juegos): se recorren de lado lo necesario para no salirse de la pantalla
+function navSubFit() { const cw = document.documentElement.clientWidth, m = 8;
+  document.querySelectorAll('.nav-sub').forEach(s => { s.style.setProperty('--nx', '0px'); const r = s.getBoundingClientRect(); if (!r.width) return;
+    const dx = r.right > cw - m ? cw - m - r.right : r.left < m ? m - r.left : 0; if (dx) s.style.setProperty('--nx', Math.round(dx) + 'px'); }); }
+navSubFit(); addEventListener('resize', navSubFit); document.fonts?.ready.then(navSubFit);
+if (window.ResizeObserver && document.querySelector('.nav')) new ResizeObserver(navSubFit).observe(document.querySelector('.nav'));
 addEventListener('resize', navFade);
 document.documentElement.classList.add('sin-edicion');
 const app = document.getElementById('app');
