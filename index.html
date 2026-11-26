@@ -4450,7 +4450,7 @@ function viewColeccion() {
   const album = pool.slice().sort((a, b) => colRareza(b) - colRareza(a) || a.personaje.localeCompare(b.personaje));
   const porRar = [3, 2, 1].map(n => ({ n, tot: pool.filter(p => colRareza(p) === n).length, mias: pool.filter(p => colRareza(p) === n && s.cartas[String(p.id)]).length }));
   app.innerHTML = `${back}<section class="intro"><h1 class="gm-h1">${gameIcon('coleccion')}${T('Colección de umas', 'Uma collection')}</h1>
-    <p>${T(`${COL_DIA} tiradas gratis al día para completar tu colección.`, `${COL_DIA} free pulls a day to complete your collection.`)} <span class="muted">${T('Modo de prueba.', 'Test mode.')}</span></p></section>
+    <p>${T(`${COL_DIA} tiradas gratis al día para completar tu colección.`, `${COL_DIA} free pulls a day to complete your collection.`)}</p></section>
   <div class="panel col-tir">
     <div class="col-btns">
       <button type="button" class="primary col-b" id="col-1" ${quedan ? '' : 'disabled'}>${T('Tirar', 'Pull')}</button>
