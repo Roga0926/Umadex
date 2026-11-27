@@ -1368,7 +1368,7 @@ a.imp-c:hover .imp-n{text-decoration:underline}
 .cu-hf{align-items:flex-start;padding-right:4px}
 .cu-kick{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .cu-h .gr{font-size:.7rem;padding:.15rem .32rem}
-.cu-ht{font-size:12px;font-weight:700;overflow-wrap:anywhere;hyphens:auto}
+.cu-ht{font-size:12px;font-weight:700;overflow-wrap:anywhere;hyphens:manual}
 .cu-c{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;aspect-ratio:1;width:100%;min-width:0;padding:4px;border-radius:10px;border:2px dashed var(--line);background:var(--surface);color:var(--ink);font:inherit;text-decoration:none;overflow:hidden}
 button.cu-c:hover:not(:disabled){border-color:var(--turf);background:var(--sunk)}
 button.cu-c:disabled{cursor:default;opacity:1}
@@ -1399,7 +1399,7 @@ a.cu-c.ok:hover .cu-cn{text-decoration:underline}
 .cu-resp li span{color:var(--muted)}.cu-resp li strong{color:var(--ink)}
 /* Selector de umas: hoja desde abajo en el celular, ventana centrada en computadora */
 html.cu-open{overflow:hidden}
-.cu-sheet{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;justify-content:center}
+.cu-sheet{position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-end;justify-content:center}
 .cu-scrim{position:absolute;inset:0;background:rgb(0 0 0/.5)}
 .cu-dlg{position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-height:82vh;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));border-radius:16px 16px 0 0;background:var(--surface);color:var(--ink);box-shadow:0 -10px 30px rgb(0 0 0/.3);animation:cu-sube .22s ease}
 @keyframes cu-sube{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
@@ -4265,8 +4265,10 @@ function cuGen(pool, r) {
     const filas = cuLado(reglas, r, new Set()); if (!filas) continue;
     const cols = cuLado(reglas, r, new Set(filas.map(x => x.r.t))); if (!cols) continue;
     const sets = [];
-    for (const f of filas) for (const c of cols) sets.push([...f.s].filter(i => c.s.has(i)));
-    if (sets.some(s => s.length < 3) || !cuMatch(sets)) continue;
+    let contiene = false;
+    // Si una regla contiene a la otra (las respuestas son todas las umas de una de las dos), la casilla no sirve
+    for (const f of filas) for (const c of cols) { const x = [...f.s].filter(i => c.s.has(i)); if (x.length === f.s.size || x.length === c.s.size) contiene = true; sets.push(x); }
+    if (contiene || sets.some(s => s.length < 3) || !cuMatch(sets)) continue;
     return { rows: filas.map(x => x.r), cols: cols.map(x => x.r) };
   }
   return null;
