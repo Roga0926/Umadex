@@ -4261,7 +4261,7 @@ function cuLado(reglas, r, prohibidos) {
 }
 function cuGen(pool, r) {
   const reglas = cuReglas(pool);
-  for (let intento = 0; intento < 6000; intento++) {
+  for (let intento = 0; intento < 30000; intento++) {
     const filas = cuLado(reglas, r, new Set()); if (!filas) continue;
     const cols = cuLado(reglas, r, new Set(filas.map(x => x.r.t))); if (!cols) continue;
     const sets = [];
@@ -4290,17 +4290,26 @@ function cuSave() {
   if (cu.modo === 'diario') lsSet(CU_KEY + '-diario', { fecha: cu.fecha, ...v });
   else lsSet(CU_KEY + '-libre', { g: cu.g, ...v });
 }
+// Cuadrícula del día: la misma para todos. Si la semilla de la fecha no da una cuadrícula válida,
+// prueba otras semillas derivadas de la fecha (fecha|2, fecha|3…), así ningún día queda vacío
+function cuDia(f) {
+  const pool = impPoolOrd();
+  let g = cuGen(pool, impRng(`cuadricula|${f}`));
+  for (let k = 2; !g && k <= 20; k++) g = cuGen(pool, impRng(`cuadricula|${f}|${k}`));
+  return g;
+}
 function cuStart(nueva) {
   const modo = modoDe('cuadricula'), f = hoyMX(), vacia = { cells: Array(9).fill(null), vidas: CU_VIDAS };
   if (modo === 'diario') {
-    const g = cuGen(impPoolOrd(), impRng(`cuadricula|${f}`)), s = lsGet(CU_KEY + '-diario');
+    const g = cuDia(f), s = lsGet(CU_KEY + '-diario');
     const ok = g && s && s.fecha === f && cuCeldasOk(g, s.cells) && s.vidas >= 0 && s.vidas <= CU_VIDAS;
     cu = { modo, fecha: f, g, ...(ok ? { cells: s.cells, vidas: s.vidas } : vacia), msg: null, sel: null, q: '' };
     return;
   }
   const s = !nueva && lsGet(CU_KEY + '-libre');
   if (s && cuValida(s.g) && cuCeldasOk(s.g, s.cells) && s.vidas >= 0 && s.vidas <= CU_VIDAS) { cu = { modo, fecha: f, g: s.g, cells: s.cells, vidas: s.vidas, msg: null, sel: null, q: '' }; return; }
-  cu = { modo, fecha: f, g: cuGen(gamePool(), Math.random), ...vacia, msg: null, sel: null, q: '' };
+  let g = null; for (let k = 0; k < 20 && !g; k++) g = cuGen(gamePool(), Math.random);
+  cu = { modo, fecha: f, g, ...vacia, msg: null, sel: null, q: '' };
   cuSave();
 }
 const cuAciertos = () => cu.cells.filter(Boolean).length;
